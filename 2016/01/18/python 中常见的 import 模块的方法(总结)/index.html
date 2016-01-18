@@ -3,42 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>hexo编写笔记 | Sherwel</title>
+  <title>python 中常见的 import 模块的方法(总结) | Sherwel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="简单的记录hexo的指令.
-新手入门新建文章1$ hexo new &quot;My New Post&quot;
-更多信息: Writing
-运行服务器1$ hexo server
-更多信息: Server
-生成静态文件1$ hexo generate
-更多信息: Generating
-部署服务1$ hexo deploy
-更多信息: Deployment">
+  <meta name="description" content="前言在用python进行编程时，经常会使用第三方模块包。这种包我们可以通过 python setup install  进行安装后，通过 import XXX或from XXX import yyy 进行导入。不过如果是自己遍写的依赖包，又不想安装到 python 的相应目录，可以放到本目录里进行import进行调用；为了更清晰的理清程序之间的关系，例如我们会把这种包放到lib目录再调用。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hexo编写笔记">
-<meta property="og:url" content="http://nanshihui.github.io/2016/01/07/hello-world/index.html">
+<meta property="og:title" content="python 中常见的 import 模块的方法(总结)">
+<meta property="og:url" content="http://nanshihui.github.io/2016/01/18/python 中常见的 import 模块的方法(总结)/index.html">
 <meta property="og:site_name" content="Sherwel">
-<meta property="og:description" content="简单的记录hexo的指令.
-新手入门新建文章1$ hexo new &quot;My New Post&quot;
-更多信息: Writing
-运行服务器1$ hexo server
-更多信息: Server
-生成静态文件1$ hexo generate
-更多信息: Generating
-部署服务1$ hexo deploy
-更多信息: Deployment">
-<meta property="og:updated_time" content="2016-01-07T07:02:38.175Z">
+<meta property="og:description" content="前言在用python进行编程时，经常会使用第三方模块包。这种包我们可以通过 python setup install  进行安装后，通过 import XXX或from XXX import yyy 进行导入。不过如果是自己遍写的依赖包，又不想安装到 python 的相应目录，可以放到本目录里进行import进行调用；为了更清晰的理清程序之间的关系，例如我们会把这种包放到lib目录再调用。">
+<meta property="og:updated_time" content="2016-01-18T13:40:02.821Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hexo编写笔记">
-<meta name="twitter:description" content="简单的记录hexo的指令.
-新手入门新建文章1$ hexo new &quot;My New Post&quot;
-更多信息: Writing
-运行服务器1$ hexo server
-更多信息: Server
-生成静态文件1$ hexo generate
-更多信息: Generating
-部署服务1$ hexo deploy
-更多信息: Deployment">
+<meta name="twitter:title" content="python 中常见的 import 模块的方法(总结)">
+<meta name="twitter:description" content="前言在用python进行编程时，经常会使用第三方模块包。这种包我们可以通过 python setup install  进行安装后，通过 import XXX或from XXX import yyy 进行导入。不过如果是自己遍写的依赖包，又不想安装到 python 的相应目录，可以放到本目录里进行import进行调用；为了更清晰的理清程序之间的关系，例如我们会把这种包放到lib目录再调用。">
   
     <link rel="alternative" href="/atom.xml" title="Sherwel" type="application/atom+xml">
   
@@ -220,11 +196,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-python 中常见的 import 模块的方法(总结)" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/01/07/hello-world/" class="article-date">
-      <time datetime="2016-01-07T06:28:56.000Z" itemprop="datePublished">2016-01-07</time>
+      <a href="/2016/01/18/python 中常见的 import 模块的方法(总结)/" class="article-date">
+      <time datetime="2016-01-18T13:23:40.000Z" itemprop="datePublished">2016-01-18</time>
 </a>
     </div>
   
@@ -237,7 +213,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      hexo编写笔记
+      python 中常见的 import 模块的方法(总结)
     </h1>
   
 
@@ -246,13 +222,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/草稿箱/">草稿箱</a>
+    <a class="article-category-link" href="/categories/python/">python</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/test/">test</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/import/">import</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -262,15 +238,20 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>简单的记录hexo的指令.</p>
-<h2 id="u65B0_u624B_u5165_u95E8"><a href="#u65B0_u624B_u5165_u95E8" class="headerlink" title="新手入门"></a>新手入门</h2><h3 id="u65B0_u5EFA_u6587_u7AE0"><a href="#u65B0_u5EFA_u6587_u7AE0" class="headerlink" title="新建文章"></a>新建文章</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>更多信息: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="u8FD0_u884C_u670D_u52A1_u5668"><a href="#u8FD0_u884C_u670D_u52A1_u5668" class="headerlink" title="运行服务器"></a>运行服务器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>更多信息: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="u751F_u6210_u9759_u6001_u6587_u4EF6"><a href="#u751F_u6210_u9759_u6001_u6587_u4EF6" class="headerlink" title="生成静态文件"></a>生成静态文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>更多信息: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="u90E8_u7F72_u670D_u52A1"><a href="#u90E8_u7F72_u670D_u52A1" class="headerlink" title="部署服务"></a>部署服务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>更多信息: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <p></p><h2 id="intro">前言</h2>在用python进行编程时，经常会使用第三方模块包。这种包我们可以通过 python setup install  进行安装后，通过 import XXX或from XXX import yyy 进行导入。不过如果是自己遍写的依赖包，又不想安装到 python 的相应目录，可以放到本目录里进行import进行调用；为了更清晰的理清程序之间的关系，例如我们会把这种包放到lib目录再调用。<br><a id="more"></a><p></p>
+<h2 id="u540C_u7EA7_u76EE_u5F55_u4E0B_u7684_u8C03_u7528"><a href="#u540C_u7EA7_u76EE_u5F55_u4E0B_u7684_u8C03_u7528" class="headerlink" title="同级目录下的调用"></a>同级目录下的调用</h2><p>　　程序结构如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-- src</span><br><span class="line">    |-- mod1.py</span><br><span class="line">    |-- <span class="built_in">test</span>1.py</span><br></pre></td></tr></table></figure>
+<p>　　若在程序test1.py中导入模块mod1, 则直接使用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import mod1</span><br><span class="line">或</span><br><span class="line">from mod1 import *;y</span><br></pre></td></tr></table></figure>
+<h2 id="u8C03_u7528_u5B50_u76EE_u5F55_u4E0B_u7684_u6A21_u5757"><a href="#u8C03_u7528_u5B50_u76EE_u5F55_u4E0B_u7684_u6A21_u5757" class="headerlink" title="调用子目录下的模块"></a>调用子目录下的模块</h2><p>　　程序结构如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-- src</span><br><span class="line">    |-- mod1.py</span><br><span class="line">    |-- lib</span><br><span class="line">    |    |-- mod2.py</span><br><span class="line">    |-- <span class="built_in">test</span>1.py</span><br></pre></td></tr></table></figure>
+<p>　　这时看到test1.py和lib目录（即mod2.py的父级目录），如果想在程序test1.py中导入模块mod2.py ，可以在lib件夹中建立空文件<strong>init</strong>.py文件(也可以在该文件中自定义输出模块接口)，然后使用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from lib.mod2 import *</span><br><span class="line">或</span><br><span class="line">import lib.mod2.</span><br></pre></td></tr></table></figure>
+<h2 id="u8C03_u7528_u4E0A_u7EA7_u76EE_u5F55_u4E0B_u7684_u6587_u4EF6"><a href="#u8C03_u7528_u4E0A_u7EA7_u76EE_u5F55_u4E0B_u7684_u6587_u4EF6" class="headerlink" title="调用上级目录下的文件"></a>调用上级目录下的文件</h2><p>　　程序结构如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-- src</span><br><span class="line">    |-- mod1.py</span><br><span class="line">    |-- lib</span><br><span class="line">    |    |-- mod2.py</span><br><span class="line">    |-- sub</span><br><span class="line">    |    |-- <span class="built_in">test</span>2.py</span><br></pre></td></tr></table></figure>
+<p>　　这里想要实现test2.py调用mod1.py和mod2.py ，做法是我们先跳到src目录下面，直接可以调用mod1，然后在lib上当下建一个空文件<strong>init</strong>.py ，就可以像第二步调用子目录下的模块一样，通过import lib.mod2进行调用了。具体代码如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line">sys.path.append(<span class="string">".."</span>)</span><br><span class="line">import mod1</span><br><span class="line">import mod2.mod2</span><br></pre></td></tr></table></figure>
+<p>　　这些细碎的只是很琐碎，有时候到很后面的时候，会突然发现，前面有些只是都会忘了。因此就把这些记下来，方便查阅。</p>
 
       
     </div>
@@ -279,13 +260,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/01/07/hello-world/">hexo编写笔记</a></p>
+        <p><span>本文标题:</span><a href="/2016/01/18/python 中常见的 import 模块的方法(总结)/">python 中常见的 import 模块的方法(总结)</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Sherwel 的个人博客">Sherwel</a></p>
-        <p><span>发布时间:</span>2016年01月07日 - 14时28分</p>
-        <p><span>最后更新:</span>2016年01月07日 - 15时02分</p>
+        <p><span>发布时间:</span>2016年01月18日 - 21时23分</p>
+        <p><span>最后更新:</span>2016年01月18日 - 21时40分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/01/07/hello-world/" title="hexo编写笔记">http://nanshihui.github.io/2016/01/07/hello-world/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://nanshihui.github.io/2016/01/07/hello-world/　　作者: Sherwel" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/01/18/python 中常见的 import 模块的方法(总结)/" title="python 中常见的 import 模块的方法(总结)">http://nanshihui.github.io/2016/01/18/python 中常见的 import 模块的方法(总结)/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://nanshihui.github.io/2016/01/18/python 中常见的 import 模块的方法(总结)/　　作者: Sherwel" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -298,12 +279,12 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/01/08/windows-mac-software/">
-                    自用 Windows 和 Mac 软件推荐
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/01/15/网络空间指纹识别/">
+                    如何构建一个网络空间指纹识别系统（一）
                 </a>
             </div>
-        
         
     </nav>
 
@@ -312,7 +293,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#u65B0_u624B_u5165_u95E8"><span class="toc-number">1.</span> <span class="toc-text">新手入门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u65B0_u5EFA_u6587_u7AE0"><span class="toc-number">1.1.</span> <span class="toc-text">新建文章</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u8FD0_u884C_u670D_u52A1_u5668"><span class="toc-number">1.2.</span> <span class="toc-text">运行服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u751F_u6210_u9759_u6001_u6587_u4EF6"><span class="toc-number">1.3.</span> <span class="toc-text">生成静态文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u90E8_u7F72_u670D_u52A1"><span class="toc-number">1.4.</span> <span class="toc-text">部署服务</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u540C_u7EA7_u76EE_u5F55_u4E0B_u7684_u8C03_u7528"><span class="toc-number">2.</span> <span class="toc-text">同级目录下的调用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u8C03_u7528_u5B50_u76EE_u5F55_u4E0B_u7684_u6A21_u5757"><span class="toc-number">3.</span> <span class="toc-text">调用子目录下的模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u8C03_u7528_u4E0A_u7EA7_u76EE_u5F55_u4E0B_u7684_u6587_u4EF6"><span class="toc-number">4.</span> <span class="toc-text">调用上级目录下的文件</span></a></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
@@ -376,7 +357,7 @@
     
       <div class="duoshuo" id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="2016/01/07/hello-world/" data-title="hexo编写笔记" data-url="http://nanshihui.github.io/2016/01/07/hello-world/"></div>
+    <div class="ds-thread" data-thread-key="2016/01/18/python 中常见的 import 模块的方法(总结)/" data-title="python 中常见的 import 模块的方法(总结)" data-url="http://nanshihui.github.io/2016/01/18/python 中常见的 import 模块的方法(总结)/"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
@@ -431,15 +412,15 @@ var duoshuoQuery = {short_name:"[object Object]"};
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/01/08/windows-mac-software/" title="上一篇: 自用 Windows 和 Mac 软件推荐">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2016/01/15/网络空间指纹识别/" title="下一篇: 如何构建一个网络空间指纹识别系统（一）">
+                <i class="fa fa-angle-right"></i>
+            </a>
         
     </div>
 
