@@ -11,7 +11,7 @@
 <meta property="og:url" content="http://nanshihui.github.io/2016/01/18/python 中常见的 import 模块的方法(总结)/index.html">
 <meta property="og:site_name" content="Sherwel">
 <meta property="og:description" content="前言在用python进行编程时，经常会使用第三方模块包。这种包我们可以通过 python setup install  进行安装后，通过 import XXX或from XXX import yyy 进行导入。不过如果是自己遍写的依赖包，又不想安装到 python 的相应目录，可以放到本目录里进行import进行调用；为了更清晰的理清程序之间的关系，例如我们会把这种包放到lib目录再调用。">
-<meta property="og:updated_time" content="2016-01-18T13:40:02.821Z">
+<meta property="og:updated_time" content="2016-01-18T13:41:34.434Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python 中常见的 import 模块的方法(总结)">
 <meta name="twitter:description" content="前言在用python进行编程时，经常会使用第三方模块包。这种包我们可以通过 python setup install  进行安装后，通过 import XXX或from XXX import yyy 进行导入。不过如果是自己遍写的依赖包，又不想安装到 python 的相应目录，可以放到本目录里进行import进行调用；为了更清晰的理清程序之间的关系，例如我们会把这种包放到lib目录再调用。">
@@ -251,7 +251,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-- src</span><br><span class="line">    |-- mod1.py</span><br><span class="line">    |-- lib</span><br><span class="line">    |    |-- mod2.py</span><br><span class="line">    |-- sub</span><br><span class="line">    |    |-- <span class="built_in">test</span>2.py</span><br></pre></td></tr></table></figure>
 <p>　　这里想要实现test2.py调用mod1.py和mod2.py ，做法是我们先跳到src目录下面，直接可以调用mod1，然后在lib上当下建一个空文件<strong>init</strong>.py ，就可以像第二步调用子目录下的模块一样，通过import lib.mod2进行调用了。具体代码如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line">sys.path.append(<span class="string">".."</span>)</span><br><span class="line">import mod1</span><br><span class="line">import mod2.mod2</span><br></pre></td></tr></table></figure>
-<p>　　这些细碎的只是很琐碎，有时候到很后面的时候，会突然发现，前面有些只是都会忘了。因此就把这些记下来，方便查阅。</p>
+<p>　　这些细碎的知识很琐碎，有时候到很后面的时候，会突然发现，前面有些只是都会忘了。因此就把这些记下来，方便查阅。</p>
 
       
     </div>
@@ -263,7 +263,7 @@
         <p><span>本文标题:</span><a href="/2016/01/18/python 中常见的 import 模块的方法(总结)/">python 中常见的 import 模块的方法(总结)</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Sherwel 的个人博客">Sherwel</a></p>
         <p><span>发布时间:</span>2016年01月18日 - 21时23分</p>
-        <p><span>最后更新:</span>2016年01月18日 - 21时40分</p>
+        <p><span>最后更新:</span>2016年01月18日 - 21时41分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/01/18/python 中常见的 import 模块的方法(总结)/" title="python 中常见的 import 模块的方法(总结)">http://nanshihui.github.io/2016/01/18/python 中常见的 import 模块的方法(总结)/</a>
             <span class="copy-path" data-clipboard-text="原文: http://nanshihui.github.io/2016/01/18/python 中常见的 import 模块的方法(总结)/　　作者: Sherwel" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
