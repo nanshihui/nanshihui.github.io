@@ -3,36 +3,42 @@
 <head>
   <meta charset="utf-8">
   
-  <title>SQL注入总结 | Sherwel</title>
+  <title>SQL注入总结（一） | Sherwel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言一直都在用sqlmap的同时，都差点忘了根本，遂总结了一下，提醒自己
+  <meta name="description" content="前言习惯sqlmap方便的的同时，会不知不觉依赖上，差点忘了根本，遂总结了一下，提醒自己
 常见的SQL注入形式
-有回显: 有SQL错误显示；
-无回显示: 没有有SQL错误显示；
+读取数据库内容常用方式:　information_schema，mysql.user
+有回显的函数错误提示: 有SQL错误显示；
+无回显的函数错误提示: 盲注，即没有有SQL错误显示；
 加密形式: SQL加密执行显示;
-其他形式: 如何避免
-其他: 想改进的地方；">
+其他形式: 宽字节注入等;
+预防措施: 如何避免；
+常用函数: sq">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SQL注入总结">
+<meta property="og:title" content="SQL注入总结（一）">
 <meta property="og:url" content="http://nanshihui.github.io/2016/01/19/SQL注入总结/index.html">
 <meta property="og:site_name" content="Sherwel">
-<meta property="og:description" content="前言一直都在用sqlmap的同时，都差点忘了根本，遂总结了一下，提醒自己
+<meta property="og:description" content="前言习惯sqlmap方便的的同时，会不知不觉依赖上，差点忘了根本，遂总结了一下，提醒自己
 常见的SQL注入形式
-有回显: 有SQL错误显示；
-无回显示: 没有有SQL错误显示；
+读取数据库内容常用方式:　information_schema，mysql.user
+有回显的函数错误提示: 有SQL错误显示；
+无回显的函数错误提示: 盲注，即没有有SQL错误显示；
 加密形式: SQL加密执行显示;
-其他形式: 如何避免
-其他: 想改进的地方；">
-<meta property="og:updated_time" content="2016-01-19T15:30:27.653Z">
+其他形式: 宽字节注入等;
+预防措施: 如何避免；
+常用函数: sq">
+<meta property="og:updated_time" content="2016-01-20T02:27:13.972Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SQL注入总结">
-<meta name="twitter:description" content="前言一直都在用sqlmap的同时，都差点忘了根本，遂总结了一下，提醒自己
+<meta name="twitter:title" content="SQL注入总结（一）">
+<meta name="twitter:description" content="前言习惯sqlmap方便的的同时，会不知不觉依赖上，差点忘了根本，遂总结了一下，提醒自己
 常见的SQL注入形式
-有回显: 有SQL错误显示；
-无回显示: 没有有SQL错误显示；
+读取数据库内容常用方式:　information_schema，mysql.user
+有回显的函数错误提示: 有SQL错误显示；
+无回显的函数错误提示: 盲注，即没有有SQL错误显示；
 加密形式: SQL加密执行显示;
-其他形式: 如何避免
-其他: 想改进的地方；">
+其他形式: 宽字节注入等;
+预防措施: 如何避免；
+常用函数: sq">
   
     <link rel="alternative" href="/atom.xml" title="Sherwel" type="application/atom+xml">
   
@@ -231,7 +237,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      SQL注入总结
+      SQL注入总结（一）
     </h1>
   
 
@@ -256,15 +262,30 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p></p><h2 id="intro">前言</h2>一直都在用sqlmap的同时，都差点忘了根本，遂总结了一下，提醒自己<p></p>
+        <p></p><h2 id="intro">前言</h2>习惯sqlmap方便的的同时，会不知不觉依赖上，差点忘了根本，遂总结了一下，提醒自己<p></p>
 <h3 id="u5E38_u89C1_u7684SQL_u6CE8_u5165_u5F62_u5F0F"><a href="#u5E38_u89C1_u7684SQL_u6CE8_u5165_u5F62_u5F0F" class="headerlink" title="常见的SQL注入形式"></a>常见的SQL注入形式</h3><ul>
-<li><strong>有回显:</strong> 有SQL错误显示；</li>
-<li><strong>无回显示:</strong> 没有有SQL错误显示；</li>
+<li><strong>读取数据库内容常用方式:</strong>　information_schema，mysql.user</li>
+<li><strong>有回显的函数错误提示:</strong> 有SQL错误显示；</li>
+<li><strong>无回显的函数错误提示:</strong> 盲注，即没有有SQL错误显示；</li>
 <li><strong>加密形式:</strong> SQL加密执行显示;</li>
-<li><strong>其他形式:</strong> 如何避免</li>
-<li><strong>其他:</strong> 想改进的地方；</li>
+<li><strong>其他形式:</strong> 宽字节注入等;</li>
+<li><strong>预防措施:</strong> 如何避免；</li>
+<li><strong>常用函数:</strong> sql自带的函数；</li>
+<li><strong>其他:</strong> 补充的地方；</li>
 </ul>
 <a id="more"></a>
+<h2 id="u8BFB_u53D6_u6570_u636E_u5E93_u5185_u5BB9_u5E38_u7528_u65B9_u5F0F"><a href="#u8BFB_u53D6_u6570_u636E_u5E93_u5185_u5BB9_u5E38_u7528_u65B9_u5F0F" class="headerlink" title="读取数据库内容常用方式"></a>读取数据库内容常用方式</h2><p>　　数据库都会有内置的表，里面已经包含了所有建表的信息。以MySQL为例。在５版本以上的数据库使用如下语句，就可以直接获得数据库的表的信息。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select group_concat(distinct table_name) from information_schema.columns <span class="built_in">where</span> table_schema=database()</span><br></pre></td></tr></table></figure></p>
+<p>　　不理解的话，可以直接查阅MySQL的information_schema.columns表就会清楚。相关的字段有 table_name，table_schema，column_name。<br>　　mysql.user表相应的字段就会有User,Password.<br>　　通过这些方式我们大概就可以知道目标数据库，所应有的表信息，就可以进行相应的操作。注释的话比如–,#,/*等</p>
+<h2 id="u6709_u56DE_u663E_u7684_u51FD_u6570_u9519_u8BEF_u63D0_u793A"><a href="#u6709_u56DE_u663E_u7684_u51FD_u6570_u9519_u8BEF_u63D0_u793A" class="headerlink" title="有回显的函数错误提示"></a>有回显的函数错误提示</h2><p>　　针对有函数回显，方式就会方便很多。可以通过union select 先得到应有的字段有多少个，如果不是数字型记得把数字换成null。union和union all的区别是,union会自动压缩多个结果集合中的重复结果，而union all则将所有的结果全部显示出来，不管是不是重复。此外猜字段的方式还可以用having ‘1’=’1’的方式来，通过错误提示，间接的得到表的属性字段。其他方式的话，自由发挥。<br>　　有时候的回显，并不是直接建立在可视化的模块的界面，而是只有SQL内置报错函数的时候，就需要使用另一种方式，比如：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">and <span class="number">1</span>=<span class="number">2</span> union select <span class="number">1</span> from (select count(*),concat(floor(rand(<span class="number">0</span>)*<span class="number">2</span>),(the code you put))a from information_schema.tables group by a)b</span><br></pre></td></tr></table></figure></p>
+<p>　　这句话的思路是通过floor(rand(0)*2)可能出现1或０的状况在group的时候，会出错，就会直接显示出错的地方，从而显示相应的字段或者数据，使用时，常常会用到limit,当然这种方法也有局限性，比如不能使用update,select into,insert,load_file(),group_concat()等函数，所以使用的时候，就会有相应的限制。得出的错误，会在开头多出一个１，所以去掉就可以了。</p>
+<h2 id="u65E0_u56DE_u663E_u7684_u51FD_u6570_u9519_u8BEF_u63D0_u793A"><a href="#u65E0_u56DE_u663E_u7684_u51FD_u6570_u9519_u8BEF_u63D0_u793A" class="headerlink" title="无回显的函数错误提示"></a>无回显的函数错误提示</h2><p>　　在没有回显的状态下如何判断存在注入，最直观的情况下，可以用benchmark等类似的延迟函数，看有没有延迟返回，来判断有没有执行SQL语句。<br>　　针对返回只有true和false的这种情况，可以通过构造一个判断，来猜表的相应的内容。<br>　　比如：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">and left(databse(),<span class="number">1</span>)=<span class="string">'1'</span>　　　　　　　　　　　　 <span class="comment">#猜数据库名的第一位是１</span></span><br><span class="line">and length(databse())=<span class="string">'1'</span>　　　　　　　　　　　   <span class="comment">#猜数据库名长度为１</span></span><br><span class="line">and substr(left(role,<span class="number">1</span>),<span class="number">1</span>,<span class="number">1</span>)=char(<span class="number">49</span>) %<span class="number">23</span>　　 　　　<span class="comment">#该表的role字段第一位为１,char(49)=1</span></span><br></pre></td></tr></table></figure></p>
+<p>　　通过类似这些方式进行猜解。当然为了避免php的GPC函数，需要用到hex函数以及使用ascii码来绕过，比如上图中的３的示例。</p>
+<h2 id="u52A0_u5BC6_u5F62_u5F0F"><a href="#u52A0_u5BC6_u5F62_u5F0F" class="headerlink" title="加密形式"></a>加密形式</h2><p>　　有些程序员会通过将查询的部分加密，然后传到服务器解密，然后进行查询。常见的方式有base64,以及其他的方式。这时候策略就会和之前一样，只不过，在构造的时候，多一部分编码就可以了。</p>
+<h2 id="u5176_u4ED6_u5F62_u5F0F"><a href="#u5176_u4ED6_u5F62_u5F0F" class="headerlink" title="其他形式"></a>其他形式</h2><h3 id="u5BBD_u5B57_u8282_u6CE8_u5165"><a href="#u5BBD_u5B57_u8282_u6CE8_u5165" class="headerlink" title="宽字节注入"></a>宽字节注入</h3><p>　　比如%df’ 被PHP转义（开启GPC、用addslashes函数，或者icov等），单引号被加上反斜杠\，变成了 %df\’，其中\的十六进制是 %5C ，那么现在 %df\’ =%df%5c%27，如果程序的默认字符集是GBK等宽字节字符集，则MYSQL用GBK的编码时，会认为 %df%5c 是一个宽字符，也就是縗’，也就是说：%df\’ = %df%5c%27=縗’，有了单引号就好注入了。其实不仅仅是%df可以，其他附近还有一定领域的也可以，可以字节去查一下。</p>
+<h2 id="u5E38_u7528_u51FD_u6570"><a href="#u5E38_u7528_u51FD_u6570" class="headerlink" title="常用函数"></a>常用函数</h2><p>　　MySQL常用的自带函数有:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">user()                               //显示数据库用户</span><br><span class="line">database()                      //当前数据库名</span><br><span class="line">version()                        //数据库版本</span><br><span class="line">concat()                          //联合数据</span><br><span class="line">group_concat()             //多组数据拼接</span><br><span class="line">hex()                                 //十六进制编码</span><br><span class="line">unhex()                             //十六进制解码</span><br><span class="line">load_file()                     //读取文件</span><br><span class="line">@@datadir                    //数据路径</span><br><span class="line">@@tmpdir                       //临时路径</span><br><span class="line">@@version                     //数据库版本</span><br></pre></td></tr></table></figure></p>
+<p>　　其他的诸如 @@version_comment，@@version_compile_os，@@warning_count等可以自己去翻一下。<br>　　此外用到比如转换类型比如convert( using latin1),以及select file into outfile’/asd/a.a’可以自己去尝试。</p>
+<h2 id="u9884_u9632_u63AA_u65BD"><a href="#u9884_u9632_u63AA_u65BD" class="headerlink" title="预防措施"></a>预防措施</h2><p>　　如果只有int的参数，最好最后直接转换为int类型，这样就可以避免注入，此外针对一些特殊的函数符号进行过滤。其他的一部分，下次会继续讲解，包括绕过等一些方式。<br>当然因为篇幅的原因，很多东西没有延伸开来，如果有错误的话欢迎指正。</p>
+
       
     </div>
     
@@ -272,12 +293,12 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/01/19/SQL注入总结/">SQL注入总结</a></p>
+        <p><span>本文标题:</span><a href="/2016/01/19/SQL注入总结/">SQL注入总结（一）</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Sherwel 的个人博客">Sherwel</a></p>
         <p><span>发布时间:</span>2016年01月19日 - 23时26分</p>
-        <p><span>最后更新:</span>2016年01月19日 - 23时30分</p>
+        <p><span>最后更新:</span>2016年01月20日 - 10时27分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/01/19/SQL注入总结/" title="SQL注入总结">http://nanshihui.github.io/2016/01/19/SQL注入总结/</a>
+            <span>原始链接:</span><a class="post-url" href="/2016/01/19/SQL注入总结/" title="SQL注入总结（一）">http://nanshihui.github.io/2016/01/19/SQL注入总结/</a>
             <span class="copy-path" data-clipboard-text="原文: http://nanshihui.github.io/2016/01/19/SQL注入总结/　　作者: Sherwel" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
@@ -305,7 +326,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u5E38_u89C1_u7684SQL_u6CE8_u5165_u5F62_u5F0F"><span class="toc-number">1.1.</span> <span class="toc-text">常见的SQL注入形式</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u5E38_u89C1_u7684SQL_u6CE8_u5165_u5F62_u5F0F"><span class="toc-number">1.1.</span> <span class="toc-text">常见的SQL注入形式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u8BFB_u53D6_u6570_u636E_u5E93_u5185_u5BB9_u5E38_u7528_u65B9_u5F0F"><span class="toc-number">2.</span> <span class="toc-text">读取数据库内容常用方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u6709_u56DE_u663E_u7684_u51FD_u6570_u9519_u8BEF_u63D0_u793A"><span class="toc-number">3.</span> <span class="toc-text">有回显的函数错误提示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u65E0_u56DE_u663E_u7684_u51FD_u6570_u9519_u8BEF_u63D0_u793A"><span class="toc-number">4.</span> <span class="toc-text">无回显的函数错误提示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u52A0_u5BC6_u5F62_u5F0F"><span class="toc-number">5.</span> <span class="toc-text">加密形式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5176_u4ED6_u5F62_u5F0F"><span class="toc-number">6.</span> <span class="toc-text">其他形式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u5BBD_u5B57_u8282_u6CE8_u5165"><span class="toc-number">6.1.</span> <span class="toc-text">宽字节注入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5E38_u7528_u51FD_u6570"><span class="toc-number">7.</span> <span class="toc-text">常用函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u9884_u9632_u63AA_u65BD"><span class="toc-number">8.</span> <span class="toc-text">预防措施</span></a></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
@@ -369,7 +390,7 @@
     
       <div class="duoshuo" id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="2016/01/19/SQL注入总结/" data-title="SQL注入总结" data-url="http://nanshihui.github.io/2016/01/19/SQL注入总结/"></div>
+    <div class="ds-thread" data-thread-key="2016/01/19/SQL注入总结/" data-title="SQL注入总结（一）" data-url="http://nanshihui.github.io/2016/01/19/SQL注入总结/"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
@@ -436,7 +457,7 @@ var duoshuoQuery = {short_name:"[object Object]"};
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/01/19/SQL注入总结/">SQL注入总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/18/python 中常见的 import 模块的方法(总结)/">python 中常见的 import 模块的方法(总结)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/15/网络空间指纹识别/">如何构建一个网络空间指纹识别系统（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/08/windows-mac-software/">自用 Windows 和 Mac 软件推荐</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/07/hello-world/">hexo编写笔记</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/01/19/SQL注入总结/">SQL注入总结（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/18/python 中常见的 import 模块的方法(总结)/">python 中常见的 import 模块的方法(总结)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/15/网络空间指纹识别/">如何构建一个网络空间指纹识别系统（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/08/windows-mac-software/">自用 Windows 和 Mac 软件推荐</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/07/hello-world/">hexo编写笔记</a></li></ul>
     <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
     <script>
         $(".post-list").addClass("toc-article");

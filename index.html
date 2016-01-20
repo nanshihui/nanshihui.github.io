@@ -217,7 +217,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/19/SQL注入总结/">SQL注入总结</a>
+      <a class="article-title" href="/2016/01/19/SQL注入总结/">SQL注入总结（一）</a>
     </h1>
   
 
@@ -227,13 +227,16 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p><h2 id="intro">前言</h2>一直都在用sqlmap的同时，都差点忘了根本，遂总结了一下，提醒自己</p>
+              <p><h2 id="intro">前言</h2>习惯sqlmap方便的的同时，会不知不觉依赖上，差点忘了根本，遂总结了一下，提醒自己</p>
 <h3 id="u5E38_u89C1_u7684SQL_u6CE8_u5165_u5F62_u5F0F"><a href="#u5E38_u89C1_u7684SQL_u6CE8_u5165_u5F62_u5F0F" class="headerlink" title="常见的SQL注入形式"></a>常见的SQL注入形式</h3><ul>
-<li><strong>有回显:</strong> 有SQL错误显示；</li>
-<li><strong>无回显示:</strong> 没有有SQL错误显示；</li>
+<li><strong>读取数据库内容常用方式:</strong>　information_schema，mysql.user</li>
+<li><strong>有回显的函数错误提示:</strong> 有SQL错误显示；</li>
+<li><strong>无回显的函数错误提示:</strong> 盲注，即没有有SQL错误显示；</li>
 <li><strong>加密形式:</strong> SQL加密执行显示;</li>
-<li><strong>其他形式:</strong> 如何避免</li>
-<li><strong>其他:</strong> 想改进的地方；</li>
+<li><strong>其他形式:</strong> 宽字节注入等;</li>
+<li><strong>预防措施:</strong> 如何避免；</li>
+<li><strong>常用函数:</strong> sql自带的函数；</li>
+<li><strong>其他:</strong> 补充的地方；</li>
 </ul>
           
       
