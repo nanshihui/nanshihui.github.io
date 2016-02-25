@@ -3,40 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>ToolForSpider简介 | Sherwel-Blog</title>
+  <title>sqlmap常用技巧整理 | Sherwel-Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言看着自己编写的代码没有说明的确不方便别人开发，便写了部分说明在这边。简单的记录该项目的相关说明。
-关于toolforspider项目的说明
-文件分布:详细文件分类
-功能使用:大致的功能描述
-效果展示: 初步的界面效果
-TODO: 进一步需要做的事情
-其他: 补充的地方">
+  <meta name="description" content="前言通过在乌云网上出现的很多SQL注入漏洞，因此来总结一下，大致使用SQLMAP所遇到的参数。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ToolForSpider简介">
-<meta property="og:url" content="http://nanshihui.github.io/2016/01/21/ToolForSpider简介/index.html">
+<meta property="og:title" content="sqlmap常用技巧整理">
+<meta property="og:url" content="http://nanshihui.github.io/2016/02/25/sqlmaptips/index.html">
 <meta property="og:site_name" content="Sherwel-Blog">
-<meta property="og:description" content="前言看着自己编写的代码没有说明的确不方便别人开发，便写了部分说明在这边。简单的记录该项目的相关说明。
-关于toolforspider项目的说明
-文件分布:详细文件分类
-功能使用:大致的功能描述
-效果展示: 初步的界面效果
-TODO: 进一步需要做的事情
-其他: 补充的地方">
-<meta property="og:image" content="http://nanshihui.github.io/public/main.png">
-<meta property="og:image" content="http://nanshihui.github.io/public/result.png">
-<meta property="og:image" content="http://nanshihui.github.io/public/work.png">
-<meta property="og:image" content="http://nanshihui.github.io/public/analyse.png">
-<meta property="og:updated_time" content="2016-02-20T11:56:09.717Z">
+<meta property="og:description" content="前言通过在乌云网上出现的很多SQL注入漏洞，因此来总结一下，大致使用SQLMAP所遇到的参数。">
+<meta property="og:updated_time" content="2016-02-25T02:11:44.439Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ToolForSpider简介">
-<meta name="twitter:description" content="前言看着自己编写的代码没有说明的确不方便别人开发，便写了部分说明在这边。简单的记录该项目的相关说明。
-关于toolforspider项目的说明
-文件分布:详细文件分类
-功能使用:大致的功能描述
-效果展示: 初步的界面效果
-TODO: 进一步需要做的事情
-其他: 补充的地方">
+<meta name="twitter:title" content="sqlmap常用技巧整理">
+<meta name="twitter:description" content="前言通过在乌云网上出现的很多SQL注入漏洞，因此来总结一下，大致使用SQLMAP所遇到的参数。">
   
     <link rel="alternative" href="/atom.xml" title="Sherwel-Blog" type="application/atom+xml">
   
@@ -222,11 +200,11 @@ TODO: 进一步需要做的事情
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-ToolForSpider简介" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-sqlmaptips" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/01/21/ToolForSpider简介/" class="article-date">
-      <time datetime="2016-01-21T01:25:37.000Z" itemprop="datePublished">2016-01-21</time>
+      <a href="/2016/02/25/sqlmaptips/" class="article-date">
+      <time datetime="2016-02-25T01:15:45.000Z" itemprop="datePublished">2016-02-25</time>
 </a>
     </div>
   
@@ -239,7 +217,7 @@ TODO: 进一步需要做的事情
         
   
     <h1 class="article-title" itemprop="name">
-      ToolForSpider简介
+      sqlmap常用技巧整理
     </h1>
   
 
@@ -254,7 +232,7 @@ TODO: 进一步需要做的事情
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nmap/">Nmap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Zmap/">Zmap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫/">爬虫</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sqlmap/">sqlmap</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -264,22 +242,25 @@ TODO: 进一步需要做的事情
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p></p><h2 id="intro">前言</h2>看着自己编写的代码没有说明的确不方便别人开发，便写了部分说明在这边。简单的记录该项目的相关说明。<p></p>
-<h3 id="u5173_u4E8Etoolforspider_u9879_u76EE_u7684_u8BF4_u660E"><a href="#u5173_u4E8Etoolforspider_u9879_u76EE_u7684_u8BF4_u660E" class="headerlink" title="关于toolforspider项目的说明"></a>关于toolforspider项目的说明</h3><ul>
-<li><strong>文件分布:</strong>详细文件分类</li>
-<li><strong>功能使用:</strong>大致的功能描述</li>
-<li><strong>效果展示:</strong> 初步的界面效果</li>
-<li><strong>TODO:</strong> 进一步需要做的事情</li>
-<li><strong>其他:</strong> 补充的地方<a id="more"></a>
-</li>
-</ul>
-<h2 id="u7B80_u4ECB"><a href="#u7B80_u4ECB" class="headerlink" title="简介"></a>简介</h2><p>　　ToolForSpider是一个网络空间指纹扫描工具，用于记录主机上的端口信息。以分布的方式，方便数据的抓取以及呈现，未来将会添加统计以及总结这些数据潜在的意义（暂时思路比较模糊）。有愿意指点我的，可以提供一点思路，谢谢。</p>
-<h3 id="u9879_u76EE_u5730_u5740"><a href="#u9879_u76EE_u5730_u5740" class="headerlink" title="项目地址"></a>项目地址</h3><p>　　<a href="https://github.com/nanshihui/toolforspider" target="_blank" rel="external">https://github.com/nanshihui/toolforspider</a></p>
-<h2 id="u6548_u679C_u5C55_u793A"><a href="#u6548_u679C_u5C55_u793A" class="headerlink" title="效果展示"></a>效果展示</h2><h3 id="u9996_u9875"><a href="#u9996_u9875" class="headerlink" title="首页"></a>首页</h3><p><img src="http://nanshihui.github.io/public/main.png" alt="PS-PNG-main"></p>
-<h3 id="u68C0_u7D22_u7ED3_u679C"><a href="#u68C0_u7D22_u7ED3_u679C" class="headerlink" title="检索结果"></a>检索结果</h3><p><img src="http://nanshihui.github.io/public/result.png" alt="PS-PNG-result"></p>
-<h3 id="u540E_u53F0"><a href="#u540E_u53F0" class="headerlink" title="后台"></a>后台</h3><p><img src="http://nanshihui.github.io/public/work.png" alt="PS-PNG-work"></p>
-<h3 id="u7EDF_u8BA1_u5206_u6790_u9875_u9762"><a href="#u7EDF_u8BA1_u5206_u6790_u9875_u9762" class="headerlink" title="统计分析页面"></a>统计分析页面</h3><p><img src="http://nanshihui.github.io/public/analyse.png" alt="PS-PNG-analyse"></p>
-<h2 id="u6574_u4F53_u601D_u8DEF"><a href="#u6574_u4F53_u601D_u8DEF" class="headerlink" title="整体思路"></a>整体思路</h2><p>　　整个项目是一个分布式的形式。如果在单台机子上，就是一个WEB项目，如果在多台机上面，就是一个主从的运行模式，由主机从用户的输入以及定时产生的任务产生数据，自己在处理数据的同时，如果从机有响应任务请求。主机会将一部分的任务发送给从机。待从机执行完任务后，将结果反馈给主机。主机再将结果返回给用户以及数据库里。由于所有的消息都是异步的，所以在实现的时候，大部分都是异步，以任务的形式分发，执行。<br>　　暂时先这样，未完待续。。。</p>
+        <p></p><h2 id="intro">前言</h2>通过在乌云网上出现的很多SQL注入漏洞，因此来总结一下，大致使用SQLMAP所遇到的参数。<br><a id="more"></a><p></p>
+<h2 id="u57FA_u672C_u7ED3_u6784"><a href="#u57FA_u672C_u7ED3_u6784" class="headerlink" title="基本结构"></a>基本结构</h2><p>　　基本SQLMAP的使用方式就如下所示，使用参数式的方式，按需求添加。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sqlmap.py -u <span class="string">"http:// *"</span>  --data=<span class="string">"a=b"</span> -p a   --level <span class="number">3</span> --random-agent --referer=<span class="string">"a"</span> </span><br><span class="line">--technique T --dbms=mysql --cookie=<span class="string">"cookie"</span> --tables</span><br></pre></td></tr></table></figure></p>
+<h2 id="u53C2_u6570_u89E3_u91CA"><a href="#u53C2_u6570_u89E3_u91CA" class="headerlink" title="参数解释"></a>参数解释</h2><h3 id="u661F_u53F7"><a href="#u661F_u53F7" class="headerlink" title="星号"></a>星号</h3><p>　　在注入的过程中，有时候是伪静态的页面，可以使用星号表示可能存在注入的部分</p>
+<h3 id="u2013data"><a href="#u2013data" class="headerlink" title="–data"></a>–data</h3><p>　　使用post方式提交的时候，就需要用到data参数了</p>
+<h3 id="p"><a href="#p" class="headerlink" title="-p"></a>-p</h3><p>　　当我们已经事先知道哪一个参数存在注入就可以直接使用-p来指定，从而减少运行时间</p>
+<h3 id="u2013level"><a href="#u2013level" class="headerlink" title="–level"></a>–level</h3><p>　　不同的level等级，SQLMAP所采用的策略也不近相同，当–level的参数设定为2或者2以上的时候，sqlmap会尝试注入Cookie参数；当–level参数设定为3或者3以上的时候，会尝试对User-Angent，referer进行注入。</p>
+<h3 id="u2013random-agent"><a href="#u2013random-agent" class="headerlink" title="–random-agent"></a>–random-agent</h3><p>　　使用该参数，SQLMAP会自动的添加useragent参数，如果你知道它要求你用某一种agent，你也应当用user-agent选项自己指定所需的agent</p>
+<h3 id="u2013technique"><a href="#u2013technique" class="headerlink" title="–technique"></a>–technique</h3><p>　　这个参数可以指定SQLMAP使用的探测技术，默认情况下会测试所有的方式。</p>
+<p>　　支持的探测方式如下：</p>
+<p>　　B: Boolean-based blind SQL injection（布尔型注入）<br>　　E: Error-based SQL injection（报错型注入）<br>　　U: UNION query SQL injection（可联合查询注入）<br>　　S: Stacked queries SQL injection（可多语句查询注入）<br>　　T: Time-based blind SQL injection（基于时间延迟注入）</p>
+<h3 id="u2013tamper"><a href="#u2013tamper" class="headerlink" title="–tamper"></a>–tamper</h3><p>　　有些时候网站会过滤掉各种字符，可以用tamper来解决（对付某些waf时也有成效）<br>　　–tamper=”space2comment.py”<br>　　理论是用/**/代替空格，当然temper的选项还有很多</p>
+<h3 id="u6709_u65F6_u53D1_u73B0_u8DD1_u51FA_u7684_u6570_u636E_u90FD_u662F_u6BEB_u65E0_u610F_u4E49_u7684_u5B57_u7B26"><a href="#u6709_u65F6_u53D1_u73B0_u8DD1_u51FA_u7684_u6570_u636E_u90FD_u662F_u6BEB_u65E0_u610F_u4E49_u7684_u5B57_u7B26" class="headerlink" title="有时发现跑出的数据都是毫无意义的字符"></a>有时发现跑出的数据都是毫无意义的字符</h3><p>解决方案：</p>
+<p>　　a）SQLMAP会提示你加–hex或者–no-cast，有时会有帮助<br>　　b）如果你用的是time-based注射，建议增加延时–time-sec等参数，即使你的网速比较好，但是服务器可能遇见各种奇怪环境<br>　　c）增加level的数值</p>
+<h3 id="u66B4_u529B_u731C_u8868"><a href="#u66B4_u529B_u731C_u8868" class="headerlink" title="暴力猜表"></a>暴力猜表</h3><p>　　针对access站可以构造common-tables.txt</p>
+<h3 id="u663E_u793Aunable_to_connect_to_the_target_url"><a href="#u663E_u793Aunable_to_connect_to_the_target_url" class="headerlink" title="显示unable to connect to the target url"></a>显示unable to connect to the target url</h3><p>　　第一个可能是time-out设置的太小，出现问题，再有可能就是WAF直接把请求拦截掉了，因此得不到响应。</p>
+<p>有些waf比较友善，过滤后会提示“参数不合法”，但是也有些waf则直接把请求拦下来无提示导致应答超时，这样在测试时会消耗大量的时间等待响应</p>
+<p>　　解决方案：减少time-out进行检测，在跑数据时改回time-out</p>
+<h3 id="u63D0_u793Apossible_integer_casting_detected"><a href="#u63D0_u793Apossible_integer_casting_detected" class="headerlink" title="提示possible integer casting detected"></a>提示possible integer casting detected</h3><p>　　如果是在手工测试，建议到这里可以停止了，节省时间。</p>
+<p>　　如果是在扫描器扫描的盲注，那么到这里坚决无视警告继续下去。</p>
 
       
     </div>
@@ -288,13 +269,13 @@ TODO: 进一步需要做的事情
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/01/21/ToolForSpider简介/">ToolForSpider简介</a></p>
+        <p><span>本文标题:</span><a href="/2016/02/25/sqlmaptips/">sqlmap常用技巧整理</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Sherwel 的个人博客">Sherwel</a></p>
-        <p><span>发布时间:</span>2016年01月21日 - 09时25分</p>
-        <p><span>最后更新:</span>2016年02月20日 - 19时56分</p>
+        <p><span>发布时间:</span>2016年02月25日 - 09时15分</p>
+        <p><span>最后更新:</span>2016年02月25日 - 10时11分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/01/21/ToolForSpider简介/" title="ToolForSpider简介">http://nanshihui.github.io/2016/01/21/ToolForSpider简介/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://nanshihui.github.io/2016/01/21/ToolForSpider简介/　　作者: Sherwel" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/02/25/sqlmaptips/" title="sqlmap常用技巧整理">http://nanshihui.github.io/2016/02/25/sqlmaptips/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://nanshihui.github.io/2016/02/25/sqlmaptips/　　作者: Sherwel" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -307,16 +288,10 @@ TODO: 进一步需要做的事情
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/02/25/sqlmaptips/">
-                    sqlmap常用技巧整理
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/01/19/SQL注入总结/">
-                    SQL注入总结（一）
+                <a href="/2016/01/21/ToolForSpider简介/">
+                    ToolForSpider简介
                 </a>
             </div>
         
@@ -327,7 +302,7 @@ TODO: 进一步需要做的事情
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u5173_u4E8Etoolforspider_u9879_u76EE_u7684_u8BF4_u660E"><span class="toc-number">1.1.</span> <span class="toc-text">关于toolforspider项目的说明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u7B80_u4ECB"><span class="toc-number">2.</span> <span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u9879_u76EE_u5730_u5740"><span class="toc-number">2.1.</span> <span class="toc-text">项目地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u6548_u679C_u5C55_u793A"><span class="toc-number">3.</span> <span class="toc-text">效果展示</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u9996_u9875"><span class="toc-number">3.1.</span> <span class="toc-text">首页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u68C0_u7D22_u7ED3_u679C"><span class="toc-number">3.2.</span> <span class="toc-text">检索结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u540E_u53F0"><span class="toc-number">3.3.</span> <span class="toc-text">后台</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u7EDF_u8BA1_u5206_u6790_u9875_u9762"><span class="toc-number">3.4.</span> <span class="toc-text">统计分析页面</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u6574_u4F53_u601D_u8DEF"><span class="toc-number">4.</span> <span class="toc-text">整体思路</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u57FA_u672C_u7ED3_u6784"><span class="toc-number">2.</span> <span class="toc-text">基本结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u53C2_u6570_u89E3_u91CA"><span class="toc-number">3.</span> <span class="toc-text">参数解释</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u661F_u53F7"><span class="toc-number">3.1.</span> <span class="toc-text">星号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u2013data"><span class="toc-number">3.2.</span> <span class="toc-text">–data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#p"><span class="toc-number">3.3.</span> <span class="toc-text">-p</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u2013level"><span class="toc-number">3.4.</span> <span class="toc-text">–level</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u2013random-agent"><span class="toc-number">3.5.</span> <span class="toc-text">–random-agent</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u2013technique"><span class="toc-number">3.6.</span> <span class="toc-text">–technique</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u2013tamper"><span class="toc-number">3.7.</span> <span class="toc-text">–tamper</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u6709_u65F6_u53D1_u73B0_u8DD1_u51FA_u7684_u6570_u636E_u90FD_u662F_u6BEB_u65E0_u610F_u4E49_u7684_u5B57_u7B26"><span class="toc-number">3.8.</span> <span class="toc-text">有时发现跑出的数据都是毫无意义的字符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u66B4_u529B_u731C_u8868"><span class="toc-number">3.9.</span> <span class="toc-text">暴力猜表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u663E_u793Aunable_to_connect_to_the_target_url"><span class="toc-number">3.10.</span> <span class="toc-text">显示unable to connect to the target url</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u63D0_u793Apossible_integer_casting_detected"><span class="toc-number">3.11.</span> <span class="toc-text">提示possible integer casting detected</span></a></li></ol></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
@@ -391,7 +366,7 @@ TODO: 进一步需要做的事情
     
       <div class="duoshuo" id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="2016/01/21/ToolForSpider简介/" data-title="ToolForSpider简介" data-url="http://nanshihui.github.io/2016/01/21/ToolForSpider简介/"></div>
+    <div class="ds-thread" data-thread-key="2016/02/25/sqlmaptips/" data-title="sqlmap常用技巧整理" data-url="http://nanshihui.github.io/2016/02/25/sqlmaptips/"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
@@ -446,15 +421,13 @@ var duoshuoQuery = {short_name:"[object Object]"};
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/02/25/sqlmaptips/" title="上一篇: sqlmap常用技巧整理">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/01/19/SQL注入总结/" title="下一篇: SQL注入总结（一）">
+            <a href="/2016/01/21/ToolForSpider简介/" title="下一篇: ToolForSpider简介">
                 <i class="fa fa-angle-right"></i>
             </a>
         
