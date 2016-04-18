@@ -19,7 +19,7 @@
 服务创建: 基本配置；
 注意事项: 一些细节注意的地方；
 主从原理: 基本的原理解析；">
-<meta property="og:updated_time" content="2016-04-18T13:55:53.735Z">
+<meta property="og:updated_time" content="2016-04-18T13:57:45.947Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL主从库相关信息整理">
 <meta name="twitter:description" content="前言仅记录在主从库遇到的坑
@@ -263,7 +263,7 @@
 <a id="more"></a>
 <h2 id="u670D_u52A1_u521B_u5EFA"><a href="#u670D_u52A1_u521B_u5EFA" class="headerlink" title="服务创建"></a>服务创建</h2><p>  需要主库以及从库<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
 <h2 id="u4E3B_u4ECE_u539F_u7406"><a href="#u4E3B_u4ECE_u539F_u7406" class="headerlink" title="主从原理"></a>主从原理</h2><h3 id="Replication__u7EBF_u7A0B"><a href="#Replication__u7EBF_u7A0B" class="headerlink" title="Replication 线程"></a>Replication 线程</h3><p>　　Mysql的 Replication 是一个异步的复制过程（mysql5.1.7以上版本分为异步复制和半同步两种模式），从一个 Mysql instace(我们称之为 Master)复制到另一个Mysql instance(我们称之 Slave)。在 Master 与 Slave 之间的实现整个复制过程主要由三个线程来完成，其中两个线程(Sql线程和IO线程)在 Slave端，另外一个线程(IO线程)在 Master 端。要实现 MySQL 的 Replication ，首先必须打开 Master 端的Binary Log(mysql-bin.xxxxxx功能，否则无法实现。因为整个复制过程实际上就是Slave从Master端获取该日志然后再在自己身上完全 顺序的执行日志中所记录的各种操作。打开 MySQL 的 Binary Log 可以通过在启动 MySQL Server 的过程中使用 “—log-bin” 参数选项，或者在 my.cnf 配置文件中的 mysqld 参数组([mysqld]标识后的参数部分)增加 “log-bin” 参数项。</p>
-<h3 id="MySQL__u590D_u5236_u7684_u57FA_u672C_u8FC7_u7A0B_u5982_u4E0B"><a href="#MySQL__u590D_u5236_u7684_u57FA_u672C_u8FC7_u7A0B_u5982_u4E0B" class="headerlink" title="MySQL 复制的基本过程如下"></a>MySQL 复制的基本过程如下</h3><p>　　1．Slave 上面的IO线程连接上 Master，并请求从指定日志文件的指定位置(或者从最开始的日志)之后的日志内容；<br>　　2. Master 接收到来自 Slave 的 IO 线程的请求后，通过负责复制的 IO 线程根据请求信息读取指定日志指定位置之后的日志信息，返回给 Slave 端的 IO 线程。返回信息中除了日志所包含的信息之外，还包括本次返回的信息在 Master 端的 Binary Log 文件的名称以及在 Binary Log 中的位置；<br>　　3. Slave 的 IO 线程接收到信息后，将接收到的日志内容依次写入到 Slave 端的Relay Log文件(mysql-relay-bin.xxxxxx)的最末端，并将读取到的Master端的bin-log的文件名和位置记录到master- info文件中，以便在下一次读取的时候能够清楚的高速Master“我需要从某个bin-log的哪个位置开始往后的日志内容，请发给我”<br>　　4. Slave 的 SQL 线程检测到 Relay Log 中新增加了内容后，会马上解析该 Log 文件中的内容成为在 Master 端真实执行时候的那些可执行的 Query 语句，并在自身执行这些 Query。这样，实际上就是在 Master 端和 Slave 端执行了同样的 Query，所以两端的数据是完全一样的</p>
+<h3 id="MySQL__u590D_u5236_u7684_u57FA_u672C_u8FC7_u7A0B_u5982_u4E0B"><a href="#MySQL__u590D_u5236_u7684_u57FA_u672C_u8FC7_u7A0B_u5982_u4E0B" class="headerlink" title="MySQL 复制的基本过程如下"></a>MySQL 复制的基本过程如下</h3><p>　　1. Slave 上面的IO线程连接上 Master，并请求从指定日志文件的指定位置(或者从最开始的日志)之后的日志内容；<br>　　2. Master 接收到来自 Slave 的 IO 线程的请求后，通过负责复制的 IO 线程根据请求信息读取指定日志指定位置之后的日志信息，返回给 Slave 端的 IO 线程。返回信息中除了日志所包含的信息之外，还包括本次返回的信息在 Master 端的 Binary Log 文件的名称以及在 Binary Log 中的位置；<br>　　3. Slave 的 IO 线程接收到信息后，将接收到的日志内容依次写入到 Slave 端的Relay Log文件(mysql-relay-bin.xxxxxx)的最末端，并将读取到的Master端的bin-log的文件名和位置记录到master- info文件中，以便在下一次读取的时候能够清楚的高速Master“我需要从某个bin-log的哪个位置开始往后的日志内容，请发给我”<br>　　4. Slave 的 SQL 线程检测到 Relay Log 中新增加了内容后，会马上解析该 Log 文件中的内容成为在 Master 端真实执行时候的那些可执行的 Query 语句，并在自身执行这些 Query。这样，实际上就是在 Master 端和 Slave 端执行了同样的 Query，所以两端的数据是完全一样的</p>
 
       
     </div>
@@ -275,7 +275,7 @@
         <p><span>本文标题:</span><a href="/2016/04/18/MySQL主从库相关信息整理/">MySQL主从库相关信息整理</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Sherwel 的个人博客">Sherwel</a></p>
         <p><span>发布时间:</span>2016年04月18日 - 21时41分</p>
-        <p><span>最后更新:</span>2016年04月18日 - 21时55分</p>
+        <p><span>最后更新:</span>2016年04月18日 - 21时57分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/04/18/MySQL主从库相关信息整理/" title="MySQL主从库相关信息整理">http://nanshihui.github.io/2016/04/18/MySQL主从库相关信息整理/</a>
             <span class="copy-path" data-clipboard-text="原文: http://nanshihui.github.io/2016/04/18/MySQL主从库相关信息整理/　　作者: Sherwel" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
