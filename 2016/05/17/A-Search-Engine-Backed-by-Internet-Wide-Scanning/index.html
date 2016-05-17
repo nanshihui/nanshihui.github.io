@@ -3,39 +3,30 @@
 <head>
   <meta charset="utf-8">
   
-  <title>如何构建一个网络空间指纹识别系统（一） | Sherwel-Blog</title>
+  <title>A Search Engine Backed by Internet-Wide Scanning | Sherwel-Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言仅记录在开发过程中的思考和理解
-如何构建一个网络空间指纹系统
-整体架构: 整体搭建的结构；
-任务调度: 怎样让多个扫描合理的去扫描而不错乱；
-扫描器构造: 使用哪些指纹库，如何写出适合自己的扫描器；
-存储归类: 怎么处理获得的凌乱的数据；
-攻击框架: 如何发现网站的表示，以及快速发现网络的漏洞；
-其他: 想改进的地方；">
+  <meta name="description" content="前言仅记录A Search Engine Backed by Internet-Wide Scanning读后短评
+结构
+概要 论文概要；
+介绍: 论文主要内容；
+结论: 论文结论；">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何构建一个网络空间指纹识别系统（一）">
-<meta property="og:url" content="http://nanshihui.github.io/2016/01/15/网络空间指纹识别/index.html">
+<meta property="og:title" content="A Search Engine Backed by Internet-Wide Scanning">
+<meta property="og:url" content="http://nanshihui.github.io/2016/05/17/A-Search-Engine-Backed-by-Internet-Wide-Scanning/index.html">
 <meta property="og:site_name" content="Sherwel-Blog">
-<meta property="og:description" content="前言仅记录在开发过程中的思考和理解
-如何构建一个网络空间指纹系统
-整体架构: 整体搭建的结构；
-任务调度: 怎样让多个扫描合理的去扫描而不错乱；
-扫描器构造: 使用哪些指纹库，如何写出适合自己的扫描器；
-存储归类: 怎么处理获得的凌乱的数据；
-攻击框架: 如何发现网站的表示，以及快速发现网络的漏洞；
-其他: 想改进的地方；">
-<meta property="og:updated_time" content="2016-01-21T04:23:07.317Z">
+<meta property="og:description" content="前言仅记录A Search Engine Backed by Internet-Wide Scanning读后短评
+结构
+概要 论文概要；
+介绍: 论文主要内容；
+结论: 论文结论；">
+<meta property="og:updated_time" content="2016-05-17T11:49:28.446Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="如何构建一个网络空间指纹识别系统（一）">
-<meta name="twitter:description" content="前言仅记录在开发过程中的思考和理解
-如何构建一个网络空间指纹系统
-整体架构: 整体搭建的结构；
-任务调度: 怎样让多个扫描合理的去扫描而不错乱；
-扫描器构造: 使用哪些指纹库，如何写出适合自己的扫描器；
-存储归类: 怎么处理获得的凌乱的数据；
-攻击框架: 如何发现网站的表示，以及快速发现网络的漏洞；
-其他: 想改进的地方；">
+<meta name="twitter:title" content="A Search Engine Backed by Internet-Wide Scanning">
+<meta name="twitter:description" content="前言仅记录A Search Engine Backed by Internet-Wide Scanning读后短评
+结构
+概要 论文概要；
+介绍: 论文主要内容；
+结论: 论文结论；">
   
     <link rel="alternative" href="/atom.xml" title="Sherwel-Blog" type="application/atom+xml">
   
@@ -221,11 +212,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-网络空间指纹识别" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-A-Search-Engine-Backed-by-Internet-Wide-Scanning" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/01/15/网络空间指纹识别/" class="article-date">
-      <time datetime="2016-01-15T10:28:36.000Z" itemprop="datePublished">2016-01-15</time>
+      <a href="/2016/05/17/A-Search-Engine-Backed-by-Internet-Wide-Scanning/" class="article-date">
+      <time datetime="2016-05-17T11:44:29.000Z" itemprop="datePublished">2016-05-17</time>
 </a>
     </div>
   
@@ -238,7 +229,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      如何构建一个网络空间指纹识别系统（一）
+      A Search Engine Backed by Internet-Wide Scanning
     </h1>
   
 
@@ -247,13 +238,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Web安全/">Web安全</a>
+    <a class="article-category-link" href="/categories/论文阅读/">论文阅读</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nmap/">Nmap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Zmap/">Zmap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫/">爬虫</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CCS/">CCS</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -263,20 +254,23 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p></p><h2 id="intro">前言</h2>仅记录在开发过程中的思考和理解<p></p>
-<h3 id="u5982_u4F55_u6784_u5EFA_u4E00_u4E2A_u7F51_u7EDC_u7A7A_u95F4_u6307_u7EB9_u7CFB_u7EDF"><a href="#u5982_u4F55_u6784_u5EFA_u4E00_u4E2A_u7F51_u7EDC_u7A7A_u95F4_u6307_u7EB9_u7CFB_u7EDF" class="headerlink" title="如何构建一个网络空间指纹系统"></a>如何构建一个网络空间指纹系统</h3><ul>
-<li><strong>整体架构:</strong> 整体搭建的结构；</li>
-<li><strong>任务调度:</strong> 怎样让多个扫描合理的去扫描而不错乱；</li>
-<li><strong>扫描器构造:</strong> 使用哪些指纹库，如何写出适合自己的扫描器；</li>
-<li><strong>存储归类:</strong> 怎么处理获得的凌乱的数据；</li>
-<li><strong>攻击框架:</strong> 如何发现网站的表示，以及快速发现网络的漏洞；</li>
-<li><strong>其他:</strong> 想改进的地方；</li>
+        <p></p><h2 id="intro">前言</h2>仅记录A Search Engine Backed by Internet-Wide Scanning读后短评<p></p>
+<h3 id="u7ED3_u6784"><a href="#u7ED3_u6784" class="headerlink" title="结构"></a>结构</h3><ul>
+<li><strong>概要</strong> 论文概要；</li>
+<li><strong>介绍:</strong> 论文主要内容；</li>
+<li><strong>结论:</strong> 论文结论；</li>
 </ul>
 <a id="more"></a>
-<h2 id="u5F15_u8A00"><a href="#u5F15_u8A00" class="headerlink" title="引言"></a>引言</h2><p>　　有不少人都看过网络空间指纹扫描的系统，用户只要轻轻的一点，就能检索出，自己要求组件的主机信息。有不少人也很好奇这是怎么实现的，同样我也是，于是自己就开始动手，因此也就有了下文。当然水平有限，有些地方表述不一定正确，如果有什么地方存在不足，欢迎指正。</p>
-<h2 id="u6574_u4F53_u67B6_u6784"><a href="#u6574_u4F53_u67B6_u6784" class="headerlink" title="整体架构"></a>整体架构</h2><p>　　整体的架构主要分为调度框架、ES存储、UI呈现等模块。<br>　　然而最核心的部分（调度框架）可以简化为两个工人集群。一个是抓取信息部分，另一个是处理信息。其中一批量爬虫工负责从任务池中接收任务，并抓取信息。另一批专门负责处理。有点类似于生产者与消费者。要构建这么一个系统，我们只要多个线程就能解决。但是如果我们想要变成一个集群的话，那思路略有不同。<br>　　我们在服务器中，首先要提供一个接口，负责当前访问的工人分配任务。当工人接收到任务的时候，接着就去完成任务，等到任务做好后，将得到的数据，重新提交给服务器。由服务器负责，将数据存储起来。同样的思维，处理信息的工作群也是这样的思路。这样整个雏形就出来了。<br>　　为了提高访问的速度以及使得信息能快速得到反馈，我们可以把工人反馈的任务在存储到数据库的同时，也把用户频繁检索所对应的数据，存入redis。这样，用户在检索的时候，首先去redis里面查找，如果找不到的话，就会去数据库里面找，如果还是找不到的话，才创建一个任务，并让工人类去执行任务。<br>　　如果不熟悉这样的操作方式的话，类似的思路可以去参考一下scapy，他的整体框架也是两批爬虫，一批负责爬取，一批负责存储，或者处理。
-　　</p>
-<p>　　未完待续。。。</p>
+<h2 id="u80CC_u666F_u8D44_u6599"><a href="#u80CC_u666F_u8D44_u6599" class="headerlink" title="背景资料"></a>背景资料</h2><ul>
+<li>单位及作者 ：Zakir Durumeric、 David Adrian† Ariana Mirian、 Michael Bailey、 J. Alex Halderman，University of Michigan ,University of Illinois, Urbana Champaign</li>
+<li>年份 ：2015</li>
+<li>类型：CCS</li>
+</ul>
+<h2 id="u6982_u8981"><a href="#u6982_u8981" class="headerlink" title="概要"></a>概要</h2><p>　　快速的网络扫描给安全研究创建了一个新的途径，从揭露随机数发生器的脆弱性到心脏出血的影响。然而，这种技术仍然需要很大的改进：比如，“哪款嵌入式设备更倾向于CBC加密？”，即使是简单的问题，需要开发一个应用扫描器，手动识别和标记设备，与网络管理员协商，并需要应对一些投诉。在本文中，我们将介绍Censys，他是公共搜索引擎和数据处理设备，其数据来源于持续的Internet范围扫描。旨在帮助研究人员回答与安全有关的问题，Censys在协议banner上支持全文搜索和查询范围很广的字段（例如443.https.cipher）。它可以识别特定的易受攻击的设备和网络，并对广泛的使用模式和趋势生成统计报告。 Censys能在毫秒级的时间返回这些结果，大幅降低了解互联网主机所付出的代价。我们提出了一个搜索引擎的架构并实验对其性能进行评估。我们还探索Censys，如何简单回答最近的研究中提出的问题。</p>
+<h2 id="u539F_u6587_u6458_u8981"><a href="#u539F_u6587_u6458_u8981" class="headerlink" title="原文摘要"></a>原文摘要</h2><p>　　Fast Internet-wide scanning has opened new avenues for security research, ranging from uncovering widespread vulnerabilities in random number generators to tracking the evolving impact of Heartbleed. However, this technique still requires significant effort: even simple questions, such as, “What models of embedded devices prefer CBC ciphers?”, require developing an application scanner, manually identifying and tagging devices, negotiating with network administrators, and responding to abuse complaints. In this paper, we introduce Censys, a public search engine and data processing facility backed by data collected from ongoing Internet-wide scans. Designed to help researchers answer security-related questions, Censys supports full-text searches on protocol banners and querying a wide range of derived fields (e.g., 443.https.cipher). It can identify specific vulnerable devices and networks and generate statistical reports on broad usage patterns and trends. Censys returns these results in sub-second time, dramatically reducing the effort of understanding the hosts that comprise the Internet. We present the search engine architecture and experimentally evaluate its performance. We also explore Censys’s applications and show how questions asked in recent studies become simple to answer.</p>
+<h2 id="u4ECB_u7ECD"><a href="#u4ECB_u7ECD" class="headerlink" title="介绍"></a>介绍</h2><p>　　使用ZMAP可以快速的扫描网络，但是在Internet范围收集有意义的数据仍然是一个专业化和劳动密集的过程。比如回答“哪一部分的https服务器更倾向于forward secret key exchange methods”这样的问题，这可能要花费一周的时间。在这种情况下专业人员需要开发高性能的应用扫描器对其他主机的443端口建立https连接并进行监听，测试并修复那些不完全遵循TLS规范的主机，然后又要扫描处理大量的返回数据。在开始此过程之前，安全研究人员必须与他们的权限机构和网络团队谈判进行扫描，还要和他们的上游网络供应商进行协调，以及后来滥用的回应。许多机构（和独立的研究人员）缺乏网络设施或行政支持，执行扫描。由于这些原因，Internet范围扫描仍然是一个小数目的研究群体，这严重地限制了应用这个方法的应用程序。Internet范围的扫描已经在发现安全问题和理解复杂的分布式系统的安全性表现出了极大的潜力。通过移动扫描到云，Censys显着减少调查这些问题所需的工作量，使研究人员能够专注于问更重要的问题，而不是回答他们的机制。此外，Censys允许安全社区增加全球协议的覆盖度，并为理解互联网增加的越来越多的嵌入式设备提供了易于处理的解决方案。同时，它最大限度地减少研究小组多余的扫描以及网络运营商监控所传入的网络流量。<br>　　作者的工作：（1）提出了一个数据收集架构（2）针对近期的安全研究，给出了POODLE以及追踪工业控<br>制系统漏洞的影响。（3）实现这个架构。</p>
+<h2 id="u7ED3_u8BBA"><a href="#u7ED3_u8BBA" class="headerlink" title="结论"></a>结论</h2><p>　　在回答有意义的安全研究问题上，对IPv4地址空间，进行主机发现扫描的技术能力仍有差距。在本文中，我们介绍了Censys，通过持续的Internet范围扫描收集数据来支撑的公共查询引擎和数据处理设备。旨在帮助研究人员回答安全有关的问题，Censys收集IPv4地址空间的数据，支持从扫描结果导出的字段进行查询并生成统计报表。探讨Censys的几个安全应用，展现Censys如何能用来方便地回答最近研究的问题。希望Censys使研究人员能够轻松地回答关于以前需要大量精力在网络上的问题，同时减少了重复劳动和总流量扫描。</p>
+<h2 id="u6CE8_u89E3"><a href="#u6CE8_u89E3" class="headerlink" title="注解"></a>注解</h2><p>　　该文侧重于从工程的角度描述了如何搭建一个全局的扫描框架体系，并以其中一个漏洞，针对该漏洞的影响力，生成一个可视化的报告。国内的ZOOMEYE以及俄罗斯的sodan都有些相似。</p>
 
       
     </div>
@@ -285,13 +279,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/01/15/网络空间指纹识别/">如何构建一个网络空间指纹识别系统（一）</a></p>
+        <p><span>本文标题:</span><a href="/2016/05/17/A-Search-Engine-Backed-by-Internet-Wide-Scanning/">A Search Engine Backed by Internet-Wide Scanning</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Sherwel 的个人博客">Sherwel</a></p>
-        <p><span>发布时间:</span>2016年01月15日 - 18时28分</p>
-        <p><span>最后更新:</span>2016年01月21日 - 12时23分</p>
+        <p><span>发布时间:</span>2016年05月17日 - 19时44分</p>
+        <p><span>最后更新:</span>2016年05月17日 - 19时49分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/01/15/网络空间指纹识别/" title="如何构建一个网络空间指纹识别系统（一）">http://nanshihui.github.io/2016/01/15/网络空间指纹识别/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://nanshihui.github.io/2016/01/15/网络空间指纹识别/　　作者: Sherwel" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/05/17/A-Search-Engine-Backed-by-Internet-Wide-Scanning/" title="A Search Engine Backed by Internet-Wide Scanning">http://nanshihui.github.io/2016/05/17/A-Search-Engine-Backed-by-Internet-Wide-Scanning/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://nanshihui.github.io/2016/05/17/A-Search-Engine-Backed-by-Internet-Wide-Scanning/　　作者: Sherwel" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -304,16 +298,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/01/18/python 中常见的 import 模块的方法(总结)/">
-                    python 中常见的 import 模块的方法(总结)
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/01/08/windows-mac-software/">
-                    自用 Windows 和 Mac 软件推荐
+                <a href="/2016/05/10/Program-Adaptive-Mutational-Fuzzing/">
+                    Program-Adaptive Mutational Fuzzing
                 </a>
             </div>
         
@@ -324,7 +312,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u5982_u4F55_u6784_u5EFA_u4E00_u4E2A_u7F51_u7EDC_u7A7A_u95F4_u6307_u7EB9_u7CFB_u7EDF"><span class="toc-number">1.1.</span> <span class="toc-text">如何构建一个网络空间指纹系统</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5F15_u8A00"><span class="toc-number">2.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u6574_u4F53_u67B6_u6784"><span class="toc-number">3.</span> <span class="toc-text">整体架构</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u7ED3_u6784"><span class="toc-number">1.1.</span> <span class="toc-text">结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u80CC_u666F_u8D44_u6599"><span class="toc-number">2.</span> <span class="toc-text">背景资料</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u6982_u8981"><span class="toc-number">3.</span> <span class="toc-text">概要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u539F_u6587_u6458_u8981"><span class="toc-number">4.</span> <span class="toc-text">原文摘要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u4ECB_u7ECD"><span class="toc-number">5.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u7ED3_u8BBA"><span class="toc-number">6.</span> <span class="toc-text">结论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u6CE8_u89E3"><span class="toc-number">7.</span> <span class="toc-text">注解</span></a></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
@@ -388,7 +376,7 @@
     
       <div class="duoshuo" id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="2016/01/15/网络空间指纹识别/" data-title="如何构建一个网络空间指纹识别系统（一）" data-url="http://nanshihui.github.io/2016/01/15/网络空间指纹识别/"></div>
+    <div class="ds-thread" data-thread-key="2016/05/17/A-Search-Engine-Backed-by-Internet-Wide-Scanning/" data-title="A Search Engine Backed by Internet-Wide Scanning" data-url="http://nanshihui.github.io/2016/05/17/A-Search-Engine-Backed-by-Internet-Wide-Scanning/"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
@@ -443,15 +431,13 @@ var duoshuoQuery = {short_name:"[object Object]"};
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/01/18/python 中常见的 import 模块的方法(总结)/" title="上一篇: python 中常见的 import 模块的方法(总结)">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/01/08/windows-mac-software/" title="下一篇: 自用 Windows 和 Mac 软件推荐">
+            <a href="/2016/05/10/Program-Adaptive-Mutational-Fuzzing/" title="下一篇: Program-Adaptive Mutational Fuzzing">
                 <i class="fa fa-angle-right"></i>
             </a>
         
