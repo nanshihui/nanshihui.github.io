@@ -27,7 +27,7 @@ TODO: 进一步需要做的事情
 <meta property="og:image" content="http://nanshihui.github.io/public/result.png">
 <meta property="og:image" content="http://nanshihui.github.io/public/work.png">
 <meta property="og:image" content="http://nanshihui.github.io/public/analyse.png">
-<meta property="og:updated_time" content="2016-06-16T01:29:25.692Z">
+<meta property="og:updated_time" content="2016-06-18T05:37:13.533Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Scan-T简介">
 <meta name="twitter:description" content="前言看着自己编写的代码没有说明的确不方便别人开发，便写了部分说明在这边。简单的记录该项目的相关说明。
@@ -273,13 +273,89 @@ TODO: 进一步需要做的事情
 <li><strong>其他:</strong> 补充的地方<a id="more"></a>
 </li>
 </ul>
-<h2 id="u7B80_u4ECB"><a href="#u7B80_u4ECB" class="headerlink" title="简介"></a>简介</h2><p>　　ToolForSpider是一个网络空间指纹扫描工具，用于记录主机上的端口信息。以分布的方式，方便数据的抓取以及呈现，未来将会添加统计以及总结这些数据潜在的意义（暂时思路比较模糊）。有愿意指点我的，可以提供一点思路，谢谢。</p>
-<h3 id="u9879_u76EE_u5730_u5740"><a href="#u9879_u76EE_u5730_u5740" class="headerlink" title="项目地址"></a>项目地址</h3><p>　　<a href="https://github.com/nanshihui/toolforspider" target="_blank" rel="external">https://github.com/nanshihui/toolforspider</a></p>
+<h2 id="u7B80_u4ECB"><a href="#u7B80_u4ECB" class="headerlink" title="简介"></a>简介</h2><p>　　Scan-T是一个网络空间指纹扫描工具，用于记录主机上的端口信息。以分布的方式，方便数据的抓取以及呈现，未来将会添加统计以及总结这些数据潜在的意义（暂时思路比较模糊）。有愿意指点我的，可以提供一点思路，谢谢。</p>
+<h3 id="u9879_u76EE_u5730_u5740"><a href="#u9879_u76EE_u5730_u5740" class="headerlink" title="项目地址"></a>项目地址</h3><p>　　<a href="https://github.com/nanshihui/Scan-T" target="_blank" rel="external">https://github.com/nanshihui/Scan-T</a></p>
 <h2 id="u6548_u679C_u5C55_u793A"><a href="#u6548_u679C_u5C55_u793A" class="headerlink" title="效果展示"></a>效果展示</h2><h3 id="u9996_u9875"><a href="#u9996_u9875" class="headerlink" title="首页"></a>首页</h3><p><img src="http://nanshihui.github.io/public/main.png" alt="PS-PNG-main"></p>
 <h3 id="u68C0_u7D22_u7ED3_u679C"><a href="#u68C0_u7D22_u7ED3_u679C" class="headerlink" title="检索结果"></a>检索结果</h3><p><img src="http://nanshihui.github.io/public/result.png" alt="PS-PNG-result"></p>
 <h3 id="u540E_u53F0"><a href="#u540E_u53F0" class="headerlink" title="后台"></a>后台</h3><p><img src="http://nanshihui.github.io/public/work.png" alt="PS-PNG-work"></p>
 <h3 id="u7EDF_u8BA1_u5206_u6790_u9875_u9762"><a href="#u7EDF_u8BA1_u5206_u6790_u9875_u9762" class="headerlink" title="统计分析页面"></a>统计分析页面</h3><p><img src="http://nanshihui.github.io/public/analyse.png" alt="PS-PNG-analyse"></p>
-<h2 id="u6574_u4F53_u601D_u8DEF"><a href="#u6574_u4F53_u601D_u8DEF" class="headerlink" title="整体思路"></a>整体思路</h2><p>　　整个项目是一个分布式的形式。如果在单台机子上，就是一个WEB项目，如果在多台机上面，就是一个主从的运行模式，由主机从用户的输入以及定时产生的任务产生数据，自己在处理数据的同时，如果从机有响应任务请求。主机会将一部分的任务发送给从机。待从机执行完任务后，将结果反馈给主机。主机再将结果返回给用户以及数据库里。由于所有的消息都是异步的，所以在实现的时候，大部分都是异步，以任务的形式分发，执行。<br>　　暂时先这样，未完待续。。。</p>
+<h2 id="u6574_u4F53_u601D_u8DEF"><a href="#u6574_u4F53_u601D_u8DEF" class="headerlink" title="整体思路"></a>整体思路</h2><p>　　整个项目是一个分布式的形式。如果在单台机子上，就是一个WEB项目，如果在多台机上面，就是一个主从的运行模式，由主机从用户的输入以及定时产生的任务产生数据，自己在处理数据的同时，如果从机有响应任务请求。主机会将一部分的任务发送给从机。待从机执行完任务后，将结果反馈给主机。主机再将结果返回给用户以及数据库里。由于所有的消息都是异步的，所以在实现的时候，大部分都是异步，以任务的形式分发，执行。</p>
+<h2 id="u5B89_u88C5_u65B9_u6CD5"><a href="#u5B89_u88C5_u65B9_u6CD5" class="headerlink" title="安装方法"></a>安装方法</h2><h3 id="Prepare_the_environment"><a href="#Prepare_the_environment" class="headerlink" title="Prepare the environment"></a>Prepare the environment</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">apt-get update </span><br><span class="line">apt-get install -y nmap</span><br><span class="line">apt-get install -y libjson-c-dev libjson-c2  libjson0 libjson0-dev</span><br><span class="line">apt-get install -y redis-server zmap libffi-dev libssl-dev python-pip libmysqlclient-dev</span><br><span class="line">apt-get install -y wget unzip</span><br><span class="line">apt-get install mysql-server</span><br></pre></td></tr></table></figure>
+<h3 id="Get_the_code"><a href="#Get_the_code" class="headerlink" title="Get the code"></a>Get the code</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/nanshihui/Scan-T/archive/master.zip</span><br><span class="line">unzip master.zip </span><br><span class="line"><span class="built_in">cd</span> toolforspider-master/</span><br></pre></td></tr></table></figure>
+<h3 id="Install_package"><a href="#Install_package" class="headerlink" title="Install package"></a>Install package</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">pip install MySQL-python</span><br><span class="line">pip install BeautifulSoup==<span class="number">3.2</span>.<span class="number">1</span></span><br><span class="line">pip install beautifulsoup4==<span class="number">4.4</span>.<span class="number">1</span></span><br><span class="line">pip install Django==<span class="number">1.9</span></span><br><span class="line">pip install python-nmap==<span class="number">0.5</span>.<span class="number">0</span>.post1</span><br><span class="line">pip install DBUtils==<span class="number">1.1</span></span><br><span class="line">pip install paramiko==<span class="number">1.16</span>.<span class="number">0</span></span><br><span class="line">pip install ruamel.ordereddict==<span class="number">0.4</span>.<span class="number">9</span></span><br><span class="line">pip install scapy==<span class="number">2.3</span>.<span class="number">2</span></span><br><span class="line">pip install scapy-http==<span class="number">1.7</span></span><br><span class="line">pip install objgraph==<span class="number">2.0</span>.<span class="number">1</span></span><br><span class="line">pip install pycrypto==<span class="number">2.6</span>.<span class="number">1</span></span><br><span class="line">pip install dozer</span><br><span class="line">pip install faulthandler</span><br><span class="line">pip install apscheduler</span><br></pre></td></tr></table></figure>
+<h3 id="Set_the_mysql_config"><a href="#Set_the_mysql_config" class="headerlink" title="Set the mysql config"></a>Set the mysql config</h3><ul>
+<li>create table</li>
+</ul>
+<pre><code class="bash">mysql -uroot -p <span class="_">-e</span> <span class="string">'create database datap'</span>
+</code></pre>
+<ul>
+<li>change password</li>
+</ul>
+<p>change you sql password both in spidermanage/spidertool/config.py<br>toolforspider/spidermanage/spidermanage/settings.py</p>
+<ul>
+<li>import the data structure</li>
+</ul>
+<pre><code class="bash">mysql -uroot -p datap <span class="_">-e</span> <span class="string">'source /toolforspider-master/spidermanage/sqldata/Dump20160331.sql'</span>
+</code></pre>
+<ul>
+<li>add your username</li>
+</ul>
+<p>add your username and password in usertable</p>
+<h3 id="Add_css_file"><a href="#Add_css_file" class="headerlink" title="Add css file"></a>Add css file</h3><ul>
+<li>PATH:/toolforspider-master/spidermanage/common_static/nmaptool/css/bootstrap/ </li>
+</ul>
+<p>create floder named lib and download css below </p>
+<pre><code class="bash">http://cine9deabril.com.br/fn/jquery/jquery-ui-1.10.2.custom/css/custom-theme/jquery-ui-1.10.2.custom.css
+https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css
+</code></pre>
+<h3 id="Add_logfile"><a href="#Add_logfile" class="headerlink" title="Add logfile"></a>Add logfile</h3><pre><code class="bash">mkdir spidermanage/lib/
+touch spidermanage/lib/__init__.py
+</code></pre>
+<p>add the following code to spidermanage/lib/logger.py </p>
+<pre><code class="bash"><span class="comment">#!/usr/bin/python</span>
+<span class="comment"># encoding=utf-8</span>
+
+
+import logging
+
+def initLog(logfile, level=2, verbose=False):
+    <span class="string">''</span><span class="string">'
+    日志记录函数，日志等级默认为2，即INFO级别的日志
+    verbose - 是否屏幕输出，默认False
+    '</span><span class="string">''</span>
+    <span class="built_in">log</span>Level = logging.INFO
+    <span class="keyword">if</span> level == 0:
+        <span class="built_in">log</span>Level = logging.NOTSET
+    <span class="keyword">elif</span> level == 1:
+        <span class="built_in">log</span>Level = logging.DEBUG
+    <span class="keyword">elif</span> level == 2:
+        <span class="built_in">log</span>Level = logging.INFO
+    <span class="keyword">elif</span> level == 3:
+        <span class="built_in">log</span>Level = logging.WARNING
+    <span class="keyword">elif</span> level == 4:
+        <span class="built_in">log</span>Level = logging.ERROR
+    <span class="keyword">elif</span> level == 5:
+        <span class="built_in">log</span>Level = logging.CRITICAL
+    logger = logging.getLogger(<span class="string">'pocdect'</span>)
+    console = logging.FileHandler(logfile)
+    formatter = logging.Formatter(<span class="string">'[%(asctime)s]%(filename)s-%(process)d-%(thread)d-%(lineno)d-%(levelname)8s-"%(message)s"'</span>,<span class="string">'%Y-%m-%d %a %H:%M:%S'</span>)
+    console.setFormatter(formatter)
+    logger.addHandler(console)
+    logger.setLevel(<span class="built_in">log</span>Level)
+
+    <span class="keyword">if</span> verbose:
+        console = logging.StreamHandler()
+        console.setLevel(<span class="built_in">log</span>Level)  <span class="comment"># always debug mode to screen</span>
+        formatter = logging.Formatter(<span class="string">'%(name)-8s: %(levelname)-8s %(message)s'</span>)
+        console.setFormatter(formatter)
+        logger.addHandler(console)
+
+    <span class="built_in">return</span> logger
+</code></pre>
+<h3 id="Start"><a href="#Start" class="headerlink" title="Start"></a>Start</h3><pre><code class="bash">python spidermanage/manage.py runserver 0.0.0.0:80 --insecure
+</code></pre>
+<h2 id="u4F7F_u7528_u65B9_u6CD5"><a href="#u4F7F_u7528_u65B9_u6CD5" class="headerlink" title="使用方法"></a>使用方法</h2><p>　　<a href="https://github.com/nanshihui/Scan-T" target="_blank" rel="external">https://github.com/nanshihui/Scan-T</a></p>
+<p>　　暂时先这样，未完待续。。。</p>
 
       
     </div>
@@ -291,7 +367,7 @@ TODO: 进一步需要做的事情
         <p><span>本文标题:</span><a href="/2016/01/21/ToolForSpider简介/">Scan-T简介</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Sherwel 的个人博客">Sherwel</a></p>
         <p><span>发布时间:</span>2016年01月21日 - 09时25分</p>
-        <p><span>最后更新:</span>2016年06月16日 - 09时29分</p>
+        <p><span>最后更新:</span>2016年06月18日 - 13时37分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/01/21/ToolForSpider简介/" title="Scan-T简介">http://nanshihui.github.io/2016/01/21/ToolForSpider简介/</a>
             <span class="copy-path" data-clipboard-text="原文: http://nanshihui.github.io/2016/01/21/ToolForSpider简介/　　作者: Sherwel" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -327,7 +403,7 @@ TODO: 进一步需要做的事情
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u5173_u4E8EScan-T_u9879_u76EE_u7684_u8BF4_u660E"><span class="toc-number">1.1.</span> <span class="toc-text">关于Scan-T项目的说明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u7B80_u4ECB"><span class="toc-number">2.</span> <span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u9879_u76EE_u5730_u5740"><span class="toc-number">2.1.</span> <span class="toc-text">项目地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u6548_u679C_u5C55_u793A"><span class="toc-number">3.</span> <span class="toc-text">效果展示</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u9996_u9875"><span class="toc-number">3.1.</span> <span class="toc-text">首页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u68C0_u7D22_u7ED3_u679C"><span class="toc-number">3.2.</span> <span class="toc-text">检索结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u540E_u53F0"><span class="toc-number">3.3.</span> <span class="toc-text">后台</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u7EDF_u8BA1_u5206_u6790_u9875_u9762"><span class="toc-number">3.4.</span> <span class="toc-text">统计分析页面</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u6574_u4F53_u601D_u8DEF"><span class="toc-number">4.</span> <span class="toc-text">整体思路</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u5173_u4E8EScan-T_u9879_u76EE_u7684_u8BF4_u660E"><span class="toc-number">1.1.</span> <span class="toc-text">关于Scan-T项目的说明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u7B80_u4ECB"><span class="toc-number">2.</span> <span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u9879_u76EE_u5730_u5740"><span class="toc-number">2.1.</span> <span class="toc-text">项目地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u6548_u679C_u5C55_u793A"><span class="toc-number">3.</span> <span class="toc-text">效果展示</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u9996_u9875"><span class="toc-number">3.1.</span> <span class="toc-text">首页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u68C0_u7D22_u7ED3_u679C"><span class="toc-number">3.2.</span> <span class="toc-text">检索结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u540E_u53F0"><span class="toc-number">3.3.</span> <span class="toc-text">后台</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u7EDF_u8BA1_u5206_u6790_u9875_u9762"><span class="toc-number">3.4.</span> <span class="toc-text">统计分析页面</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u6574_u4F53_u601D_u8DEF"><span class="toc-number">4.</span> <span class="toc-text">整体思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5B89_u88C5_u65B9_u6CD5"><span class="toc-number">5.</span> <span class="toc-text">安装方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Prepare_the_environment"><span class="toc-number">5.1.</span> <span class="toc-text">Prepare the environment</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Get_the_code"><span class="toc-number">5.2.</span> <span class="toc-text">Get the code</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Install_package"><span class="toc-number">5.3.</span> <span class="toc-text">Install package</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Set_the_mysql_config"><span class="toc-number">5.4.</span> <span class="toc-text">Set the mysql config</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Add_css_file"><span class="toc-number">5.5.</span> <span class="toc-text">Add css file</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Add_logfile"><span class="toc-number">5.6.</span> <span class="toc-text">Add logfile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Start"><span class="toc-number">5.7.</span> <span class="toc-text">Start</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u4F7F_u7528_u65B9_u6CD5"><span class="toc-number">6.</span> <span class="toc-text">使用方法</span></a></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
