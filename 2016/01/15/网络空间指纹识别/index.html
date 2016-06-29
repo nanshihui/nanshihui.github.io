@@ -25,7 +25,7 @@
 存储归类: 怎么处理获得的凌乱的数据；
 攻击框架: 如何发现网站的表示，以及快速发现网络的漏洞；
 其他: 想改进的地方；">
-<meta property="og:updated_time" content="2016-01-21T04:23:07.317Z">
+<meta property="og:updated_time" content="2016-06-29T02:09:15.521Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何构建一个网络空间指纹识别系统（一）">
 <meta name="twitter:description" content="前言仅记录在开发过程中的思考和理解
@@ -276,6 +276,7 @@
 <h2 id="u5F15_u8A00"><a href="#u5F15_u8A00" class="headerlink" title="引言"></a>引言</h2><p>　　有不少人都看过网络空间指纹扫描的系统，用户只要轻轻的一点，就能检索出，自己要求组件的主机信息。有不少人也很好奇这是怎么实现的，同样我也是，于是自己就开始动手，因此也就有了下文。当然水平有限，有些地方表述不一定正确，如果有什么地方存在不足，欢迎指正。</p>
 <h2 id="u6574_u4F53_u67B6_u6784"><a href="#u6574_u4F53_u67B6_u6784" class="headerlink" title="整体架构"></a>整体架构</h2><p>　　整体的架构主要分为调度框架、ES存储、UI呈现等模块。<br>　　然而最核心的部分（调度框架）可以简化为两个工人集群。一个是抓取信息部分，另一个是处理信息。其中一批量爬虫工负责从任务池中接收任务，并抓取信息。另一批专门负责处理。有点类似于生产者与消费者。要构建这么一个系统，我们只要多个线程就能解决。但是如果我们想要变成一个集群的话，那思路略有不同。<br>　　我们在服务器中，首先要提供一个接口，负责当前访问的工人分配任务。当工人接收到任务的时候，接着就去完成任务，等到任务做好后，将得到的数据，重新提交给服务器。由服务器负责，将数据存储起来。同样的思维，处理信息的工作群也是这样的思路。这样整个雏形就出来了。<br>　　为了提高访问的速度以及使得信息能快速得到反馈，我们可以把工人反馈的任务在存储到数据库的同时，也把用户频繁检索所对应的数据，存入redis。这样，用户在检索的时候，首先去redis里面查找，如果找不到的话，就会去数据库里面找，如果还是找不到的话，才创建一个任务，并让工人类去执行任务。<br>　　如果不熟悉这样的操作方式的话，类似的思路可以去参考一下scapy，他的整体框架也是两批爬虫，一批负责爬取，一批负责存储，或者处理。
 　　</p>
+<h2 id="u4EFB_u52A1_u8C03_u5EA6"><a href="#u4EFB_u52A1_u8C03_u5EA6" class="headerlink" title="任务调度"></a>任务调度</h2><p>　　任务调度常见的就是多线程/多进程,不过由于Python语言在多线程的实现上采用了全局锁,使得即使你采用多线程,也只能够在单核上跑.因此出现了多进程和协程的结合方式。常见的Python的调度框架有很多,如果你仔细去看的话,就会发现他们的实现方式有很多共同性,他们的整体逻辑就是一个队列和工人,然后根据需要处理完任务,是否返回其他操作。所以你也完全可以自己是定制一个适合自己的实现方式。</p>
 <p>　　未完待续。。。</p>
 
       
@@ -288,7 +289,7 @@
         <p><span>本文标题:</span><a href="/2016/01/15/网络空间指纹识别/">如何构建一个网络空间指纹识别系统（一）</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Sherwel 的个人博客">Sherwel</a></p>
         <p><span>发布时间:</span>2016年01月15日 - 18时28分</p>
-        <p><span>最后更新:</span>2016年01月21日 - 12时23分</p>
+        <p><span>最后更新:</span>2016年06月29日 - 10时09分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/01/15/网络空间指纹识别/" title="如何构建一个网络空间指纹识别系统（一）">http://nanshihui.github.io/2016/01/15/网络空间指纹识别/</a>
             <span class="copy-path" data-clipboard-text="原文: http://nanshihui.github.io/2016/01/15/网络空间指纹识别/　　作者: Sherwel" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -324,7 +325,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u5982_u4F55_u6784_u5EFA_u4E00_u4E2A_u7F51_u7EDC_u7A7A_u95F4_u6307_u7EB9_u7CFB_u7EDF"><span class="toc-number">1.1.</span> <span class="toc-text">如何构建一个网络空间指纹系统</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5F15_u8A00"><span class="toc-number">2.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u6574_u4F53_u67B6_u6784"><span class="toc-number">3.</span> <span class="toc-text">整体架构</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u5982_u4F55_u6784_u5EFA_u4E00_u4E2A_u7F51_u7EDC_u7A7A_u95F4_u6307_u7EB9_u7CFB_u7EDF"><span class="toc-number">1.1.</span> <span class="toc-text">如何构建一个网络空间指纹系统</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5F15_u8A00"><span class="toc-number">2.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u6574_u4F53_u67B6_u6784"><span class="toc-number">3.</span> <span class="toc-text">整体架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u4EFB_u52A1_u8C03_u5EA6"><span class="toc-number">4.</span> <span class="toc-text">任务调度</span></a></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
