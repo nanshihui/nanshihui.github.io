@@ -28,7 +28,7 @@ TODO: 进一步需要做的事情
 <meta property="og:image" content="http://nanshihui.github.io/public/work.png">
 <meta property="og:image" content="http://nanshihui.github.io/public/analyse.png">
 <meta property="og:image" content="http://nanshihui.github.io/public/phone.png">
-<meta property="og:updated_time" content="2016-08-01T02:44:15.078Z">
+<meta property="og:updated_time" content="2016-08-01T02:52:25.258Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Scan-T简介">
 <meta name="twitter:description" content="前言看着自己编写的代码没有说明的确不方便别人开发，便写了部分说明在这边。简单的记录该项目的相关说明。
@@ -280,7 +280,7 @@ TODO: 进一步需要做的事情
 <h3 id="u68C0_u7D22_u7ED3_u679C"><a href="#u68C0_u7D22_u7ED3_u679C" class="headerlink" title="检索结果"></a>检索结果</h3><p><img src="http://nanshihui.github.io/public/result.png" alt="PS-PNG-result"></p>
 <h3 id="u540E_u53F0"><a href="#u540E_u53F0" class="headerlink" title="后台"></a>后台</h3><p><img src="http://nanshihui.github.io/public/work.png" alt="PS-PNG-work"></p>
 <h3 id="u7EDF_u8BA1_u5206_u6790_u9875_u9762"><a href="#u7EDF_u8BA1_u5206_u6790_u9875_u9762" class="headerlink" title="统计分析页面"></a>统计分析页面</h3><p><img src="http://nanshihui.github.io/public/analyse.png" alt="PS-PNG-analyse"></p>
-<h3 id="u79FB_u52A8_u7AEF"><a href="#u79FB_u52A8_u7AEF" class="headerlink" title="移动端"></a>移动端</h3><p><img src="http://nanshihui.github.io/public/phone.png" alt="Screenshot"></p>
+<h3 id="u79FB_u52A8_u7AEF"><a href="#u79FB_u52A8_u7AEF" class="headerlink" title="移动端"></a>移动端</h3><p><div><br><img src="http://nanshihui.github.io/public/phone.png" width="268" height="480" alt="图片名称" align="center"><br></div></p>
 <h2 id="u6574_u4F53_u601D_u8DEF"><a href="#u6574_u4F53_u601D_u8DEF" class="headerlink" title="整体思路"></a>整体思路</h2><p>　　整个项目是一个分布式的形式。如果在单台机子上，就是一个WEB项目，如果在多台机上面，就是一个主从的运行模式，由主机从用户的输入以及定时产生的任务产生数据，自己在处理数据的同时，如果从机有响应任务请求。主机会将一部分的任务发送给从机。待从机执行完任务后，将结果反馈给主机。主机再将结果返回给用户以及数据库里。由于所有的消息都是异步的，所以在实现的时候，大部分都是异步，以任务的形式分发，执行。</p>
 <h2 id="u5B89_u88C5_u65B9_u6CD5"><a href="#u5B89_u88C5_u65B9_u6CD5" class="headerlink" title="安装方法"></a>安装方法</h2><h3 id="Prepare_the_environment"><a href="#Prepare_the_environment" class="headerlink" title="Prepare the environment"></a>Prepare the environment</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">apt-get update </span><br><span class="line">apt-get install -y nmap</span><br><span class="line">apt-get install -y libjson-c-dev libjson-c2  libjson0 libjson0-dev</span><br><span class="line">apt-get install -y redis-server zmap libffi-dev libssl-dev python-pip libmysqlclient-dev</span><br><span class="line">apt-get install -y wget unzip</span><br><span class="line">apt-get install mysql-server</span><br></pre></td></tr></table></figure>
 <h3 id="Get_the_code"><a href="#Get_the_code" class="headerlink" title="Get the code"></a>Get the code</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/nanshihui/Scan-T/archive/master.zip</span><br><span class="line">unzip master.zip </span><br><span class="line"><span class="built_in">cd</span> Scan-T-master/</span><br></pre></td></tr></table></figure>
@@ -321,7 +321,7 @@ TODO: 进一步需要做的事情
         <p><span>本文标题:</span><a href="/2016/01/21/ToolForSpider简介/">Scan-T简介</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Sherwel 的个人博客">Sherwel</a></p>
         <p><span>发布时间:</span>2016年01月21日 - 09时25分</p>
-        <p><span>最后更新:</span>2016年08月01日 - 10时44分</p>
+        <p><span>最后更新:</span>2016年08月01日 - 10时52分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/01/21/ToolForSpider简介/" title="Scan-T简介">http://nanshihui.github.io/2016/01/21/ToolForSpider简介/</a>
             <span class="copy-path" data-clipboard-text="原文: http://nanshihui.github.io/2016/01/21/ToolForSpider简介/　　作者: Sherwel" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
