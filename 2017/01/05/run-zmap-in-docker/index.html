@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Run Zmap in docker | Sherwel-Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言最近尝试在Docker环境中安装ZMAP，出现一些问题
+总体
+情况描述1:　出现 SIOCGIFADDR: Invalid argument
+情况描述2:　无法发包">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Run Zmap in docker">
+<meta property="og:url" content="http://nanshihui.github.io/2017/01/05/run-zmap-in-docker/index.html">
+<meta property="og:site_name" content="Sherwel-Blog">
+<meta property="og:description" content="前言最近尝试在Docker环境中安装ZMAP，出现一些问题
+总体
+情况描述1:　出现 SIOCGIFADDR: Invalid argument
+情况描述2:　无法发包">
+<meta property="og:updated_time" content="2017-03-21T08:12:08.648Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Run Zmap in docker">
+<meta name="twitter:description" content="前言最近尝试在Docker环境中安装ZMAP，出现一些问题
+总体
+情况描述1:　出现 SIOCGIFADDR: Invalid argument
+情况描述2:　无法发包">
+  
+    <link rel="alternative" href="/atom.xml" title="Sherwel-Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/avatar.png" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/">Sherwel</a></h1>
+        </hgroup>
+
+        
+        
+        <form><input type="text" class="search" placeholder=" Search..."></form>
+                
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                            <li><a href="/sitemap.xml">Sitemap</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <li id="Email"><a class="Email" target="_blank" href="mailto:nanshihui@gmail.com" title="Email"></a></li>
+                            
+                                <li id="新浪微博"><a class="新浪微博" target="_blank" href="http://weibo.com/sherwel" title="新浪微博"></a></li>
+                            
+                                <li id="GitHub"><a class="GitHub" target="_blank" href="https://github.com/nanshihui" title="GitHub"></a></li>
+                            
+                                <li id="知乎"><a class="知乎" target="_blank" href="https://www.zhihu.com/people/sherwel" title="知乎"></a></li>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/CCS/" style="font-size: 13.33px;">CCS</a> <a href="/tags/Centos/" style="font-size: 10px;">Centos</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nmap/" style="font-size: 13.33px;">Nmap</a> <a href="/tags/Proxy/" style="font-size: 10px;">Proxy</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/S-P/" style="font-size: 10px;">S&P</a> <a href="/tags/SQL注入/" style="font-size: 10px;">SQL注入</a> <a href="/tags/Software/" style="font-size: 10px;">Software</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/Zmap/" style="font-size: 16.67px;">Zmap</a> <a href="/tags/import/" style="font-size: 10px;">import</a> <a href="/tags/sqlmap/" style="font-size: 10px;">sqlmap</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/浏览器指纹/" style="font-size: 10px;">浏览器指纹</a> <a href="/tags/爬虫/" style="font-size: 13.33px;">爬虫</a>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/nanshihui">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于吃</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Sherwel</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img lazy-src="/img/avatar.png" class="js-avatar">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Sherwel</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                    <li><a href="/sitemap.xml">Sitemap</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <li id="Email"><a class="Email" target="_blank" href="mailto:nanshihui@gmail.com" title="Email"></a></li>
+                            
+                                <li id="新浪微博"><a class="新浪微博" target="_blank" href="http://weibo.com/sherwel" title="新浪微博"></a></li>
+                            
+                                <li id="GitHub"><a class="GitHub" target="_blank" href="https://github.com/nanshihui" title="GitHub"></a></li>
+                            
+                                <li id="知乎"><a class="知乎" target="_blank" href="https://www.zhihu.com/people/sherwel" title="知乎"></a></li>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-run-zmap-in-docker" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/01/05/run-zmap-in-docker/" class="article-date">
+      <time datetime="2017-01-05T05:47:03.000Z" itemprop="datePublished">2017-01-05</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Run Zmap in docker
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Web安全/">Web安全</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Centos/">Centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Zmap/">Zmap</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p></p><h2 id="intro">前言</h2>最近尝试在Docker环境中安装ZMAP，出现一些问题<p></p>
+<h3 id="u603B_u4F53"><a href="#u603B_u4F53" class="headerlink" title="总体"></a>总体</h3><ul>
+<li><strong>情况描述1:</strong>　出现 SIOCGIFADDR: Invalid argument</li>
+<li><strong>情况描述2:</strong>　无法发包<a id="more"></a>
+<h2 id="u95EE_u9898_u63CF_u8FF0"><a href="#u95EE_u9898_u63CF_u8FF0" class="headerlink" title="问题描述"></a>问题描述</h2></li>
+</ul>
+<p>　　最近因为需要，遂在Docker环境的下Centos，安装ZMAP。安装的时候出现一系列组件没有完全。网上的在Centos里安装ZMAP的方法，已经无法使用。也不能使用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">　　yum install zmap</span><br></pre></td></tr></table></figure></p>
+<p>类似这样的方法，因此就只能自己乖乖的安装基本组件。</p>
+<h2 id="u5B89_u88C5_u6D41_u7A0B"><a href="#u5B89_u88C5_u6D41_u7A0B" class="headerlink" title="安装流程"></a>安装流程</h2><p>　　相关的安装方法可以参考<a href="https://github.com/zmap/zmap" target="_blank" rel="external">ZMAP</a>官方的教程。在安装<a href="https://github.com/zmap/zmap" target="_blank" rel="external">ZMAP</a>之前还需要安装<a href="https://github.com/json-c/json-c" target="_blank" rel="external">JSON-C</a>.相关的参考文档，在对应的git都有相应的教程。</p>
+<h3 id="u9700_u8981_u7684_u73AF_u5883"><a href="#u9700_u8981_u7684_u73AF_u5883" class="headerlink" title="需要的环境"></a>需要的环境</h3><ul>
+<li>gcc</li>
+<li>libtool&gt;=2.2.6b</li>
+<li>autoconf&gt;=2.64 (autoreconf)</li>
+<li>automake&gt;=1.10.3</li>
+</ul>
+<p>　　在遇到这些库没有的时候，在Google直接搜索对应的组件以及版本，找到对应的RPM包进行安装。<br>　　在安装完JSON-C后，安装ZMAP会出现缺少JSON-C组件，这时候就需要自己添加路径。或者安装一个libjson的库。</p>
+<h2 id="u8FD0_u884C_u95EE_u9898"><a href="#u8FD0_u884C_u95EE_u9898" class="headerlink" title="运行问题"></a>运行问题</h2><p>　　在运行ZMAP的时候，会出现如下错误:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zmap:could not detect default network interface(e,g.eth0).Try running as root or setting interface using -i flag</span><br></pre></td></tr></table></figure>
+<p>　　这时候通过ifconfig查找对应interface name，然后在运行ZMAP运行的时候添加-i 参数，并附上interface name就行了。<br>　　虽然能运行起来，但是会发现程序无法收发包，通过 tcpdump 抓包发现程序也无法发包，显示错误：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SIOCGIFADDR: Invalid argument</span><br></pre></td></tr></table></figure></p>
+<p>通过gdb单步调试，确定报错的位置在send-linux.h文件的如下函数<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (ioctl(sock, SIOCGIFADDR, &amp;<span class="keyword">if</span>_ip) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">		perror(<span class="string">"SIOCGIFADDR"</span>);</span><br><span class="line">		<span class="built_in">return</span> EXIT_FAILURE;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后观察前后文，并没有发现<code>if_ip</code>被使用的情况<br>因此就注释了这一段，然后重新把源码编译一下，就能够运行了。</p>
+<p>然后将问题反馈给ZMAP作者，并修复了这个问题。详细细节见<a href="https://github.com/zmap/zmap/issues/279#issuecomment-270719911" target="_blank" rel="external">https://github.com/zmap/zmap/issues/279#issuecomment-270719911</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/01/05/run-zmap-in-docker/">Run Zmap in docker</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 Sherwel 的个人博客">Sherwel</a></p>
+        <p><span>发布时间:</span>2017年01月05日 - 13时47分</p>
+        <p><span>最后更新:</span>2017年03月21日 - 16时12分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/01/05/run-zmap-in-docker/" title="Run Zmap in docker">http://nanshihui.github.io/2017/01/05/run-zmap-in-docker/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://nanshihui.github.io/2017/01/05/run-zmap-in-docker/　　作者: Sherwel" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/02/08/ipproxy/">
+                    细数代理检测
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/05/27/the-spy-in-the-sandbox/">
+                    The Spy in the Sandbox :Practical Cache Attacks in JavaScript and their Implications
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u603B_u4F53"><span class="toc-number">1.1.</span> <span class="toc-text">总体</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u95EE_u9898_u63CF_u8FF0"><span class="toc-number">2.</span> <span class="toc-text">问题描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5B89_u88C5_u6D41_u7A0B"><span class="toc-number">3.</span> <span class="toc-text">安装流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u9700_u8981_u7684_u73AF_u5883"><span class="toc-number">3.1.</span> <span class="toc-text">需要的环境</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u8FD0_u884C_u95EE_u9898"><span class="toc-number">4.</span> <span class="toc-text">运行问题</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+<div class="share">
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+    <a href="#" class="bds_copy" data-cmd="copy" title="复制网址"></a>
+    <a href="#" class="bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+    </div>
+    <script>
+        window._bd_share_config={
+            "common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+</div>
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="2017/01/05/run-zmap-in-docker/" data-title="Run Zmap in docker" data-url="http://nanshihui.github.io/2017/01/05/run-zmap-in-docker/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"sherwel"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+
+        ds.src = '//nanshihui.github.io/js/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+
+    <!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"[object Object]"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+        //ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.src = 'http://nanshihui.github.io/js/embed.js';
+    /*上面是我自己的 embed.js 链接，请改为你自己的地址*/
+
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+-->
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/02/08/ipproxy/" title="上一篇: 细数代理检测">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/05/27/the-spy-in-the-sandbox/" title="下一篇: The Spy in the Sandbox :Practical Cache Attacks in JavaScript and their Implications">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/03/21/browser-fingerprint/">浏览器指纹追踪</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/08/ipproxy/">细数代理检测</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/05/run-zmap-in-docker/">Run Zmap in docker</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/27/the-spy-in-the-sandbox/">The Spy in the Sandbox :Practical Cache Attacks in JavaScript and their Implications</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/17/A-Search-Engine-Backed-by-Internet-Wide-Scanning/">A Search Engine Backed by Internet-Wide Scanning</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/10/Program-Adaptive-Mutational-Fuzzing/">Program-Adaptive Mutational Fuzzing</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/18/MySQL主从库相关信息整理/">MySQL主从库相关信息整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/25/sqlmaptips/">sqlmap常用技巧整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/21/ToolForSpider简介/">Scan-T简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/19/SQL注入总结/">SQL注入总结（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/18/python 中常见的 import 模块的方法(总结)/">python 中常见的 import 模块的方法(总结)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/15/网络空间指纹识别/">如何构建一个网络空间指纹识别系统（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/08/windows-mac-software/">自用 Windows 和 Mac 软件推荐</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/07/hello-world/">hexo编写笔记</a></li></ul>
+    <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    
+        <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+        <script>
+            var yiliaConfig = {
+            fancybox: true,
+            mathjax: true,
+            animate: true,
+            isHome: false,
+            isPost: true,
+            isArchive: false,
+            isTag: false,
+            isCategory: false,
+            open_in_new: false
+            }
+        </script>
+        
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-right">
+                &copy; 2017 Sherwel
+            </div>
+
+        </div>
+        <div class="visit">
+            <span id="busuanzi_container_site_pv" style='display:none'>
+                <span id="site-visit" >本站到访数: 
+                    <span id="busuanzi_value_site_uv"></span>
+                </span>
+            </span>
+            <span id="busuanzi_container_page_pv" style='display:none'>
+                <span id="page-visit">, 本页阅读量: 
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+            </span>
+        </div>
+    </div>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</footer>
+
+    </div>
+    
+
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+<a href="https://github.com/nanshihui"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
+</body>
+</html>
