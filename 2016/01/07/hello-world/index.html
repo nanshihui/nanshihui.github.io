@@ -443,7 +443,7 @@
     <script>
         var loadComment = function(){
             var d = document, s = d.createElement('script');
-            s.src = 'http://v2.uyan.cc/code/uyan.js?uid=2127999';
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:')+'//v2.uyan.cc/code/uyan.js?uid=2127999';
             (d.head || d.body).appendChild(s);
         }
     </script>
