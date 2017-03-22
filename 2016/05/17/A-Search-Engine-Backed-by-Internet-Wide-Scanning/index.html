@@ -441,19 +441,27 @@
 
 
     
-        <section class="youyan" id="comments">
+        <section id="comments">
+    <style> aside.comment-bar { margin: auto 30px; }</style>
+    <div id="disqus_thread"></div>
     <script>
+        var disqus_config = function(){
+            this.page.url = 'http://nanshihui.github.io/2016/05/17/A-Search-Engine-Backed-by-Internet-Wide-Scanning/';
+            this.page.identifier = '2016/05/17/A-Search-Engine-Backed-by-Internet-Wide-Scanning/';
+        };
         var loadComment = function(){
             var d = document, s = d.createElement('script');
-            s.src = 'http://v2.uyan.cc/code/uyan.js?uid=2127999';
+            s.src = '//sherwel.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
             (d.head || d.body).appendChild(s);
         }
     </script>
     
     <script> loadComment(); </script>
 
-    <div id="uyan_frame"></div>
 </section>
+
+
     
 
 
