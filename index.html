@@ -292,6 +292,8 @@
             <span class="ds-thread-count"  data-thread-key="2017/03/21/browser-fingerprint/" ></span>
         
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/03/21/browser-fingerprint/"></span>
+        
     </a>
 
     </div>
@@ -374,6 +376,8 @@
         
             <span class="ds-thread-count"  data-thread-key="2017/02/08/ipproxy/" ></span>
         
+        
+            <span class="disqus-comment-count" data-disqus-identifier="2017/02/08/ipproxy/"></span>
         
     </a>
 
@@ -458,6 +462,8 @@
             <span class="ds-thread-count"  data-thread-key="2017/01/05/run-zmap-in-docker/" ></span>
         
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/01/05/run-zmap-in-docker/"></span>
+        
     </a>
 
     </div>
@@ -537,6 +543,8 @@
         
             <span class="ds-thread-count"  data-thread-key="2016/05/27/the-spy-in-the-sandbox/" ></span>
         
+        
+            <span class="disqus-comment-count" data-disqus-identifier="2016/05/27/the-spy-in-the-sandbox/"></span>
         
     </a>
 
@@ -620,6 +628,8 @@
             <span class="ds-thread-count"  data-thread-key="2016/05/17/A-Search-Engine-Backed-by-Internet-Wide-Scanning/" ></span>
         
         
+            <span class="disqus-comment-count" data-disqus-identifier="2016/05/17/A-Search-Engine-Backed-by-Internet-Wide-Scanning/"></span>
+        
     </a>
 
     </div>
@@ -701,6 +711,8 @@
         
             <span class="ds-thread-count"  data-thread-key="2016/05/10/Program-Adaptive-Mutational-Fuzzing/" ></span>
         
+        
+            <span class="disqus-comment-count" data-disqus-identifier="2016/05/10/Program-Adaptive-Mutational-Fuzzing/"></span>
         
     </a>
 
@@ -784,6 +796,8 @@
             <span class="ds-thread-count"  data-thread-key="2016/04/18/MySQL主从库相关信息整理/" ></span>
         
         
+            <span class="disqus-comment-count" data-disqus-identifier="2016/04/18/MySQL主从库相关信息整理/"></span>
+        
     </a>
 
     </div>
@@ -866,6 +880,8 @@
             <span class="ds-thread-count"  data-thread-key="2016/02/25/sqlmaptips/" ></span>
         
         
+            <span class="disqus-comment-count" data-disqus-identifier="2016/02/25/sqlmaptips/"></span>
+        
     </a>
 
     </div>
@@ -942,6 +958,8 @@
         
             <span class="ds-thread-count"  data-thread-key="2016/01/21/ToolForSpider简介/" ></span>
         
+        
+            <span class="disqus-comment-count" data-disqus-identifier="2016/01/21/ToolForSpider简介/"></span>
         
     </a>
 
@@ -1025,6 +1043,8 @@
         
             <span class="ds-thread-count"  data-thread-key="2016/01/19/SQL注入总结/" ></span>
         
+        
+            <span class="disqus-comment-count" data-disqus-identifier="2016/01/19/SQL注入总结/"></span>
         
     </a>
 
@@ -1181,6 +1201,22 @@
         </script>
     
 
+    
+        <script id="dsq-count-scr" src="//sherwel.disqus.com.disqus.com/count.js" async></script>
+        <script>
+            if ($(".left-col").is(":visible")) {
+                var $disqusCount = $(".disqus-comment-count");
+                $disqusCount.bind("DOMNodeInserted", function(e) {
+                    var num = $(this).text().replace(/[^0-9]/ig,"");
+                    if (num > 0) {
+                        $(this).siblings(".count-comment").text(num);
+                    }
+                    $(this).remove();
+                })
+            } else {
+                $(".disqus-comment-count").remove();
+            }
+        </script>
      
 
 

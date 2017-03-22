@@ -292,6 +292,8 @@
             <span class="ds-thread-count"  data-thread-key="2016/01/18/python 中常见的 import 模块的方法(总结)/" ></span>
         
         
+            <span class="disqus-comment-count" data-disqus-identifier="2016/01/18/python 中常见的 import 模块的方法(总结)/"></span>
+        
     </a>
 
     </div>
@@ -368,6 +370,8 @@
         
             <span class="ds-thread-count"  data-thread-key="2016/01/15/网络空间指纹识别/" ></span>
         
+        
+            <span class="disqus-comment-count" data-disqus-identifier="2016/01/15/网络空间指纹识别/"></span>
         
     </a>
 
@@ -454,6 +458,8 @@
             <span class="ds-thread-count"  data-thread-key="2016/01/08/windows-mac-software/" ></span>
         
         
+            <span class="disqus-comment-count" data-disqus-identifier="2016/01/08/windows-mac-software/"></span>
+        
     </a>
 
     </div>
@@ -538,6 +544,8 @@
         
             <span class="ds-thread-count"  data-thread-key="2016/01/07/hello-world/" ></span>
         
+        
+            <span class="disqus-comment-count" data-disqus-identifier="2016/01/07/hello-world/"></span>
         
     </a>
 
@@ -688,6 +696,22 @@
         </script>
     
 
+    
+        <script id="dsq-count-scr" src="//sherwel.disqus.com.disqus.com/count.js" async></script>
+        <script>
+            if ($(".left-col").is(":visible")) {
+                var $disqusCount = $(".disqus-comment-count");
+                $disqusCount.bind("DOMNodeInserted", function(e) {
+                    var num = $(this).text().replace(/[^0-9]/ig,"");
+                    if (num > 0) {
+                        $(this).siblings(".count-comment").text(num);
+                    }
+                    $(this).remove();
+                })
+            } else {
+                $(".disqus-comment-count").remove();
+            }
+        </script>
      
 
 
