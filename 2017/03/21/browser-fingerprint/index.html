@@ -1,11 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hans">
 <head>
-  <meta charset="utf-8">
-  
-  <title>浏览器指纹追踪 | Sherwel-Blog</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言随着flash逐渐退出浏览器,传统的浏览器指纹开始不适用,为此本文介绍目前最常见的浏览器指纹模型,以及新的浏览器指纹技术,方便需要的人.
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Sherwel" />
+
+
+
+<meta name="description" content="前言随着flash逐渐退出浏览器,传统的浏览器指纹开始不适用,为此本文介绍目前最常见的浏览器指纹模型,以及新的浏览器指纹技术,方便需要的人.
 浏览器指纹技术
 常见浏览器指纹: 常见的浏览器指纹技术；
 Canvas指纹以及WebGL 指纹: 用过Canvas以及WebGL技术获得指纹信息；
@@ -22,7 +32,7 @@ Canvas指纹以及WebGL 指纹: 用过Canvas以及WebGL技术获得指纹信息�
 新浏览器指纹技术: 目前前沿的浏览器指纹技术；
 驻留技术: 提高cookie的存活率,即使被删也能恢复,甚至是">
 <meta property="og:image" content="http://nanshihui.github.io/public/emoji.png">
-<meta property="og:updated_time" content="2017-03-21T13:25:49.314Z">
+<meta property="og:updated_time" content="2017-03-22T01:09:23.949Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浏览器指纹追踪">
 <meta name="twitter:description" content="前言随着flash逐渐退出浏览器,传统的浏览器指纹开始不适用,为此本文介绍目前最常见的浏览器指纹模型,以及新的浏览器指纹技术,方便需要的人.
@@ -31,16 +41,71 @@ Canvas指纹以及WebGL 指纹: 用过Canvas以及WebGL技术获得指纹信息�
 Canvas指纹以及WebGL 指纹: 用过Canvas以及WebGL技术获得指纹信息；
 新浏览器指纹技术: 目前前沿的浏览器指纹技术；
 驻留技术: 提高cookie的存活率,即使被删也能恢复,甚至是">
-  
-    <link rel="alternative" href="/atom.xml" title="Sherwel-Blog" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
-  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Sherwel-Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>浏览器指纹追踪 | Sherwel-Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
 </head>
 <body>
   <div id="container">
@@ -49,19 +114,22 @@ Canvas指纹以及WebGL 指纹: 用过Canvas以及WebGL技术获得指纹信息�
 <div class="intrude-less">
     <header id="header" class="inner">
         <a href="/" class="profilepic">
-            
-            <img lazy-src="/img/avatar.png" class="js-avatar">
-            
+            <img src="/img/avatar.png" class="animated zoomIn">
         </a>
-
         <hgroup>
           <h1 class="header-author"><a href="/">Sherwel</a></h1>
         </hgroup>
 
         
+
         
-        <form><input type="text" class="search" placeholder=" Search..."></form>
-                
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
 
 
         
@@ -127,13 +195,13 @@ Canvas指纹以及WebGL 指纹: 用过Canvas以及WebGL技术获得指纹信息�
                     <nav class="header-nav">
                         <ul class="social">
                             
-                                <li id="Email"><a class="Email" target="_blank" href="mailto:nanshihui@gmail.com" title="Email"></a></li>
+                                <a class="fa Email" href="mailto:nanshihui@gmail.com" title="Email"></a>
                             
-                                <li id="新浪微博"><a class="新浪微博" target="_blank" href="http://weibo.com/sherwel" title="新浪微博"></a></li>
+                                <a class="fa 新浪微博" href="http://weibo.com/sherwel" title="新浪微博"></a>
                             
-                                <li id="GitHub"><a class="GitHub" target="_blank" href="https://github.com/nanshihui" title="GitHub"></a></li>
+                                <a class="fa GitHub" href="https://github.com/nanshihui" title="GitHub"></a>
                             
-                                <li id="知乎"><a class="知乎" target="_blank" href="https://www.zhihu.com/people/sherwel" title="知乎"></a></li>
+                                <a class="fa 知乎" href="https://www.zhihu.com/people/sherwel" title="知乎"></a>
                             
                         </ul>
                     </nav>
@@ -142,7 +210,7 @@ Canvas指纹以及WebGL 指纹: 用过Canvas以及WebGL技术获得指纹信息�
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <a href="/tags/CCS/" style="font-size: 13.33px;">CCS</a> <a href="/tags/Centos/" style="font-size: 10px;">Centos</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Nmap/" style="font-size: 13.33px;">Nmap</a> <a href="/tags/Proxy/" style="font-size: 10px;">Proxy</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/S-P/" style="font-size: 10px;">S&P</a> <a href="/tags/SQL注入/" style="font-size: 10px;">SQL注入</a> <a href="/tags/Software/" style="font-size: 10px;">Software</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/Zmap/" style="font-size: 16.67px;">Zmap</a> <a href="/tags/import/" style="font-size: 10px;">import</a> <a href="/tags/sqlmap/" style="font-size: 10px;">sqlmap</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/浏览器指纹/" style="font-size: 10px;">浏览器指纹</a> <a href="/tags/爬虫/" style="font-size: 13.33px;">爬虫</a>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CCS/">CCS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Centos/">Centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nmap/">Nmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Proxy/">Proxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/S-P/">S&P</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL注入/">SQL注入</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Software/">Software</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zmap/">Zmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/import/">import</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlmap/">sqlmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/浏览器指纹/">浏览器指纹</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫/">爬虫</a></li></ul>
                     </div>
                 </section>
                 
@@ -151,7 +219,9 @@ Canvas指纹以及WebGL 指纹: 用过Canvas以及WebGL技术获得指纹信息�
                 <section class="switch-part switch-part3">
                     <div id="js-friends">
                     
-                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/nanshihui">GitHub</a>
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://github.com/nanshihui">GitHub</a>
                     
                     </div>
                 </section>
@@ -178,7 +248,7 @@ Canvas指纹以及WebGL 指纹: 用过Canvas以及WebGL技术获得指纹信息�
     <div class="intrude-less">
         <header id="header" class="inner">
             <a href="/" class="profilepic">
-                <img lazy-src="/img/avatar.png" class="js-avatar">
+                <img src="/img/avatar.png" class="animated zoomIn">
             </a>
             <hgroup>
               <h1 class="header-author"><a href="/" title="回到主页">Sherwel</a></h1>
@@ -203,18 +273,19 @@ Canvas指纹以及WebGL 指纹: 用过Canvas以及WebGL技术获得指纹信息�
             <nav class="header-nav">
                         <ul class="social">
                             
-                                <li id="Email"><a class="Email" target="_blank" href="mailto:nanshihui@gmail.com" title="Email"></a></li>
+                                <a class="fa Email" target="_blank" href="mailto:nanshihui@gmail.com" title="Email"></a>
                             
-                                <li id="新浪微博"><a class="新浪微博" target="_blank" href="http://weibo.com/sherwel" title="新浪微博"></a></li>
+                                <a class="fa 新浪微博" target="_blank" href="http://weibo.com/sherwel" title="新浪微博"></a>
                             
-                                <li id="GitHub"><a class="GitHub" target="_blank" href="https://github.com/nanshihui" title="GitHub"></a></li>
+                                <a class="fa GitHub" target="_blank" href="https://github.com/nanshihui" title="GitHub"></a>
                             
-                                <li id="知乎"><a class="知乎" target="_blank" href="https://www.zhihu.com/people/sherwel" title="知乎"></a></li>
+                                <a class="fa 知乎" target="_blank" href="https://www.zhihu.com/people/sherwel" title="知乎"></a>
                             
                         </ul>
             </nav>
         </header>                
     </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
       <div class="body-wrap"><article id="post-browser-fingerprint" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -222,6 +293,8 @@ Canvas指纹以及WebGL 指纹: 用过Canvas以及WebGL技术获得指纹信息�
       <a href="/2017/03/21/browser-fingerprint/" class="article-date">
       <time datetime="2017-03-21T10:07:10.000Z" itemprop="datePublished">2017-03-21</time>
 </a>
+
+
     </div>
   
   <div class="article-inner">
@@ -371,7 +444,7 @@ Canvas指纹以及WebGL 指纹: 用过Canvas以及WebGL技术获得指纹信息�
 <h4 id="u8BBE_u5907_u548C_u64CD_u4F5C_u7CFB_u7EDF_u6307_u7EB9"><a href="#u8BBE_u5907_u548C_u64CD_u4F5C_u7CFB_u7EDF_u6307_u7EB9" class="headerlink" title="设备和操作系统指纹"></a>设备和操作系统指纹</h4><p>　　例如emoji表情的笑脸在不同系统版本显示不一样,如下图所示,因此通过emoji表情可以判断操作系统甚至是版本信息.<br><img src="http://nanshihui.github.io/public/emoji.png" alt="PS-PNG-work"></p>
 <h4 id="u786C_u4EF6_u64CD_u4F5C_u7CFB_u7EDF_u6307_u7EB9"><a href="#u786C_u4EF6_u64CD_u4F5C_u7CFB_u7EDF_u6307_u7EB9" class="headerlink" title="硬件操作系统指纹"></a>硬件操作系统指纹</h4><p>　　打印字体,观察渲染图像的过程，会有像素点的偏差.虽然此字体具有相同的尺寸,但是在操作系统中,最终图像由于渲染过程的差异,存在像素可见的变化。渲染图像的过程是复杂的,并且依赖硬件和软件（例如GPU，渲染引擎，图形驱动程序，抗锯齿，OS），并且这些层中的任何层中的变化都会使得测试受到影响。有趣的是，测试结果也是相对稳定的，因为在渲染过程中,用户不经常改变图层配置。</p>
 <h3 id="WebGL__u6307_u7EB9"><a href="#WebGL__u6307_u7EB9" class="headerlink" title="WebGL 指纹"></a>WebGL 指纹</h3><p>　　通过WEBGL_debug_renderer_info 接口，获得产品名和供应商名</p>
-<h3 id="u5176_u4ED6_u6307_u7EB9"><a href="#u5176_u4ED6_u6307_u7EB9" class="headerlink" title="其他指纹"></a>其他指纹</h3><p>Platform(UA),Do Not Track &amp; Ad blocker<br>未完待续..</p>
+<h3 id="u5176_u4ED6_u6307_u7EB9"><a href="#u5176_u4ED6_u6307_u7EB9" class="headerlink" title="其他指纹"></a>其他指纹</h3><p>　　Platform(UA),Do Not Track &amp; Ad blocker</p>
 <h2 id="u65B0_u6D4F_u89C8_u5668_u6307_u7EB9_u6280_u672F"><a href="#u65B0_u6D4F_u89C8_u5668_u6307_u7EB9_u6280_u672F" class="headerlink" title="新浏览器指纹技术"></a>新浏览器指纹技术</h2><h3 id="CPU_u865A_u62DF_u6838_u5FC3_u6570"><a href="#CPU_u865A_u62DF_u6838_u5FC3_u6570" class="headerlink" title="CPU虚拟核心数"></a>CPU虚拟核心数</h3><p>　　新的浏览器特性具有<code>hardwareConcurrency</code>函数,即使不支持,我们也可以通过侧信道攻击,也能发现,比如可以在增加worker的数量,观察有效载荷的完成时间。当完成时间随着worker的数量级显著增加时，说明达到硬件并发的限制，使得可以预估CPU核心数量。 当然值得注意的是，某些浏览器（例如Safari）会将Web Workers的可用核心数减少一半，那么我们需要将浏览器指纹的worker数量加倍.</p>
 <p>未完待续……</p>
 
@@ -383,17 +456,16 @@ Canvas指纹以及WebGL 指纹: 用过Canvas以及WebGL技术获得指纹信息�
     
     <div class="copyright">
         <p><span>本文标题:</span><a href="/2017/03/21/browser-fingerprint/">浏览器指纹追踪</a></p>
-        <p><span>文章作者:</span><a href="/" title="访问 Sherwel 的个人博客">Sherwel</a></p>
-        <p><span>发布时间:</span>2017年03月21日 - 18时07分</p>
-        <p><span>最后更新:</span>2017年03月21日 - 21时25分</p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Sherwel</a></p>
+        <p><span>发布时间:</span>2017-03-21, 18:07:10</p>
+        <p><span>最后更新:</span>2017-03-22, 09:09:23</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/03/21/browser-fingerprint/" title="浏览器指纹追踪">http://nanshihui.github.io/2017/03/21/browser-fingerprint/</a>
             <span class="copy-path" data-clipboard-text="原文: http://nanshihui.github.io/2017/03/21/browser-fingerprint/　　作者: Sherwel" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
-            <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
         </p>
     </div>
 
@@ -414,119 +486,76 @@ Canvas指纹以及WebGL 指纹: 用过Canvas以及WebGL技术获得指纹信息�
 </article>
 
     <div id="toc" class="toc-article">
-    <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u6D4F_u89C8_u5668_u6307_u7EB9_u6280_u672F"><span class="toc-number">1.1.</span> <span class="toc-text">浏览器指纹技术</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5F15_u8A00"><span class="toc-number">2.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5E38_u89C1_u7684_u6D4F_u89C8_u5668_u6307_u7EB9_u6280_u672F"><span class="toc-number">3.</span> <span class="toc-text">常见的浏览器指纹技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Canvas_u6307_u7EB9_u6280_u672F_u548CWEBGL_u6307_u7EB9_u6280_u672F"><span class="toc-number">4.</span> <span class="toc-text">Canvas指纹技术和WEBGL指纹技术</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Canvas_u6307_u7EB9"><span class="toc-number">4.1.</span> <span class="toc-text">Canvas指纹</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#u5B57_u4F53_u63A2_u6D4B"><span class="toc-number">4.1.1.</span> <span class="toc-text">字体探测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u8BBE_u5907_u548C_u64CD_u4F5C_u7CFB_u7EDF_u6307_u7EB9"><span class="toc-number">4.1.2.</span> <span class="toc-text">设备和操作系统指纹</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u786C_u4EF6_u64CD_u4F5C_u7CFB_u7EDF_u6307_u7EB9"><span class="toc-number">4.1.3.</span> <span class="toc-text">硬件操作系统指纹</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WebGL__u6307_u7EB9"><span class="toc-number">4.2.</span> <span class="toc-text">WebGL 指纹</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u5176_u4ED6_u6307_u7EB9"><span class="toc-number">4.3.</span> <span class="toc-text">其他指纹</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u65B0_u6D4F_u89C8_u5668_u6307_u7EB9_u6280_u672F"><span class="toc-number">5.</span> <span class="toc-text">新浏览器指纹技术</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CPU_u865A_u62DF_u6838_u5FC3_u6570"><span class="toc-number">5.1.</span> <span class="toc-text">CPU虚拟核心数</span></a></li></ol></li></ol>
-</div>
-<style>
-    .left-col .switch-btn {
-        display: none;
-    }
-    .left-col .switch-area {
-        display: none;
-    }
-</style>
-
-<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
-
-<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
-<script>
-    var valueHide = "隐藏目录";
-    var valueShow = "显示目录";
-
-    if ($(".left-col").is(":hidden")) {
-        $("#tocButton").attr("value", valueShow);
-    }
-
-    $("#tocButton").click(function() {
-        if ($("#toc").is(":hidden")) {
-            $("#tocButton").attr("value", valueHide);
-            $("#toc").slideDown(320);
-            $(".switch-btn, .switch-area").fadeOut(300);
-        }
-        else {
-            $("#tocButton").attr("value", valueShow);
-            $("#toc").slideUp(350);
-            $(".switch-btn, .switch-area").fadeIn(500);
-        }
-    })
-
-    if ($(".toc").length < 1) {
-        $("#toc, #tocButton").hide();
-        $(".switch-btn, .switch-area").show();
-    }
-</script>
-
-
-
-
-<div class="share">
-    <div class="bdsharebuttonbox">
-    <a href="#" class="bds_more" data-cmd="more"></a>
-    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
-    <a href="#" class="bds_copy" data-cmd="copy" title="复制网址"></a>
-    <a href="#" class="bds_mail" data-cmd="mail" title="通过邮件分享"></a>
-    <a href="#" class="bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u6D4F_u89C8_u5668_u6307_u7EB9_u6280_u672F"><span class="toc-number">1.1.</span> <span class="toc-text">浏览器指纹技术</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5F15_u8A00"><span class="toc-number">2.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5E38_u89C1_u7684_u6D4F_u89C8_u5668_u6307_u7EB9_u6280_u672F"><span class="toc-number">3.</span> <span class="toc-text">常见的浏览器指纹技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Canvas_u6307_u7EB9_u6280_u672F_u548CWEBGL_u6307_u7EB9_u6280_u672F"><span class="toc-number">4.</span> <span class="toc-text">Canvas指纹技术和WEBGL指纹技术</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Canvas_u6307_u7EB9"><span class="toc-number">4.1.</span> <span class="toc-text">Canvas指纹</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#u5B57_u4F53_u63A2_u6D4B"><span class="toc-number">4.1.1.</span> <span class="toc-text">字体探测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u8BBE_u5907_u548C_u64CD_u4F5C_u7CFB_u7EDF_u6307_u7EB9"><span class="toc-number">4.1.2.</span> <span class="toc-text">设备和操作系统指纹</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u786C_u4EF6_u64CD_u4F5C_u7CFB_u7EDF_u6307_u7EB9"><span class="toc-number">4.1.3.</span> <span class="toc-text">硬件操作系统指纹</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WebGL__u6307_u7EB9"><span class="toc-number">4.2.</span> <span class="toc-text">WebGL 指纹</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u5176_u4ED6_u6307_u7EB9"><span class="toc-number">4.3.</span> <span class="toc-text">其他指纹</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u65B0_u6D4F_u89C8_u5668_u6307_u7EB9_u6280_u672F"><span class="toc-number">5.</span> <span class="toc-text">新浏览器指纹技术</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CPU_u865A_u62DF_u6838_u5FC3_u6570"><span class="toc-number">5.1.</span> <span class="toc-text">CPU虚拟核心数</span></a></li></ol></li></ol>
+        
     </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
     <script>
-        window._bd_share_config={
-            "common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
     </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"浏览器指纹追踪　| Sherwel-Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
 </div>
+
+
+
+
 
 
 
     
       <div class="duoshuo" id="comments">
-    <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="2017/03/21/browser-fingerprint/" data-title="浏览器指纹追踪" data-url="http://nanshihui.github.io/2017/03/21/browser-fingerprint/"></div>
-    <!-- 多说评论框 end -->
-    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-    <script type="text/javascript">
-    var duoshuoQuery = {short_name:"sherwel"};
-    (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2017/03/21/browser-fingerprint/" data-title="浏览器指纹追踪" data-url="http://nanshihui.github.io/2017/03/21/browser-fingerprint/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"sherwel"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
 
-        ds.src = '//nanshihui.github.io/js/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0] 
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
+        
     </script>
+    
+    <script> loadComment(); </script>
 
-    <!-- 多说公共JS代码 end -->
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"[object Object]"};
-(function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-        //ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-    ds.src = 'http://nanshihui.github.io/js/embed.js';
-    /*上面是我自己的 embed.js 链接，请改为你自己的地址*/
-
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
-     || document.getElementsByTagName('body')[0]).appendChild(ds);
-})();
-</script>
--->
     
 
 
@@ -547,84 +576,50 @@ var duoshuoQuery = {short_name:"[object Object]"};
     </div>
 
     <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/03/21/browser-fingerprint/">浏览器指纹追踪</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/08/ipproxy/">细数代理检测</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/05/run-zmap-in-docker/">Run Zmap in docker</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/27/the-spy-in-the-sandbox/">The Spy in the Sandbox :Practical Cache Attacks in JavaScript and their Implications</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/17/A-Search-Engine-Backed-by-Internet-Wide-Scanning/">A Search Engine Backed by Internet-Wide Scanning</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/10/Program-Adaptive-Mutational-Fuzzing/">Program-Adaptive Mutational Fuzzing</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/18/MySQL主从库相关信息整理/">MySQL主从库相关信息整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/25/sqlmaptips/">sqlmap常用技巧整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/21/ToolForSpider简介/">Scan-T简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/19/SQL注入总结/">SQL注入总结（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/18/python 中常见的 import 模块的方法(总结)/">python 中常见的 import 模块的方法(总结)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/15/网络空间指纹识别/">如何构建一个网络空间指纹识别系统（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/08/windows-mac-software/">自用 Windows 和 Mac 软件推荐</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/07/hello-world/">hexo编写笔记</a></li></ul>
-    <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+
+
+
     <script>
-        $(".post-list").addClass("toc-article");
-        $(".post-list-item a").attr("target","_blank");
-        $("#post-nav-button > a:nth-child(2)").click(function() {
-            $(".fa-bars, .fa-times").toggle();
-            $(".post-list").toggle(300);
-            if ($(".toc").length > 0) {
-                $("#toc, #tocButton").toggle(200, function() {
-                    if ($(".switch-area").is(":visible")) {
-                        $("#toc, .switch-btn, .switch-area").toggle();
-                        $("#tocButton").attr("value", valueHide);
-                        }
-                    })
-            }
-            else {
-                $(".switch-btn, .switch-area").fadeToggle(300);
-            }
-        })
-    </script>
-
-
-
-
-    
-        <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-        <script>
-            var yiliaConfig = {
-            fancybox: true,
-            mathjax: true,
-            animate: true,
-            isHome: false,
-            isPost: true,
-            isArchive: false,
-            isTag: false,
-            isCategory: false,
-            open_in_new: false
-            }
-        </script>
         
-
+    </script>
 </div>
       <footer id="footer">
     <div class="outer">
         <div id="footer-info">
             <div class="footer-right">
-                &copy; 2017 Sherwel
+                <i class="fa fa-copyright"></i> 
+                2016-2017 Sherwel
             </div>
 
         </div>
-        <div class="visit">
-            <span id="busuanzi_container_site_pv" style='display:none'>
-                <span id="site-visit" >本站到访数: 
-                    <span id="busuanzi_value_site_uv"></span>
-                </span>
-            </span>
-            <span id="busuanzi_container_page_pv" style='display:none'>
-                <span id="page-visit">, 本页阅读量: 
-                    <span id="busuanzi_value_page_pv"></span>
-                </span>
-            </span>
-        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
     </div>
-<script>
-(function(){
-    var bp = document.createElement('script');
-    bp.src = '//push.zhanzhang.baidu.com/push.js';
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
-</script>
 </footer>
 
     </div>
     
+    <script src="/js/GithubRepoWidget.js" type="text/javascript"></script>
 
-<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
-<script src="/js/main.js" type="text/javascript"></script>
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
 
     <script>
         $(document).ready(function() {
@@ -645,7 +640,8 @@ var duoshuoQuery = {short_name:"[object Object]"};
 
 
 
-<script type="text/x-mathjax-config">
+
+    <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
     tex2jax: {
         inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
@@ -662,22 +658,35 @@ MathJax.Hub.Queue(function() {
 });
 </script>
 
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 
 
 <div class="scroll" id="scroll">
     <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
     <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
 </div>
-
 <script>
-    $(document).ready(function() {
-        if ($("#comments").length < 1) {
-            $("#scroll > a:nth-child(2)").hide();
-        };
-    })
+    // Open in New Window
+    
+        var oOpenInNew = {
+             github: ".github-widget a", 
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
 </script>
 
 <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
