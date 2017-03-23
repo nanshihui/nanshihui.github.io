@@ -121,7 +121,7 @@
 <h3 id="WebGL__u6307_u7EB9"><a href="#WebGL__u6307_u7EB9" class="headerlink" title="WebGL 指纹"></a>WebGL 指纹</h3><p>　　通过WEBGL_debug_renderer_info 接口，获得产品名和供应商名</p>
 <h3 id="u5176_u4ED6_u6307_u7EB9"><a href="#u5176_u4ED6_u6307_u7EB9" class="headerlink" title="其他指纹"></a>其他指纹</h3><p>　　Platform(UA),Do Not Track &amp; Ad blocker</p>
 <h2 id="u65B0_u6D4F_u89C8_u5668_u6307_u7EB9_u6280_u672F"><a href="#u65B0_u6D4F_u89C8_u5668_u6307_u7EB9_u6280_u672F" class="headerlink" title="新浏览器指纹技术"></a>新浏览器指纹技术</h2><h3 id="CPU_u865A_u62DF_u6838_u5FC3_u6570"><a href="#CPU_u865A_u62DF_u6838_u5FC3_u6570" class="headerlink" title="CPU虚拟核心数"></a>CPU虚拟核心数</h3><p>　　新的浏览器特性具有<code>hardwareConcurrency</code>函数,即使不支持,我们也可以通过侧信道攻击,也能发现,比如可以在增加worker的数量,观察有效载荷的完成时间。当完成时间随着worker的数量级显著增加时，说明达到硬件并发的限制，使得可以预估CPU核心数量。 当然值得注意的是，某些浏览器（例如Safari）会将Web Workers的可用核心数减少一半，那么我们需要将浏览器指纹的worker数量加倍.</p>
-<h3 id="u97F3_u9891_u4E0A_u4E0B_u6587"><a href="#u97F3_u9891_u4E0A_u4E0B_u6587" class="headerlink" title="音频上下文"></a>音频上下文</h3><p>　　音频上下文借助OS和音频卡中的音频堆栈，为音频信号产生到信号滤波,提供处理功能。具体来说，现有的指纹识别工作使用振荡器节点生成三角波，然后将波馈入产生压缩效果的信号处理模块，该节点可以抑制较大的声音以及放大微小的声音。 然后，经处理的音频信号通过分析节点转换为频域。<br>　　这种波形在同一台机不同浏览器是不一样的.但是对于跨浏览器,其峰值和它们对应的频率相对稳定.通过映射关系可以将这个作为跨浏览器的特征.其中作为特征的有采样率，最大通道数，输入数，输出数，通道数，通道计数模式和通道解释。<br>　　此处推荐篇论文<a href="http://nanshihui.github.io/public/crossbrowsertracking_NDSS17.pdf">http://nanshihui.github.io/public/crossbrowsertracking_NDSS17.pdf</a>,其指纹模型目前能够达到99%的识别率.</p>
+<h3 id="u97F3_u9891_u4E0A_u4E0B_u6587"><a href="#u97F3_u9891_u4E0A_u4E0B_u6587" class="headerlink" title="音频上下文"></a>音频上下文</h3><p>　　音频上下文借助OS和音频卡中的音频堆栈，为音频信号产生到信号滤波,提供处理功能。具体来说，现有的指纹识别工作使用振荡器节点生成三角波，然后将波馈入产生压缩效果的信号处理模块，该节点可以抑制较大的声音以及放大微小的声音。 然后，经处理的音频信号通过分析节点转换为频域。<br>　　这种波形在同一台机不同浏览器是不一样的.但是对于跨浏览器,其峰值和它们对应的频率相对稳定.通过映射关系可以将这个作为跨浏览器的特征.其中作为特征的有采样率，最大通道数，输入数，输出数，通道数，通道计数模式和通道解释。<br>　　此处推荐篇论文<a href="https://nanshihui.github.io/public/crossbrowsertracking_NDSS17.pdf">https://nanshihui.github.io/public/crossbrowsertracking_NDSS17.pdf</a>,其指纹模型目前能够达到99%的识别率.</p>
 <h3 id="u5B57_u4F53_u68C0_u6D4B"><a href="#u5B57_u4F53_u68C0_u6D4B" class="headerlink" title="字体检测"></a>字体检测</h3><p>　　以往检测字体,是通过falsh达到的,这里使用侧信道攻击,通过测量某个字符串的宽度和高度以确定字体<br>类型.</p>
 <h3 id="u9A7B_u7559_u6280_u672F"><a href="#u9A7B_u7559_u6280_u672F" class="headerlink" title="驻留技术"></a>驻留技术</h3><p>　　通过各种属性生成的指纹需要长期保存,防止被用户删除,或者可恢复,这就需要驻留技术,驻留技术比较成熟的是evercookie.其存储cookie的思路从以下几个方面</p>
 <ul>
@@ -142,7 +142,7 @@
 <li>Java JNLP 持久化服务</li>
 <li>Java漏洞利用CVE-2013-0422 - 尝试将applet沙箱转储并将cookie数据直接写入用户的硬盘驱动器。<br>　　以上维度,不是所有浏览器都是支持,但是evercookie提供一个很好的支持.</li>
 </ul>
-<h2 id="u603B_u7ED3"><a href="#u603B_u7ED3" class="headerlink" title="总结"></a>总结</h2><p>　　对于浏览器指纹,攻与防在不断的转换,目前浏览器指纹也不能绝对的标识一台主机,如果用户切换显卡或者双系统,虚拟机这些因素,那么目前的浏览器指纹就无法唯一标识了.未来随着新的HTML5技术不断更新,新的浏览器技术会提供更多的API.</p>
+<h2 id="u603B_u7ED3"><a href="#u603B_u7ED3" class="headerlink" title="总结"></a>总结</h2><p>　　对于浏览器指纹,攻与防在不断的转换,目前浏览器指纹也不能绝对的标识一台主机,如果用户切换显卡或者双系统,虚拟机这些因素,那么目前的浏览器指纹就无法唯一标识了.未来随着新的HTML5技术不断更新,新的浏览器技术会提供更多的API.以及通过侧信道技术,在浏览器指纹会有新的突破.</p>
 ]]></content>
       
         <categories>
