@@ -1484,14 +1484,24 @@
         <section class="youyan" id="comments">
     <script>
         var loadComment = function(){
-            var d = document, s = d.createElement('script');
-            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:')+'//v2.uyan.cc/code/uyan.js?uid=2127999';
-            (d.head || d.body).appendChild(s);
+            // var d = document, s = d.createElement('script');
+            // s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:')+'//v2.uyan.cc/code/uyan.js?uid=2127999';
+            // (d.head || d.body).appendChild(s);
         }
     </script>
     
     <script> loadComment(); </script>
 
+    <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+<script>
+  var cloudTieConfig = {
+    url: document.location.href, 
+    sourceId: "",
+    productKey: "b5e745da886b40bbac100f4e58b55f04",
+    target: "cloud-tie-wrapper"
+  };
+</script>
+<script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
     <div id="uyan_frame"></div>
 </section>
     
