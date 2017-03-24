@@ -31,8 +31,8 @@
 代理类型: 常见的代理类型
 代理检测方法: 检测代理所使用的方法，包含对http,https,socks,vpn,tor等
 其他: 对于代理检测的展望">
-<meta property="og:image" content="http://nanshihui.github.io/public/tor.jpg">
-<meta property="og:updated_time" content="2017-03-21T08:12:08.648Z">
+<meta property="og:image" content="https://nanshihui.github.io//nanshihui.github.io/public/tor.jpg">
+<meta property="og:updated_time" content="2017-03-24T02:12:04.841Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="细数代理检测">
 <meta name="twitter:description" content="前言代理检测,虽然看起来很常见，但是仔细琢磨，还是有不少东西
@@ -344,7 +344,7 @@
 <h3 id="HTTPS_u4EE3_u7406"><a href="#HTTPS_u4EE3_u7406" class="headerlink" title="HTTPS代理"></a>HTTPS代理</h3><p>　　侧重于对访问有SSL和TLS加密的网站，典型的如VPN,常见的端口443,8443</p>
 <h3 id="SOCKS_u4EE3_u7406"><a href="#SOCKS_u4EE3_u7406" class="headerlink" title="SOCKS代理"></a>SOCKS代理</h3><p>　　不关心应用层的细节,因此速度会比较快，目前常见的有socks4和socks5两种方式，简单的说就是，socks4具备的，socks5都支持，常见的端口有1080。</p>
 <h3 id="TOR"><a href="#TOR" class="headerlink" title="TOR"></a>TOR</h3><p>　　TOR其实侧重的是匿名性，放在此处仅仅做一个补充了解tor.常见的端口有9050,9001,9040</p>
-<h4 id="tor_u7EC4_u6210"><a href="#tor_u7EC4_u6210" class="headerlink" title="tor组成"></a>tor组成</h4><p>　　tor包含三个节点，有guard node,relay node ,以及exit node<br><img src="http://nanshihui.github.io/public/tor.jpg" alt="PS-PNG-work"></p>
+<h4 id="tor_u7EC4_u6210"><a href="#tor_u7EC4_u6210" class="headerlink" title="tor组成"></a>tor组成</h4><p>　　tor包含三个节点，有guard node,relay node ,以及exit node<br><img src="//nanshihui.github.io/public/tor.jpg" alt="PS-PNG-work"></p>
 <h4 id="tor_u539F_u7406_u6D41_u7A0B"><a href="#tor_u539F_u7406_u6D41_u7A0B" class="headerlink" title="tor原理流程"></a>tor原理流程</h4><p>　　tor节点一开始会请求一个consensus文档，以获得tor网络的节点是什么样的。而这个文档是由以下几个IP维护的。其文档的具体内容可以通过如下IP访问,路径为<br>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/tor/status-vote/current/consensus</span><br></pre></td></tr></table></figure></p>
 <p>其具体的格式解析，可以参考该<a href="https://www.cryptolux.org/images/b/bc/Tor_Issues_Thesis_Thill_Fabrice.pdf" target="_blank" rel="external">https://www.cryptolux.org/images/b/bc/Tor_Issues_Thesis_Thill_Fabrice.pdf</a>论文描述。tor客户端在获得这个共识文档后，会随机的选择３个节点作为整个链路。<br>　　网桥，是由于国内用户无法直接访问以下这几个IP，通过网桥，绕过GFW的限制，从而获得共识文档。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123; ip = <span class="string">"128.31.0.39"</span>, port = <span class="string">"9131"</span>&#125;,</span><br><span class="line">&#123; ip = <span class="string">"86.59.21.38"</span>, port = <span class="string">"80"</span> &#125;,</span><br><span class="line">&#123; ip = <span class="string">"194.109.206.212"</span>, port = <span class="string">"80"</span> &#125;,</span><br><span class="line">&#123; ip = <span class="string">"82.94.251.203"</span>, port = <span class="string">"80"</span> &#125;,</span><br><span class="line">&#123; ip = <span class="string">"131.188.40.189"</span>, port = <span class="string">"80"</span>&#125;,</span><br><span class="line">&#123; ip = <span class="string">"193.23.244.244"</span>, port = <span class="string">"80"</span>&#125;,</span><br><span class="line">&#123; ip = <span class="string">"208.83.223.34"</span>, port = <span class="string">"443"</span> &#125;,</span><br><span class="line">&#123; ip = <span class="string">"171.25.193.9"</span>, port = <span class="string">"443"</span> &#125;,</span><br><span class="line">&#123; ip = <span class="string">"154.35.175.225"</span>, port = <span class="string">"80"</span> &#125;,</span><br><span class="line">&#123; ip = <span class="string">"199.254.238.52"</span>, port = <span class="string">"80"</span> &#125;</span><br></pre></td></tr></table></figure></p>
 <p>　　流量在Tor之间传输都是加密的形式，而出口节点的信息，则是透明的，除非使用https协议或者其他安全方式。因此，如果在tor网络只使用http协议访问网站，那么你的信息，就可以被别人捕获到。</p>
@@ -364,7 +364,7 @@
         <p><span>本文标题:</span><a href="/2017/02/08/ipproxy/">细数代理检测</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Sherwel</a></p>
         <p><span>发布时间:</span>2017-02-08, 18:56:28</p>
-        <p><span>最后更新:</span>2017-03-21, 16:12:08</p>
+        <p><span>最后更新:</span>2017-03-24, 10:12:04</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/02/08/ipproxy/" title="细数代理检测">https://nanshihui.github.io/2017/02/08/ipproxy/</a>
             <span class="copy-path" data-clipboard-text="原文: https://nanshihui.github.io/2017/02/08/ipproxy/　　作者: Sherwel" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
