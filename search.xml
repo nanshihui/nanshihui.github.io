@@ -5,7 +5,7 @@
     
     <entry>
       <title><![CDATA[浏览器指纹追踪]]></title>
-      <url>http://nanshihui.github.io/2017/03/21/browser-fingerprint/</url>
+      <url>https://nanshihui.github.io/2017/03/21/browser-fingerprint/</url>
       <content type="html"><![CDATA[<p></p><h2 id="intro">前言</h2>随着flash逐渐退出浏览器,传统的浏览器指纹开始不适用,为此本文介绍目前最常见的浏览器指纹模型,以及新的浏览器指纹技术,方便需要的人.<p></p>
 <h3 id="u6D4F_u89C8_u5668_u6307_u7EB9_u6280_u672F"><a href="#u6D4F_u89C8_u5668_u6307_u7EB9_u6280_u672F" class="headerlink" title="浏览器指纹技术"></a>浏览器指纹技术</h3><ul>
 <li><strong>常见浏览器指纹:</strong> 常见的浏览器指纹技术；</li>
@@ -162,7 +162,7 @@
     
     <entry>
       <title><![CDATA[细数代理检测]]></title>
-      <url>http://nanshihui.github.io/2017/02/08/ipproxy/</url>
+      <url>https://nanshihui.github.io/2017/02/08/ipproxy/</url>
       <content type="html"><![CDATA[<p></p><h2 id="intro">前言</h2>代理检测,虽然看起来很常见，但是仔细琢磨，还是有不少东西<p></p>
 <h3 id="u7ED3_u6784"><a href="#u7ED3_u6784" class="headerlink" title="结构"></a>结构</h3><ul>
 <li><strong>代理的作用</strong> </li>
@@ -206,7 +206,7 @@
     
     <entry>
       <title><![CDATA[Run Zmap in docker]]></title>
-      <url>http://nanshihui.github.io/2017/01/05/run-zmap-in-docker/</url>
+      <url>https://nanshihui.github.io/2017/01/05/run-zmap-in-docker/</url>
       <content type="html"><![CDATA[<p></p><h2 id="intro">前言</h2>最近尝试在Docker环境中安装ZMAP，出现一些问题<p></p>
 <h3 id="u603B_u4F53"><a href="#u603B_u4F53" class="headerlink" title="总体"></a>总体</h3><ul>
 <li><strong>情况描述1:</strong>　出现 SIOCGIFADDR: Invalid argument</li>
@@ -252,7 +252,7 @@
     
     <entry>
       <title><![CDATA[The Spy in the Sandbox :Practical Cache Attacks in JavaScript and their Implications]]></title>
-      <url>http://nanshihui.github.io/2016/05/27/the-spy-in-the-sandbox/</url>
+      <url>https://nanshihui.github.io/2016/05/27/the-spy-in-the-sandbox/</url>
       <content type="html"><![CDATA[<p></p><h2 id="intro">前言</h2>仅记录The Spy in the Sandbox: Practical Cache Attacks in JavaScript and their Implications 读后短评<p></p>
 <h3 id="u7ED3_u6784"><a href="#u7ED3_u6784" class="headerlink" title="结构"></a>结构</h3><ul>
 <li><strong>概要</strong> 论文概要；</li>
@@ -289,7 +289,7 @@
     
     <entry>
       <title><![CDATA[A Search Engine Backed by Internet-Wide Scanning]]></title>
-      <url>http://nanshihui.github.io/2016/05/17/A-Search-Engine-Backed-by-Internet-Wide-Scanning/</url>
+      <url>https://nanshihui.github.io/2016/05/17/A-Search-Engine-Backed-by-Internet-Wide-Scanning/</url>
       <content type="html"><![CDATA[<p></p><h2 id="intro">前言</h2>仅记录A Search Engine Backed by Internet-Wide Scanning读后短评<p></p>
 <h3 id="u7ED3_u6784"><a href="#u7ED3_u6784" class="headerlink" title="结构"></a>结构</h3><ul>
 <li><strong>概要</strong> 论文概要；</li>
@@ -326,7 +326,7 @@
     
     <entry>
       <title><![CDATA[Program-Adaptive Mutational Fuzzing]]></title>
-      <url>http://nanshihui.github.io/2016/05/10/Program-Adaptive-Mutational-Fuzzing/</url>
+      <url>https://nanshihui.github.io/2016/05/10/Program-Adaptive-Mutational-Fuzzing/</url>
       <content type="html"><![CDATA[<p></p><h2 id="intro">前言</h2>仅记录Program-Adaptive Mutational Fuzzing读后短评<p></p>
 <h3 id="u7ED3_u6784"><a href="#u7ED3_u6784" class="headerlink" title="结构"></a>结构</h3><ul>
 <li><strong>概要</strong> 论文概要；</li>
@@ -363,7 +363,7 @@
     
     <entry>
       <title><![CDATA[MySQL主从库相关信息整理]]></title>
-      <url>http://nanshihui.github.io/2016/04/18/MySQL%E4%B8%BB%E4%BB%8E%E5%BA%93%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF%E6%95%B4%E7%90%86/</url>
+      <url>https://nanshihui.github.io/2016/04/18/MySQL%E4%B8%BB%E4%BB%8E%E5%BA%93%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF%E6%95%B4%E7%90%86/</url>
       <content type="html"><![CDATA[<p></p><h2 id="intro">前言</h2>仅记录在主从库遇到的坑<p></p>
 <h3 id="u76F8_u5173_u7684_u914D_u7F6E_u65B9_u5F0F"><a href="#u76F8_u5173_u7684_u914D_u7F6E_u65B9_u5F0F" class="headerlink" title="相关的配置方式"></a>相关的配置方式</h3><ul>
 <li><strong>服务创建:</strong> 基本配置；</li>
@@ -414,7 +414,7 @@
     
     <entry>
       <title><![CDATA[sqlmap常用技巧整理]]></title>
-      <url>http://nanshihui.github.io/2016/02/25/sqlmaptips/</url>
+      <url>https://nanshihui.github.io/2016/02/25/sqlmaptips/</url>
       <content type="html"><![CDATA[<p></p><h2 id="intro">前言</h2>通过在乌云网上出现的很多SQL注入漏洞，因此来总结一下，大致使用SQLMAP所遇到的参数。<br><a id="more"></a><p></p>
 <h2 id="u57FA_u672C_u7ED3_u6784"><a href="#u57FA_u672C_u7ED3_u6784" class="headerlink" title="基本结构"></a>基本结构</h2><p>　　基本SQLMAP的使用方式就如下所示，使用参数式的方式，按需求添加。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sqlmap.py -u <span class="string">"http:// *"</span>  --data=<span class="string">"a=b"</span> -p a   --level <span class="number">3</span> --random-agent --referer=<span class="string">"a"</span> </span><br><span class="line">--technique T --dbms=mysql --cookie=<span class="string">"cookie"</span> --tables</span><br></pre></td></tr></table></figure></p>
 <h2 id="u53C2_u6570_u89E3_u91CA"><a href="#u53C2_u6570_u89E3_u91CA" class="headerlink" title="参数解释"></a>参数解释</h2><h3 id="u661F_u53F7"><a href="#u661F_u53F7" class="headerlink" title="星号"></a>星号</h3><p>　　在注入的过程中，有时候是伪静态的页面，可以使用星号表示可能存在注入的部分</p>
@@ -620,7 +620,7 @@
     
     <entry>
       <title><![CDATA[Scan-T简介]]></title>
-      <url>http://nanshihui.github.io/2016/01/21/ToolForSpider%E7%AE%80%E4%BB%8B/</url>
+      <url>https://nanshihui.github.io/2016/01/21/ToolForSpider%E7%AE%80%E4%BB%8B/</url>
       <content type="html"><![CDATA[<p></p><h2 id="intro">前言</h2>看着自己编写的代码没有说明的确不方便别人开发，便写了部分说明在这边。简单的记录该项目的相关说明。<p></p>
 <h3 id="u5173_u4E8EScan-T_u9879_u76EE_u7684_u8BF4_u660E"><a href="#u5173_u4E8EScan-T_u9879_u76EE_u7684_u8BF4_u660E" class="headerlink" title="关于Scan-T项目的说明"></a>关于Scan-T项目的说明</h3><ul>
 <li><strong>文件分布:</strong>详细文件分类</li>
@@ -692,7 +692,7 @@
     
     <entry>
       <title><![CDATA[SQL注入总结（一）]]></title>
-      <url>http://nanshihui.github.io/2016/01/19/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/</url>
+      <url>https://nanshihui.github.io/2016/01/19/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/</url>
       <content type="html"><![CDATA[<p></p><h2 id="intro">前言</h2>习惯sqlmap方便的的同时，会不知不觉依赖上，差点忘了根本，遂总结了一下，提醒自己<p></p>
 <h3 id="u5E38_u89C1_u7684SQL_u6CE8_u5165_u5F62_u5F0F"><a href="#u5E38_u89C1_u7684SQL_u6CE8_u5165_u5F62_u5F0F" class="headerlink" title="常见的SQL注入形式"></a>常见的SQL注入形式</h3><ul>
 <li><strong>读取数据库内容常用方式:</strong>　information_schema，mysql.user</li>
@@ -746,7 +746,7 @@
     
     <entry>
       <title><![CDATA[python 中常见的 import 模块的方法(总结)]]></title>
-      <url>http://nanshihui.github.io/2016/01/18/python%20%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%9A%84%20import%20%E6%A8%A1%E5%9D%97%E7%9A%84%E6%96%B9%E6%B3%95(%E6%80%BB%E7%BB%93)/</url>
+      <url>https://nanshihui.github.io/2016/01/18/python%20%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%9A%84%20import%20%E6%A8%A1%E5%9D%97%E7%9A%84%E6%96%B9%E6%B3%95(%E6%80%BB%E7%BB%93)/</url>
       <content type="html"><![CDATA[<p></p><h2 id="intro">前言</h2>在用python进行编程时，经常会使用第三方模块包。这种包我们可以通过 python setup install  进行安装后，通过 import XXX或from XXX import yyy 进行导入。不过如果是自己遍写的依赖包，又不想安装到 python 的相应目录，可以放到本目录里进行import进行调用；为了更清晰的理清程序之间的关系，例如我们会把这种包放到lib目录再调用。<br><a id="more"></a><p></p>
 <h2 id="u540C_u7EA7_u76EE_u5F55_u4E0B_u7684_u8C03_u7528"><a href="#u540C_u7EA7_u76EE_u5F55_u4E0B_u7684_u8C03_u7528" class="headerlink" title="同级目录下的调用"></a>同级目录下的调用</h2><p>　　程序结构如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-- src</span><br><span class="line">    |-- mod1.py</span><br><span class="line">    |-- <span class="built_in">test</span>1.py</span><br></pre></td></tr></table></figure>
@@ -782,7 +782,7 @@
     
     <entry>
       <title><![CDATA[如何构建一个网络空间指纹识别系统（一）]]></title>
-      <url>http://nanshihui.github.io/2016/01/15/%E7%BD%91%E7%BB%9C%E7%A9%BA%E9%97%B4%E6%8C%87%E7%BA%B9%E8%AF%86%E5%88%AB/</url>
+      <url>https://nanshihui.github.io/2016/01/15/%E7%BD%91%E7%BB%9C%E7%A9%BA%E9%97%B4%E6%8C%87%E7%BA%B9%E8%AF%86%E5%88%AB/</url>
       <content type="html"><![CDATA[<p></p><h2 id="intro">前言</h2>仅记录在开发过程中的思考和理解<p></p>
 <h3 id="u5982_u4F55_u6784_u5EFA_u4E00_u4E2A_u7F51_u7EDC_u7A7A_u95F4_u6307_u7EB9_u7CFB_u7EDF"><a href="#u5982_u4F55_u6784_u5EFA_u4E00_u4E2A_u7F51_u7EDC_u7A7A_u95F4_u6307_u7EB9_u7CFB_u7EDF" class="headerlink" title="如何构建一个网络空间指纹系统"></a>如何构建一个网络空间指纹系统</h3><ul>
 <li><strong>整体架构:</strong> 整体搭建的结构；</li>
@@ -823,7 +823,7 @@
     
     <entry>
       <title><![CDATA[自用 Windows 和 Mac 软件推荐]]></title>
-      <url>http://nanshihui.github.io/2016/01/08/windows-mac-software/</url>
+      <url>https://nanshihui.github.io/2016/01/08/windows-mac-software/</url>
       <content type="html"><![CDATA[<p></p><h2 id="intro">前言</h2>罗列自己正在使用的 Windows 和 Mac OS 软件，基本上都是同类中能较好满足个人需求的软件，作表记录，方便自己检索，也顺便推荐给大家。<p></p>
 <h3 id="u8F6F_u4EF6_u5206_u7C7B_u8BF4_u660E"><a href="#u8F6F_u4EF6_u5206_u7C7B_u8BF4_u660E" class="headerlink" title="软件分类说明"></a>软件分类说明</h3><ul>
 <li><strong>编程开发:</strong> 目前写代码用到的一些软件；</li>
@@ -1901,7 +1901,7 @@
     
     <entry>
       <title><![CDATA[hexo编写笔记]]></title>
-      <url>http://nanshihui.github.io/2016/01/07/hello-world/</url>
+      <url>https://nanshihui.github.io/2016/01/07/hello-world/</url>
       <content type="html"><![CDATA[<p>简单的记录hexo的指令.</p>
 <h2 id="u65B0_u624B_u5165_u95E8"><a href="#u65B0_u624B_u5165_u95E8" class="headerlink" title="新手入门"></a>新手入门</h2><h3 id="u65B0_u5EFA_u6587_u7AE0"><a href="#u65B0_u5EFA_u6587_u7AE0" class="headerlink" title="新建文章"></a>新建文章</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
 <p>更多信息: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
