@@ -15,32 +15,27 @@
 
 
 
-<meta name="description" content="前言代理检测,虽然看起来很常见，但是仔细琢磨，还是有不少东西
-结构
-代理的作用 
-代理类型: 常见的代理类型
-代理检测方法: 检测代理所使用的方法，包含对http,https,socks,vpn,tor等
-其他: 对于代理检测的展望">
+<meta name="description" content="前言很多人都会好奇为什么ZMAP能够做到45分钟,扫遍整个互联网,遂去看了下ZMAP的源码,顺便分享知识.
+zmap源码解读之zmap扫描快的原因
+整体架构: ZMAP整体框架；
+源码分析: 详细的解释扫描的原理；">
 <meta property="og:type" content="article">
-<meta property="og:title" content="细数代理检测">
-<meta property="og:url" content="https://nanshihui.github.io/2017/02/08/ipproxy/index.html">
+<meta property="og:title" content="zmap源码解读之zmap扫描快的原因">
+<meta property="og:url" content="https://nanshihui.github.io/2017/03/29/zmap源码解读之zmap扫描快的原因/index.html">
 <meta property="og:site_name" content="Sherwel-Blog">
-<meta property="og:description" content="前言代理检测,虽然看起来很常见，但是仔细琢磨，还是有不少东西
-结构
-代理的作用 
-代理类型: 常见的代理类型
-代理检测方法: 检测代理所使用的方法，包含对http,https,socks,vpn,tor等
-其他: 对于代理检测的展望">
-<meta property="og:image" content="https://nanshihui.github.io/public/tor.jpg">
-<meta property="og:updated_time" content="2017-03-24T02:42:44.518Z">
+<meta property="og:description" content="前言很多人都会好奇为什么ZMAP能够做到45分钟,扫遍整个互联网,遂去看了下ZMAP的源码,顺便分享知识.
+zmap源码解读之zmap扫描快的原因
+整体架构: ZMAP整体框架；
+源码分析: 详细的解释扫描的原理；">
+<meta property="og:image" content="https://nanshihui.github.io//nanshihui.github.io/public/ClusterCallButterfly-src.png">
+<meta property="og:image" content="https://nanshihui.github.io//nanshihui.github.io/public/syn.jpg">
+<meta property="og:updated_time" content="2017-03-29T07:12:30.307Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="细数代理检测">
-<meta name="twitter:description" content="前言代理检测,虽然看起来很常见，但是仔细琢磨，还是有不少东西
-结构
-代理的作用 
-代理类型: 常见的代理类型
-代理检测方法: 检测代理所使用的方法，包含对http,https,socks,vpn,tor等
-其他: 对于代理检测的展望">
+<meta name="twitter:title" content="zmap源码解读之zmap扫描快的原因">
+<meta name="twitter:description" content="前言很多人都会好奇为什么ZMAP能够做到45分钟,扫遍整个互联网,遂去看了下ZMAP的源码,顺便分享知识.
+zmap源码解读之zmap扫描快的原因
+整体架构: ZMAP整体框架；
+源码分析: 详细的解释扫描的原理；">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -72,7 +67,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>细数代理检测 | Sherwel-Blog</title>
+<title>zmap源码解读之zmap扫描快的原因 | Sherwel-Blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -301,11 +296,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-ipproxy" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-zmap源码解读之zmap扫描快的原因" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/02/08/ipproxy/" class="article-date">
-      <time datetime="2017-02-08T10:56:28.000Z" itemprop="datePublished">2017-02-08</time>
+      <a href="/2017/03/29/zmap源码解读之zmap扫描快的原因/" class="article-date">
+      <time datetime="2017-03-29T03:38:16.000Z" itemprop="datePublished">2017-03-29</time>
 </a>
 
 
@@ -320,7 +315,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      细数代理检测
+      zmap源码解读之zmap扫描快的原因
     </h1>
   
 
@@ -329,13 +324,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/安全研发/">安全研发</a>
+    <a class="article-category-link" href="/categories/Web安全/">Web安全</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Proxy/">Proxy</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Zmap/">Zmap</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -345,28 +340,24 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p></p><h2 id="intro">前言</h2>代理检测,虽然看起来很常见，但是仔细琢磨，还是有不少东西<p></p>
-<h3 id="u7ED3_u6784"><a href="#u7ED3_u6784" class="headerlink" title="结构"></a>结构</h3><ul>
-<li><strong>代理的作用</strong> </li>
-<li><strong>代理类型:</strong> 常见的代理类型</li>
-<li><strong>代理检测方法:</strong> 检测代理所使用的方法，包含对http,https,socks,vpn,tor等</li>
-<li><strong>其他:</strong> 对于代理检测的展望</li>
+        <p></p><h2 id="intro">前言</h2>很多人都会好奇为什么ZMAP能够做到45分钟,扫遍整个互联网,遂去看了下ZMAP的源码,顺便分享知识.<p></p>
+<h3 id="zmap_u6E90_u7801_u89E3_u8BFB_u4E4Bzmap_u626B_u63CF_u5FEB_u7684_u539F_u56E0"><a href="#zmap_u6E90_u7801_u89E3_u8BFB_u4E4Bzmap_u626B_u63CF_u5FEB_u7684_u539F_u56E0" class="headerlink" title="zmap源码解读之zmap扫描快的原因"></a>zmap源码解读之zmap扫描快的原因</h3><ul>
+<li><strong>整体架构:</strong> ZMAP整体框架；</li>
+<li><strong>源码分析:</strong> 详细的解释扫描的原理；<a id="more"></a>
+</li>
 </ul>
-<a id="more"></a>
-<h2 id="u5F15_u8A00"><a href="#u5F15_u8A00" class="headerlink" title="引言"></a>引言</h2><p>　　对于代理，想必不会陌生。然而对于代理的检测，出于对速度和准确率之间的取舍，往往摸不到头。通过对一些论文和目前常见的检测代理方法了解过后，遂做了些总结。</p>
-<h2 id="u4EE3_u7406_u7C7B_u578B"><a href="#u4EE3_u7406_u7C7B_u578B" class="headerlink" title="代理类型"></a>代理类型</h2><h3 id="HTTP_u4EE3_u7406"><a href="#HTTP_u4EE3_u7406" class="headerlink" title="HTTP代理"></a>HTTP代理</h3><p>　　HTTP代理是我们最熟悉的一种方式，一般用于访问网页，一般有内容过滤和缓存等功能。常见的端口有8080,3128,80</p>
-<h3 id="HTTPS_u4EE3_u7406"><a href="#HTTPS_u4EE3_u7406" class="headerlink" title="HTTPS代理"></a>HTTPS代理</h3><p>　　侧重于对访问有SSL和TLS加密的网站，典型的如VPN,常见的端口443,8443</p>
-<h3 id="SOCKS_u4EE3_u7406"><a href="#SOCKS_u4EE3_u7406" class="headerlink" title="SOCKS代理"></a>SOCKS代理</h3><p>　　不关心应用层的细节,因此速度会比较快，目前常见的有socks4和socks5两种方式，简单的说就是，socks4具备的，socks5都支持，常见的端口有1080。</p>
-<h3 id="TOR"><a href="#TOR" class="headerlink" title="TOR"></a>TOR</h3><p>　　TOR其实侧重的是匿名性，放在此处仅仅做一个补充了解tor.常见的端口有9050,9001,9040</p>
-<h4 id="tor_u7EC4_u6210"><a href="#tor_u7EC4_u6210" class="headerlink" title="tor组成"></a>tor组成</h4><p>　　tor包含三个节点，有guard node,relay node ,以及exit node<br><img src="/public/tor.jpg" alt="PS-PNG-work"></p>
-<h4 id="tor_u539F_u7406_u6D41_u7A0B"><a href="#tor_u539F_u7406_u6D41_u7A0B" class="headerlink" title="tor原理流程"></a>tor原理流程</h4><p>　　tor节点一开始会请求一个consensus文档，以获得tor网络的节点是什么样的。而这个文档是由以下几个IP维护的。其文档的具体内容可以通过如下IP访问,路径为<br>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/tor/status-vote/current/consensus</span><br></pre></td></tr></table></figure></p>
-<p>其具体的格式解析，可以参考该<a href="https://www.cryptolux.org/images/b/bc/Tor_Issues_Thesis_Thill_Fabrice.pdf" target="_blank" rel="external">https://www.cryptolux.org/images/b/bc/Tor_Issues_Thesis_Thill_Fabrice.pdf</a>论文描述。tor客户端在获得这个共识文档后，会随机的选择３个节点作为整个链路。<br>　　网桥，是由于国内用户无法直接访问以下这几个IP，通过网桥，绕过GFW的限制，从而获得共识文档。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123; ip = <span class="string">"128.31.0.39"</span>, port = <span class="string">"9131"</span>&#125;,</span><br><span class="line">&#123; ip = <span class="string">"86.59.21.38"</span>, port = <span class="string">"80"</span> &#125;,</span><br><span class="line">&#123; ip = <span class="string">"194.109.206.212"</span>, port = <span class="string">"80"</span> &#125;,</span><br><span class="line">&#123; ip = <span class="string">"82.94.251.203"</span>, port = <span class="string">"80"</span> &#125;,</span><br><span class="line">&#123; ip = <span class="string">"131.188.40.189"</span>, port = <span class="string">"80"</span>&#125;,</span><br><span class="line">&#123; ip = <span class="string">"193.23.244.244"</span>, port = <span class="string">"80"</span>&#125;,</span><br><span class="line">&#123; ip = <span class="string">"208.83.223.34"</span>, port = <span class="string">"443"</span> &#125;,</span><br><span class="line">&#123; ip = <span class="string">"171.25.193.9"</span>, port = <span class="string">"443"</span> &#125;,</span><br><span class="line">&#123; ip = <span class="string">"154.35.175.225"</span>, port = <span class="string">"80"</span> &#125;,</span><br><span class="line">&#123; ip = <span class="string">"199.254.238.52"</span>, port = <span class="string">"80"</span> &#125;</span><br></pre></td></tr></table></figure></p>
-<p>　　流量在Tor之间传输都是加密的形式，而出口节点的信息，则是透明的，除非使用https协议或者其他安全方式。因此，如果在tor网络只使用http协议访问网站，那么你的信息，就可以被别人捕获到。</p>
-<h2 id="u4EE3_u7406_u7684_u68C0_u6D4B_u65B9_u6CD5"><a href="#u4EE3_u7406_u7684_u68C0_u6D4B_u65B9_u6CD5" class="headerlink" title="代理的检测方法"></a>代理的检测方法</h2><h3 id="https/http_u4EE3_u7406_u68C0_u6D4B"><a href="#https/http_u4EE3_u7406_u68C0_u6D4B" class="headerlink" title="https/http代理检测"></a>https/http代理检测</h3><p>　　最常见的方式是转发，其次对于报文头的一些头信息，可以间接的判断。最常见的比如<code>http_via,remote_ip,x_forworded_for</code>这些字段，其次一些代理产品，有相应的产品指纹，可以直接获得。对于目标ip,如果其真实操作系统和请求头信息不匹配，也可以认为是代理。依此类推时间，语言，操作系统任何一个不一致，都可以被认为是代理。对于VPN产品信息，有特定的指纹信息，可以通过请求返回的报文判断。</p>
-<h3 id="socks_u4EE3_u7406_u68C0_u6D4B"><a href="#socks_u4EE3_u7406_u68C0_u6D4B" class="headerlink" title="socks代理检测"></a>socks代理检测</h3><p>　　通过转发的方式，判断是否是代理</p>
-<h3 id="Tor_u68C0_u6D4B"><a href="#Tor_u68C0_u6D4B" class="headerlink" title="Tor检测"></a>Tor检测</h3><p>　　tor的检测，可以直接从共识文档获取，因为tor的出口节点ip才是我们想要的，所以直接检测tor出口节点就行了。<br>  　此外，tor-browser启动的时候，会在本地开放一个tor-socks端口，通过这个端口也可以间接的判断是否是代理IP.</p>
-<h3 id="u901A_u7528_u68C0_u6D4B_u65B9_u6CD5"><a href="#u901A_u7528_u68C0_u6D4B_u65B9_u6CD5" class="headerlink" title="通用检测方法"></a>通用检测方法</h3><p>　　通用的方法，就是以IP为单位，比如IP的whois信息，以及DNSBL信息等，都可以推测出。<br>  　此外，网上免费代理的名单也可以间接的作为一份黑名单。</p>
-<h2 id="u5176_u4ED6"><a href="#u5176_u4ED6" class="headerlink" title="其他"></a>其他</h2><p>　　然而，对于代理检测，目前最前沿的方式是，通过在客户端添加一个自有协议，通过这个协议来检测访问时延。通过对这个时延的判断，来间接的判断，是否代理。而这个访问的依据是，使用代理会比不使用代理的速度会慢一点，因为一个请求默认会匹配最近的基站，如果使用代理，相当于绕远路的方式，因此可以通过这个方式来检测。<br>      而对于，提高代理检测的速度，以及其他优化的方法，会在下一篇文章中细数。</p>
+<h2 id="u5F15_u8A00"><a href="#u5F15_u8A00" class="headerlink" title="引言"></a>引言</h2><p>　　ZMAP是目前比较出色的端口扫描器,他的45分钟扫遍整个互联网的能力令人咋舌.然后去网上检索ZMAP扫描快的原因,都没有相关解释,遂只能自己动手,丰衣足食.</p>
+<h2 id="u6574_u4F53_u67B6_u6784"><a href="#u6574_u4F53_u67B6_u6784" class="headerlink" title="整体架构"></a>整体架构</h2><p>　　ZMAP整体函数调用图如下所示.<br><img src="//nanshihui.github.io/public/ClusterCallButterfly-src.png" alt="PS-PNG-work"><br>　　通过图我们可以直观的看到整个程序调用的过程.ZMAP在启动时候,先获取环境信息,如IP,网关等.然后读取配置文件选择使用哪种扫描方式,然后在Probe_modules切换到对应的模块,然后启动.<br>　　本文侧重分析SYN扫描这个模块.整个执行的过程中,会有一个线程专门负责发送,另外有一个使用libpcap组件抓包.发送和接收就独立开来.</p>
+<h2 id="SYN_u626B_u63CF"><a href="#SYN_u626B_u63CF" class="headerlink" title="SYN扫描"></a>SYN扫描</h2><p>　　如下图所示,客户端在发送一个SYN包的时候,如果对方端口开放,就会发送一个SYN-ACK,那么就表明这个端口开放,这时候我们发送RST包,防止占用对方资源.如果对方端口不开放,那么我们就会收到对方主机的RST包<br><img src="//nanshihui.github.io/public/syn.jpg" alt="SYN扫描"></p>
+<h2 id="SYN_u626B_u63CF_u5206_u6790"><a href="#SYN_u626B_u63CF_u5206_u6790" class="headerlink" title="SYN扫描分析"></a>SYN扫描分析</h2><p>　　ZMAP扫描在单端口的情况下比NMAP快,哪怕他们都是采用SYN,这是因为,ZMAP使用了无状态的扫描方式.无状态,就是在扫描过程中,不会记录发包的状态,不用记住那些包发了没,这样减少了用于存储状态的空间,相对的提高了扫描的速度.</p>
+<h3 id="u7C97_u7565_u89E3_u91CA"><a href="#u7C97_u7565_u89E3_u91CA" class="headerlink" title="粗略解释"></a>粗略解释</h3><p>　　ZMAP虽然不存储状态信息,但是这并不意味他不需要状态信息,而是他把状态信息存储在数据包里,这样通过返回的数据包,就能够直观的知道,这个包,是不是在我本次发送包的范围之内.在发送SYN包的时候,程序会将IP信息hash化,将其存储在sport,seq.在接收包的时候只要检验IPhash化的结果是否和dport和ack两个字段的内容相符合就行了.</p>
+<h3 id="u8BE6_u7EC6_u89E3_u91CA"><a href="#u8BE6_u7EC6_u89E3_u91CA" class="headerlink" title="详细解释"></a>详细解释</h3><p>　　程序在初始化的时候,会使用<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">```&#10;void validate_init()&#10;&#123;&#10;    for (int i=0; i &#60; AES_BLOCK_WORDS; i++) &#123;&#10;        aes_input[i] = 0;&#10;    &#125;&#10;    uint8_t key[AES_KEY_BYTES];&#10;    if (!random_bytes(key, AES_KEY_BYTES)) &#123;&#10;        log_fatal(&#34;validate&#34;, &#34;couldn&#39;t get random bytes&#34;);&#10;    &#125;&#10;    if (rijndaelKeySetupEnc(aes_sched, key, AES_KEY_BYTES*8) != AES_ROUNDS) &#123;&#10;        log_fatal(&#34;validate&#34;, &#34;couldn&#39;t initialize AES key&#34;);&#10;    &#125;&#10;    inited = 1;&#10;&#125;&#10;&#10;void validate_gen(const uint32_t src, const uint32_t dst,&#10;                uint8_t output[VALIDATE_BYTES])&#10;&#123;&#10;    assert(inited);&#10;    aes_input[0] = src;&#10;    aes_input[1] = dst;&#10;    rijndaelEncrypt(aes_sched, AES_ROUNDS, (uint8_t *)aes_input, output);&#10;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>validate_init是用于生成key,validate_gen是用于生成密文来校验.<br>在发送SYN包的时候,程序会将生成的密文分两部分,一个存储在seq和sport<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int synscan_make_packet(void *buf, ipaddr_n_t src_ip, ipaddr_n_t dst_ip,&#10;        uint32_t *validation, int probe_num, __attribute__((unused)) void *arg)&#10;&#123;&#10;    struct ether_header *eth_header = (struct ether_header *)buf;&#10;    struct ip *ip_header = (struct ip*)(&#38;eth_header[1]);&#10;    struct tcphdr *tcp_header = (struct tcphdr*)(&#38;ip_header[1]);&#10;    uint32_t tcp_seq = validation[0];&#10;&#10;    ip_header-&#62;ip_src.s_addr = src_ip;&#10;    ip_header-&#62;ip_dst.s_addr = dst_ip;&#10;&#10;    tcp_header-&#62;th_sport = htons(get_src_port(num_ports,&#10;                probe_num, validation));&#10;    tcp_header-&#62;th_seq = tcp_seq;&#10;    tcp_header-&#62;th_sum = 0;&#10;    tcp_header-&#62;th_sum = tcp_checksum(sizeof(struct tcphdr),&#10;            ip_header-&#62;ip_src.s_addr, ip_header-&#62;ip_dst.s_addr, tcp_header);&#10;&#10;    ip_header-&#62;ip_sum = 0;&#10;    ip_header-&#62;ip_sum = zmap_ip_checksum((unsigned short *) ip_header);&#10;&#10;    return EXIT_SUCCESS;&#10;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>而端口的怎么分配的,是通过<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">```&#10;&#10;&#10;static __attribute__((unused)) inline uint16_t get_src_port(int num_ports,&#10;                int probe_num, uint32_t *validation)&#10;&#123;&#10;    return zconf.source_port_first + ((validation[1] + probe_num) % num_ports);&#10;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在接受包的时候,通过同样的方式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">static __attribute__((unused)) inline int check_dst_port(uint16_t port,&#10;                int num_ports, uint32_t *validation)&#10;&#123;&#10;    if (port &#62; zconf.source_port_last&#10;                    || port &#60; zconf.source_port_first) &#123;&#10;        return -1;&#10;    &#125;&#10;    int32_t to_validate = port - zconf.source_port_first;&#10;    int32_t min = validation[1] % num_ports;&#10;    int32_t max = (validation[1] + zconf.packet_streams - 1) % num_ports;&#10;&#10;    return (((max - min) % num_ports) &#62;= ((to_validate - min) % num_ports));&#10;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>来检测这个包是不是我想要的包.<br>整个校验包的函数如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int synscan_validate_packet(const struct ip *ip_hdr, uint32_t len,&#10;        __attribute__((unused))uint32_t *src_ip,&#10;        uint32_t *validation)&#10;&#123;&#10;    if (ip_hdr-&#62;ip_p != IPPROTO_TCP) &#123;&#10;        return 0;&#10;    &#125;&#10;    if ((4*ip_hdr-&#62;ip_hl + sizeof(struct tcphdr)) &#62; len) &#123;&#10;        // buffer not large enough to contain expected tcp header&#10;        return 0;&#10;    &#125;&#10;    struct tcphdr *tcp = (struct tcphdr*)((char *) ip_hdr + 4*ip_hdr-&#62;ip_hl);&#10;    uint16_t sport = tcp-&#62;th_sport;&#10;    uint16_t dport = tcp-&#62;th_dport;&#10;    // validate source port&#10;    if (ntohs(sport) != zconf.target_port) &#123;&#10;        return 0;&#10;    &#125;&#10;    // validate destination port&#10;    if (!check_dst_port(ntohs(dport), num_ports, validation)) &#123;&#10;        return 0;&#10;    &#125;&#10;    // validate tcp acknowledgement number&#10;    if (htonl(tcp-&#62;th_ack) != htonl(validation[0])+1) &#123;&#10;        return 0;&#10;    &#125;&#10;    return 1;&#10;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>程序会首先看目标的端口是不是,本次我在探测的端口,其次是看dport是不是符合取模运算,最后比较接收的数据包的ACK字段是不是符合本次加密的密文第一部分.</p>
+<p>通过这样的一个过程,使得ZMAP可以将状态信息存在数据包里.避免了记录了状态信息.</p>
 
       
     </div>
@@ -375,13 +366,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/02/08/ipproxy/">细数代理检测</a></p>
+        <p><span>本文标题:</span><a href="/2017/03/29/zmap源码解读之zmap扫描快的原因/">zmap源码解读之zmap扫描快的原因</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Sherwel</a></p>
-        <p><span>发布时间:</span>2017-02-08, 18:56:28</p>
-        <p><span>最后更新:</span>2017-03-24, 10:42:44</p>
+        <p><span>发布时间:</span>2017-03-29, 11:38:16</p>
+        <p><span>最后更新:</span>2017-03-29, 15:12:30</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/02/08/ipproxy/" title="细数代理检测">https://nanshihui.github.io/2017/02/08/ipproxy/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://nanshihui.github.io/2017/02/08/ipproxy/　　作者: Sherwel" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/03/29/zmap源码解读之zmap扫描快的原因/" title="zmap源码解读之zmap扫描快的原因">https://nanshihui.github.io/2017/03/29/zmap源码解读之zmap扫描快的原因/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://nanshihui.github.io/2017/03/29/zmap源码解读之zmap扫描快的原因/　　作者: Sherwel" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -406,16 +397,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/03/21/browser-fingerprint/">
-                    浏览器指纹追踪
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/01/05/run-zmap-in-docker/">
-                    Run Zmap in docker
+                <a href="/2017/03/21/browser-fingerprint/">
+                    浏览器指纹追踪
                 </a>
             </div>
         
@@ -427,7 +412,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u7ED3_u6784"><span class="toc-number">1.1.</span> <span class="toc-text">结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5F15_u8A00"><span class="toc-number">2.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u4EE3_u7406_u7C7B_u578B"><span class="toc-number">3.</span> <span class="toc-text">代理类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP_u4EE3_u7406"><span class="toc-number">3.1.</span> <span class="toc-text">HTTP代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTPS_u4EE3_u7406"><span class="toc-number">3.2.</span> <span class="toc-text">HTTPS代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SOCKS_u4EE3_u7406"><span class="toc-number">3.3.</span> <span class="toc-text">SOCKS代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TOR"><span class="toc-number">3.4.</span> <span class="toc-text">TOR</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#tor_u7EC4_u6210"><span class="toc-number">3.4.1.</span> <span class="toc-text">tor组成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#tor_u539F_u7406_u6D41_u7A0B"><span class="toc-number">3.4.2.</span> <span class="toc-text">tor原理流程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u4EE3_u7406_u7684_u68C0_u6D4B_u65B9_u6CD5"><span class="toc-number">4.</span> <span class="toc-text">代理的检测方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#https/http_u4EE3_u7406_u68C0_u6D4B"><span class="toc-number">4.1.</span> <span class="toc-text">https/http代理检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#socks_u4EE3_u7406_u68C0_u6D4B"><span class="toc-number">4.2.</span> <span class="toc-text">socks代理检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tor_u68C0_u6D4B"><span class="toc-number">4.3.</span> <span class="toc-text">Tor检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u901A_u7528_u68C0_u6D4B_u65B9_u6CD5"><span class="toc-number">4.4.</span> <span class="toc-text">通用检测方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5176_u4ED6"><span class="toc-number">5.</span> <span class="toc-text">其他</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#zmap_u6E90_u7801_u89E3_u8BFB_u4E4Bzmap_u626B_u63CF_u5FEB_u7684_u539F_u56E0"><span class="toc-number">1.1.</span> <span class="toc-text">zmap源码解读之zmap扫描快的原因</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5F15_u8A00"><span class="toc-number">2.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u6574_u4F53_u67B6_u6784"><span class="toc-number">3.</span> <span class="toc-text">整体架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SYN_u626B_u63CF"><span class="toc-number">4.</span> <span class="toc-text">SYN扫描</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SYN_u626B_u63CF_u5206_u6790"><span class="toc-number">5.</span> <span class="toc-text">SYN扫描分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u7C97_u7565_u89E3_u91CA"><span class="toc-number">5.1.</span> <span class="toc-text">粗略解释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u8BE6_u7EC6_u89E3_u91CA"><span class="toc-number">5.2.</span> <span class="toc-text">详细解释</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -463,7 +448,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"细数代理检测　| Sherwel-Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/js/share.js?v=89860593.js?'];
+                "common":{"bdSnsKey":{},"bdText":"zmap源码解读之zmap扫描快的原因　| Sherwel-Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/js/share.js?v=89860593.js?'];
         </script>
     
 
@@ -527,15 +512,13 @@ window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="tex
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/03/21/browser-fingerprint/" title="上一篇: 浏览器指纹追踪">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/01/05/run-zmap-in-docker/" title="下一篇: Run Zmap in docker">
+            <a href="/2017/03/21/browser-fingerprint/" title="下一篇: 浏览器指纹追踪">
                 <i class="fa fa-angle-right"></i>
             </a>
         
