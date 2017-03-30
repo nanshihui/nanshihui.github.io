@@ -121,14 +121,14 @@
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct DexTypeList&#10;&#123;&#10;    uint       size;&#10;    type_item  list [size] &#10;&#125;&#10;&#10;struct type_item&#10;&#123;&#10;    ushort type_idx   //--&#62;type_ids&#10;&#125;&#10;&#10;struct DexAnnotationsDirectoryItem&#10;&#123;&#10;    uint class_annotations_off;        //--&#62;annotation_set_item&#10;    uint fields_size;&#10;    uint annotated_methods_size;&#10;    uint annotated_parameters_size;&#10;    &#10;    field_annotation field_annotations[fields_size];&#10;    method_annotation method_annotations[annotated_methods_size];&#10;    parameter_annotation parameter_annotations[annotated_parameters_size];&#10;&#125;&#10;&#10;struct field_annotation&#10;&#123;&#10;    uint field_idx;&#10;    uint annotations_off;    //--&#62;annotation_set_item&#10;&#125;&#10;&#10;struct method_annotation&#10;&#123;&#10;    uint method_idx;&#10;    uint annotations_off;    //--&#62;annotation_set_item&#10;&#125;&#10;&#10;struct parameter_annotation&#10;&#123;&#10;    uint method_idx;&#10;    uint annotations_off;    //--&#62;annotation_set_ref_list&#10;&#125;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>class_annotations_off: 这个偏移指向了 annotation_set_item 具体的可以看 dex-format.html 上的介绍。</li>
+<li>class_annotations_off: 这个偏移指向了 annotation_set_item 具体的可以看 dex-format.html 上的介绍.</li>
 <li>fields_size: 表示属性的个数</li>
 <li>annotated_methods_size: 表示方法的个数</li>
-<li><p>annotated_parameters_size: 表示参数的个数</p>
+<li>annotated_parameters_size: 表示参数的个数</li>
+</ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;struct DexClassData&#123;&#10;    DexClassDataHeader          header;         /*&#25351;&#23450;&#23383;&#27573;&#19982;&#26041;&#27861;&#30340;&#20010;&#25968;*/&#10;    DexField*           staticFields;       /*&#38745;&#24577;&#23383;&#27573;&#65292;DexField&#32467;&#26500;*/&#10;    DexField*           instanceFields&#65307; /*&#23454;&#20363;&#23383;&#27573;&#65292;DexField&#32467;&#26500;*/&#10;    DexMethod*          directMethods;      /*&#30452;&#25509;&#26041;&#27861;&#65292;DexMethod&#32467;&#26500;*/&#10;    DexMethod*          virtualMethods;     /*&#34394;&#26041;&#27861;&#65292;DexMethod&#32467;&#26500;*/&#10;&#125;&#10;&#10;&#10;struct DexClassDataHeader&#123;&#10;    u4 staticFieldsSize;    /*&#38745;&#24577;&#23383;&#27573;&#20010;&#25968;*/&#10;    u4 instanceFieldsSize;  /*&#23454;&#20363;&#23383;&#27573;&#20010;&#25968;*/&#10;    u4 directMethodsSize;   /*&#30452;&#25509;&#26041;&#27861;&#20010;&#25968;*/&#10;    u4 virtualMethodsSize;  /*&#34394;&#26041;&#27861;&#20010;&#25968;*/&#10;&#125;&#10;&#10;struct encoded_field&#10;&#123;&#10;    uleb128 filed_idx_diff; &#10;    uleb128 access_flags;  &#10;&#125;&#10;&#10;struct encoded_method&#10;&#123;&#10;    uleb128 method_idx_diff; &#10;    uleb128 access_flags; &#10;    uleb128 code_off;&#10;&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>method_idx_diff: 前缀 methd_idx 表示它的值是 method_ids 的一个 index ，后缀 _diff 表示它是于另 外一个 method_idx 的一个差值 ，就是相对于 encodeed_method [] 数组里上一个元素的 method_idx 的差值 。 其实 encoded_filed - &gt; field_idx_diff 表示的也是相同的意思 ，只是编译出来的 Hello.dex 文件里没有使用到 class filed 所以没有仔细讲 ，详细的参考 dex_format.html 的官网文档。</p>
-</li>
+<ul>
+<li>method_idx_diff: 前缀 methd_idx 表示它的值是 method_ids 的一个 index ，后缀 _diff 表示它是于另 外一个 method_idx 的一个差值 ，就是相对于 encodeed_method [] 数组里上一个元素的 method_idx 的差值 。 其实 encoded_filed - &gt; field_idx_diff 表示的也是相同的意思 ，只是编译出来的 Hello.dex 文件里没有使用到 class filed 所以没有仔细讲 ，详细的参考 dex_format.html 的官网文档。</li>
 <li>access_flags: 访问权限，比如 public、private、static、final 等。</li>
 <li>code_off: 一个指向 data 区的偏移地址，目标是本 method 的代码实现。被指向的结构是code_item，有近 10 项元素。</li>
 </ul>
