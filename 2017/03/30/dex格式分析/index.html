@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Sherwel" />
+
+
+
+<meta name="description" content="前言最近接触Android逆向,就开始熟悉dex格式,顺便记录下数据结构,方便下次直接查询.
+dex格式分析
+dex: 什么是DEX
+dex结构: 详细的dex数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="dex格式分析">
+<meta property="og:url" content="https://nanshihui.github.io/2017/03/30/dex格式分析/index.html">
+<meta property="og:site_name" content="Sherwel-Blog">
+<meta property="og:description" content="前言最近接触Android逆向,就开始熟悉dex格式,顺便记录下数据结构,方便下次直接查询.
+dex格式分析
+dex: 什么是DEX
+dex结构: 详细的dex数据结构">
+<meta property="og:image" content="https://nanshihui.github.io//nanshihui.github.io/public/dexmain.png">
+<meta property="og:image" content="https://nanshihui.github.io//nanshihui.github.io/public/dex.png">
+<meta property="og:updated_time" content="2017-03-30T13:34:46.663Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="dex格式分析">
+<meta name="twitter:description" content="前言最近接触Android逆向,就开始熟悉dex格式,顺便记录下数据结构,方便下次直接查询.
+dex格式分析
+dex: 什么是DEX
+dex结构: 详细的dex数据结构">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Sherwel-Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>dex格式分析 | Sherwel-Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?b393fdaea56f1c61a5861e21d720164b";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Sherwel</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">一个专注于吃的程序猿</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                            <li><a href="/sitemap.xml">Sitemap</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:nanshihui@gmail.com" title="Email"></a>
+                            
+                                <a class="fa 新浪微博" href="http://weibo.com/sherwel" title="新浪微博"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/nanshihui" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" href="https://www.zhihu.com/people/sherwel" title="知乎"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CCS/">CCS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Centos/">Centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nmap/">Nmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Proxy/">Proxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/S-P/">S&P</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL注入/">SQL注入</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Software/">Software</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zmap/">Zmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/import/">import</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlmap/">sqlmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/浏览器指纹/">浏览器指纹</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫/">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/逆向/">逆向</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://github.com/nanshihui">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于吃</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Sherwel</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Sherwel</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">一个专注于吃的程序猿</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                    <li><a href="/sitemap.xml">Sitemap</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:nanshihui@gmail.com" title="Email"></a>
+                            
+                                <a class="fa 新浪微博" target="_blank" href="http://weibo.com/sherwel" title="新浪微博"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/nanshihui" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" target="_blank" href="https://www.zhihu.com/people/sherwel" title="知乎"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-dex格式分析" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/03/30/dex格式分析/" class="article-date">
+      <time datetime="2017-03-30T12:03:32.000Z" itemprop="datePublished">2017-03-30</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      dex格式分析
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/移动安全/">移动安全</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/逆向/">逆向</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p></p><h2 id="intro">前言</h2>最近接触Android逆向,就开始熟悉dex格式,顺便记录下数据结构,方便下次直接查询.<p></p>
+<h3 id="dex_u683C_u5F0F_u5206_u6790"><a href="#dex_u683C_u5F0F_u5206_u6790" class="headerlink" title="dex格式分析"></a>dex格式分析</h3><ul>
+<li><strong>dex:</strong> 什么是DEX</li>
+<li><strong>dex结构:</strong> 详细的dex数据结构<a id="more"></a>
+<h2 id="u5F15_u8A00"><a href="#u5F15_u8A00" class="headerlink" title="引言"></a>引言</h2>　　很久之前曾接触过Android,那时候对逆向感到畏惧,当真正的开始接触他的时候,感觉其实也就那样.需要很大的耐心去看.</li>
+</ul>
+<h2 id="DEX"><a href="#DEX" class="headerlink" title="DEX"></a>DEX</h2><p>　　Dex是Android平台上可执行文件的类型。包含应用程序的全部操作指令以及运行时数据。由于dalvik是一种针对嵌入式设备而特殊设计的java虚拟机，所以dex文件与标准的class文件在结构设计上有着本质的区别.当java程序编译成class后，还需要使用dx工具将所有的class文件整合到一个dex文件，目的是其中各个类能够共享数据，在一定程度上降低了冗余，同时也是文件结构更加经凑，实验表明，dex文件是传统jar文件大小的50%左右.</p>
+<h2 id="DEX_u7ED3_u6784"><a href="#DEX_u7ED3_u6784" class="headerlink" title="DEX结构"></a>DEX结构</h2><p>　　下面就逐步开始描述这个dex文件,首先先上一张整体dex格式图,以便有一个宏观的了解.<br><img src="//nanshihui.github.io/public/dexmain.png" alt="dex整体图"><br>　　通过图我们可以直观的发现整个结构的分布.<br>其数据结构为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct DexFile  &#10;&#123;  &#10;    DexHeader           Header;  &#10;    DexStringId          StringIds[stringIdsSize];  &#10;    DexTypeId           TypeIds[typeIdsSize];  &#10;    DexProtoId           ProtoIds[protoIdsSize];  &#10;    DexFieldId            FieldIds[fieldIdsSize];  &#10;    DexMethodId       MethodIds[methodIdsSize];  &#10;    DexClassDef         ClassDefs[classDefsSize];  &#10;    DexData                Data[];  &#10;    DexLink                 LinkData;  &#10;&#125;;</span><br></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th style="text-align:center">格式</th>
+<th style="text-align:right">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>header</td>
+<td style="text-align:center">header_item</td>
+<td style="text-align:right">文件头。</td>
+</tr>
+<tr>
+<td>string_ids</td>
+<td style="text-align:center">string_id_item[]</td>
+<td style="text-align:right">字符串索引表，记录了各个字符所在的偏移值，使用UTF-16编码。</td>
+</tr>
+<tr>
+<td>type_ids</td>
+<td style="text-align:center">type_id_item[]</td>
+<td style="text-align:right">类型数据索引，记录了各个类型的字符串索引。</td>
+</tr>
+<tr>
+<td>proto_id</td>
+<td style="text-align:center">proto_id_item[]</td>
+<td style="text-align:right">函数原型数据索引，记录了方法声明的字符串，返回类型和参数列表。</td>
+</tr>
+<tr>
+<td>field_ids</td>
+<td style="text-align:center">field_id_item[]</td>
+<td style="text-align:right">字段数据索引，记录了所属类，声明类型和方法名等信息。</td>
+</tr>
+<tr>
+<td>method_ids</td>
+<td style="text-align:center">method_id_item[]</td>
+<td style="text-align:right">类方法索引，记录了方法所属类，声明类型以及方法名等信息。</td>
+</tr>
+<tr>
+<td>class_defs</td>
+<td style="text-align:center">class_def_item[]</td>
+<td style="text-align:right">类定义数据，记录了指定类的各类信息，包括接口，超类，类数据偏移量等。</td>
+</tr>
+<tr>
+<td>data</td>
+<td style="text-align:center">type_id_item[]</td>
+<td style="text-align:right">类型数据索引，记录了各个类型的字符串索引。</td>
+</tr>
+<tr>
+<td>type_ids</td>
+<td style="text-align:center">ubyte[]</td>
+<td style="text-align:right">数据区，保存着各个类的数据。</td>
+</tr>
+<tr>
+<td>link_data</td>
+<td style="text-align:center">ubyte[]</td>
+<td style="text-align:right">静态连接数据</td>
+</tr>
+</tbody>
+</table>
+<h3 id="header"><a href="#header" class="headerlink" title="header"></a>header</h3><p>　　header的结构如下所示.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _DexHeader  &#10;&#123;  &#10;    u1  magic[8];                       // dex &#29256;&#26412;&#26631;&#35782;&#65292;&#34;dex.035&#34;  &#10;    u4  checksum;                       // adler32 &#26816;&#39564;  &#10;    u1  signature[kSHA1DigestLen];      // SHA-1 &#21704;&#24076;&#20540;&#65292;20&#20010;&#23383;&#33410;  &#10;    u4  fileSize;                       // &#25972;&#20010; dex &#25991;&#20214;&#22823;&#23567;  &#10;    u4  headerSize;                     // DexHeader &#32467;&#26500;&#22823;&#23567;&#65292;0x70  &#10;    u4  endianTag;                      // &#23383;&#33410;&#24207;&#26631;&#35760;&#65292;&#23567;&#31471; &#34;0x12345678&#34;&#65292;&#22823;&#31471;&#34;0x78563412&#34;  &#10;    u4  linkSize;                       // &#38142;&#25509;&#27573;&#22823;&#23567;  &#10;    u4  linkOff;                        // &#38142;&#25509;&#27573;&#20559;&#31227;  &#10;    u4  mapOff;                         // DexMapList &#30340;&#20559;&#31227;  &#10;    u4  stringIdsSize;                  // DexStringId &#30340;&#20010;&#25968;  &#10;    u4  stringIdsOff;                   // DexStringId &#30340;&#20559;&#31227;         &#23383;&#31526;&#20018;  &#10;    u4  typeIdsSize;                    // DexTypeId &#30340;&#20010;&#25968;  &#10;    u4  typedeIdsOff;                   // DexTypeId &#30340;&#20559;&#31227;            &#31867;&#22411;  &#10;    u4  protoIdsSize;                   // DexProtoId &#30340;&#20010;&#25968;  &#10;    u4  protoIdsOff;                    // DexProtoId &#30340;&#20559;&#31227;           &#22768;&#26126;  &#10;    u4  fieldIdsSize;                   // DexFieldId &#30340;&#20010;&#25968;  &#10;    u4  fieldIdsOff;                    // DexFieldId &#30340;&#20559;&#31227;           &#23383;&#27573;  &#10;    u4  methodIdsSize;                  // DexMethodId &#30340;&#20010;&#25968;  &#10;    u4  methodIdsOff;                   // DexMethodId &#30340;&#20559;&#31227;          &#26041;&#27861;  &#10;    u4  classDefsSize;                  // DexClassDef &#30340;&#20010;&#25968;  &#10;    u4  classDefsOff;                   // DexClassDef &#30340;&#20559;&#31227;          &#31867;  &#10;    u4  dataSize;                       // &#25968;&#25454;&#27573;&#30340;&#22823;&#23567;  &#10;    u4  dataOff;                        // &#25968;&#25454;&#27573;&#30340;&#20559;&#31227;  &#10;&#125;DexHeader, *PDexHeader;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>magic: 它代表dex中的文件标识，一般被称为魔数。是用来识别dex这种文件的，它可以判断当前的dex文件是否有效，可以看到它用了8个1字节的无符号数来表示.</li>
+<li>checksum: 它是dex文件的校验和，通过它可以判断dex文件是否被损坏或者被篡改。它占用4个字节.</li>
+<li>signature[kSHA1DigestLen]: signature字段用于检验dex文件，其实就是把整个dex文件用SHA-1签名得到的一个值。这里占用20个字节.</li>
+<li>fileSize: 表示整个文件的大小，占用4个字节。</li>
+<li>headerSize: 表示DexHeader头结构的大小，占用4个字节。</li>
+<li>endianTag: 代表 字节序标记，用于指定dex运行环境的cpu，预设值为0x12345678</li>
+<li>linkSize ,linkOff: 这两个字段，它们分别指定了链接段的大小和文件偏移，通常情况下它们都为0。linkSize为0的话表示静态链接</li>
+<li>mapOff: 它指定了DexMapList的文件偏移</li>
+</ul>
+<h3 id="DexStringId"><a href="#DexStringId" class="headerlink" title="DexStringId"></a>DexStringId</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct DexStringId &#123; &#10;u4 stringDataOff;        /* string_data_item &#20559;&#31227;&#22320;&#22336;*/ &#10;&#125;; &#10;struct string_data_item &#10;&#123;&#10;    uleb128 utf16_size;&#10;    ubyte   data; &#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>其中 data 保存的就是字符串的值。string_ids 是比较关键的，后续的区段很多都是直接指向 string_ids 的 index</p>
+<h3 id="DexTypeId"><a href="#DexTypeId" class="headerlink" title="DexTypeId"></a>DexTypeId</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct DexTypeId&#123;&#10;    u4 descriptorIdx;   /*&#25351;&#21521;DexStringId&#21015;&#34920;&#30340;&#32034;&#24341;*/&#10;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="DexProtoId"><a href="#DexProtoId" class="headerlink" title="DexProtoId"></a>DexProtoId</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct DexProtoId&#123;&#10;    u4 shortyIdx;           /*&#25351;&#21521;DexStringId&#21015;&#34920;&#30340;&#32034;&#24341;*/&#10;    u4 returnTypeIdx;       /*&#25351;&#21521;DexTypeId&#21015;&#34920;&#30340;&#32034;&#24341;*/&#10;    u4 parametersOff;       /*&#25351;&#21521;DexTypeList&#30340;&#20301;&#32622;&#20559;&#31227;*/&#10;&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>shorty_idx: 跟 type_ids 一样，它的值是一个 string_ids 的 index 号，最终是一个简短的字符串描述，用来说明该 method 原型。</li>
+<li>return_type_idx: 它的值是一个 type_ids 的 index 号 ，表示该 method 原型的返回值类型。</li>
+<li>parameters_off: 指向 method 原型的参数列表 type_list，若 method 没有参数，值为0。参数列表的格式是 type_list，下面会有描述。<h3 id="DexTypeList"><a href="#DexTypeList" class="headerlink" title="DexTypeList"></a>DexTypeList</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct DexTypeList&#123;&#10;    u4 size;        /*DexTypeItem&#30340;&#20010;&#25968;*/&#10;    DexTypeItem list[1];    /*DexTypeItem&#32467;&#26500;*/&#10;&#125;&#10;&#10;struct DexTypeItem&#123;&#10;    u2 typeIdx;             /*&#25351;&#21521;DexTypeId&#21015;&#34920;&#30340;&#32034;&#24341;*/&#10;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="DexFieldId"><a href="#DexFieldId" class="headerlink" title="DexFieldId"></a>DexFieldId</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct DexFieldId&#123;&#10;    u2 classIdx;        /*&#31867;&#30340;&#31867;&#22411;&#65292;&#25351;&#21521;DexTypeId&#21015;&#34920;&#30340;&#32034;&#24341;*/&#10;    u2 typeIdx;     /*&#23383;&#27573;&#31867;&#22411;&#65292;&#25351;&#21521;DexTypeId&#21015;&#34920;&#30340;&#32034;&#24341;*/&#10;    u4 nameIdx;     /*&#23383;&#27573;&#21517;&#65292;&#25351;&#21521;DexStringId&#21015;&#34920;&#30340;&#32034;&#24341;*/&#10;&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>class_idx: 表示 field 所属的 class 类型，class_idx 的值是 type_ids 的一个 index，并且必须指向一个 class 类型。</li>
+<li>type_idx: 表示本 field 的类型，它的值也是 type_ids 的一个 index 。</li>
+<li>name_idx: 表示本 field 的名称，它的值是 string_ids 的一个 index 。</li>
+</ul>
+<h3 id="DexMethodId"><a href="#DexMethodId" class="headerlink" title="DexMethodId"></a>DexMethodId</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct DexMethodId&#123;&#10;    u2 classIdx;        /*&#31867;&#30340;&#31867;&#22411;&#65292;&#25351;&#21521;DexTypeId&#21015;&#34920;&#30340;&#32034;&#24341;*/&#10;    u2 protoIdx;        /*&#22768;&#26126;&#31867;&#22411;&#65292;&#25351;&#21521;DexProtoId&#21015;&#34920;&#30340;&#32034;&#24341;*/&#10;    u4 nameIdx;     /*&#26041;&#27861;&#21517;&#65292;&#25351;&#21521;DexStringId&#21015;&#34920;&#30340;&#32034;&#24341;*/&#10;&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>class_idx: 表示 method 所属的 class 类型，class_idx 的值是 type_ids 的一个 index，并且必须指向一个 class 类型。ushort类型也是为什么我们说一个 dex 只能有 65535 个方法的原因，多了必须分包。</li>
+<li>proto_idx: 表示 method 的类型，它的值也是 type_ids 的一个 index。</li>
+<li>name_idx: 表示 method 的名称，它的值是 string_ids 的一个 index。</li>
+</ul>
+<h3 id="DexClassDef"><a href="#DexClassDef" class="headerlink" title="DexClassDef"></a>DexClassDef</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct DexClassDef&#123;&#10;    u4 classIdx;        /*&#31867;&#30340;&#31867;&#22411;&#65292;&#25351;&#21521;DexTypeId&#21015;&#34920;&#30340;&#32034;&#24341;*/&#10;    u4 accessFlags;     /*&#35775;&#38382;&#26631;&#24535;*/&#10;    u4 superclassIdx;   /*&#29238;&#31867;&#31867;&#22411;&#65292;&#25351;&#21521;DexTypeId&#21015;&#34920;&#30340;&#32034;&#24341;*/&#10;    u4 interfacesOff;   /*&#25509;&#21475;&#65292;&#25351;&#21521;DexTypeList&#30340;&#20559;&#31227;*/&#10;    u4 sourceFileIdx;   /*&#28304;&#25991;&#20214;&#21517;&#65292;&#25351;&#21521;DexStringId&#21015;&#34920;&#30340;&#32034;&#24341;*/&#10;    u4 annotationsOff;  /*&#27880;&#35299;&#65292;&#25351;&#21521;DexAnnotationsDirectoryItem&#32467;&#26500;*/&#10;    u4 classDataOff;    /*&#25351;&#21521;DexClassData&#32467;&#26500;&#30340;&#20559;&#31227;*/&#10;    u4 staticValuesOff; /*&#25351;&#21521;DexEncodedArray&#32467;&#26500;&#30340;&#20559;&#31227;*/&#10;&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>class_idx: 描述具体的 class 类型，值是 type_ids 的一个 index 。值必须是一个 class 类型，不能是数组类型或者基本类型。</li>
+<li>access_flags: 描述 class 的访问类型，诸如 public , final , static 等。在 dex-format.html 里 “access_flags Definitions” 有具体的描述 。</li>
+<li>superclass_idx: 描述 supperclass 的类型，值的形式跟 class_idx 一样 。</li>
+<li>interfaces_off: 值为偏移地址，指向 class 的 interfaces，被指向的数据结构为 type_list 。class 若没有 interfaces 值为 0。</li>
+<li>source_file_idx: 表示源代码文件的信息，值是 string_ids 的一个 index。若此项信息缺失，此项值赋值为 NO_INDEX=0xffff ffff。</li>
+<li>annotions_off: 值是一个偏移地址，指向的内容是该 class 的注释，位置在 data 区，格式为 annotations_direcotry_item。若没有此项内容，值为 0 。</li>
+<li>class_data_off: 值是一个偏移地址，指向的内容是该 class 的使用到的数据，位置在 data 区，格式为 class_data_item。若没有此项内容值为 0。该结构里有很多内容，详细描述该 class 的 field、method, method 里的执行代码等信息，后面会介绍 class_data_item。</li>
+<li>static_value_off: 值是一个偏移地址 ，指向 data 区里的一个列表 (list)，格式为 encoded_array_item。若没有此项内容值为 0。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct DexTypeList&#10;&#123;&#10;    uint       size;&#10;    type_item  list [size] &#10;&#125;&#10;&#10;struct type_item&#10;&#123;&#10;    ushort type_idx   //--&#62;type_ids&#10;&#125;&#10;&#10;struct DexAnnotationsDirectoryItem&#10;&#123;&#10;    uint class_annotations_off;        //--&#62;annotation_set_item&#10;    uint fields_size;&#10;    uint annotated_methods_size;&#10;    uint annotated_parameters_size;&#10;    &#10;    field_annotation field_annotations[fields_size];&#10;    method_annotation method_annotations[annotated_methods_size];&#10;    parameter_annotation parameter_annotations[annotated_parameters_size];&#10;&#125;&#10;&#10;struct field_annotation&#10;&#123;&#10;    uint field_idx;&#10;    uint annotations_off;    //--&#62;annotation_set_item&#10;&#125;&#10;&#10;struct method_annotation&#10;&#123;&#10;    uint method_idx;&#10;    uint annotations_off;    //--&#62;annotation_set_item&#10;&#125;&#10;&#10;struct parameter_annotation&#10;&#123;&#10;    uint method_idx;&#10;    uint annotations_off;    //--&#62;annotation_set_ref_list&#10;&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>class_annotations_off: 这个偏移指向了 annotation_set_item 具体的可以看 dex-format.html 上的介绍。</li>
+<li>fields_size: 表示属性的个数</li>
+<li>annotated_methods_size: 表示方法的个数</li>
+<li><p>annotated_parameters_size: 表示参数的个数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;struct DexClassData&#123;&#10;    DexClassDataHeader          header;         /*&#25351;&#23450;&#23383;&#27573;&#19982;&#26041;&#27861;&#30340;&#20010;&#25968;*/&#10;    DexField*           staticFields;       /*&#38745;&#24577;&#23383;&#27573;&#65292;DexField&#32467;&#26500;*/&#10;    DexField*           instanceFields&#65307; /*&#23454;&#20363;&#23383;&#27573;&#65292;DexField&#32467;&#26500;*/&#10;    DexMethod*          directMethods;      /*&#30452;&#25509;&#26041;&#27861;&#65292;DexMethod&#32467;&#26500;*/&#10;    DexMethod*          virtualMethods;     /*&#34394;&#26041;&#27861;&#65292;DexMethod&#32467;&#26500;*/&#10;&#125;&#10;&#10;&#10;struct DexClassDataHeader&#123;&#10;    u4 staticFieldsSize;    /*&#38745;&#24577;&#23383;&#27573;&#20010;&#25968;*/&#10;    u4 instanceFieldsSize;  /*&#23454;&#20363;&#23383;&#27573;&#20010;&#25968;*/&#10;    u4 directMethodsSize;   /*&#30452;&#25509;&#26041;&#27861;&#20010;&#25968;*/&#10;    u4 virtualMethodsSize;  /*&#34394;&#26041;&#27861;&#20010;&#25968;*/&#10;&#125;&#10;&#10;struct encoded_field&#10;&#123;&#10;    uleb128 filed_idx_diff; &#10;    uleb128 access_flags;  &#10;&#125;&#10;&#10;struct encoded_method&#10;&#123;&#10;    uleb128 method_idx_diff; &#10;    uleb128 access_flags; &#10;    uleb128 code_off;&#10;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>method_idx_diff: 前缀 methd_idx 表示它的值是 method_ids 的一个 index ，后缀 _diff 表示它是于另 外一个 method_idx 的一个差值 ，就是相对于 encodeed_method [] 数组里上一个元素的 method_idx 的差值 。 其实 encoded_filed - &gt; field_idx_diff 表示的也是相同的意思 ，只是编译出来的 Hello.dex 文件里没有使用到 class filed 所以没有仔细讲 ，详细的参考 dex_format.html 的官网文档。</p>
+</li>
+<li>access_flags: 访问权限，比如 public、private、static、final 等。</li>
+<li>code_off: 一个指向 data 区的偏移地址，目标是本 method 的代码实现。被指向的结构是code_item，有近 10 项元素。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct code_item &#10;&#123;&#10;    ushort                         registers_size;&#10;    ushort                         ins_size;&#10;    ushort                         outs_size;&#10;    ushort                         tries_size;&#10;    uint                         debug_info_off;&#10;    uint                         insns_size;&#10;    ushort                         insns [insns_size]; &#10;    ushort                         paddding;             // optional&#10;    try_item                     tries [tyies_size]; // optional&#10;    encoded_catch_handler_list  handlers;             // optional&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>code_item 结构里描述着某个 method 的具体实现.</p>
+<ul>
+<li>registers_size: 本段代码使用到的寄存器数目。</li>
+<li>ins_size: method 传入参数的数目 。</li>
+<li>outs_size: 本段代码调用其它 method 时需要的参数个数 。</li>
+<li>tries_size: try_item 结构的个数 。</li>
+<li>debug_off: 偏移地址，指向本段代码的 debug 信息存放位置，是一个 debug_info_item 结构。</li>
+<li>insns_size: 指令列表的大小，以 16-bit 为单位。 insns 是 instructions 的缩写 。</li>
+<li>padding: 值为 0，用于对齐字节 。</li>
+<li>tries 和 handlers: 用于处理 java 中的 exception，常见的语法有 try catch。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct encoded_array_item&#10;&#123;&#10;    encoded_array value;&#10;&#125;&#10;&#10;struct encoded_array&#10;&#123;    &#10;    uleb128 size;&#10;    encoded_value values[size];&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>class_def_item-&gt;static_value_off 偏移指向该区段数据。</p>
+<ul>
+<li>size : 表示encoded_value 个数<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct DexField&#123;&#10;    u4 fieldIdx;        /*&#25351;&#21521;DexFieldId&#30340;&#32034;&#24341;*/&#10;    u4 accessFlags;     /*&#35775;&#38382;&#26631;&#24535;*/&#10;&#125;&#10;&#10;struct DexMethod&#123;&#10;    u4 methodIdx;       /*&#25351;&#21521;DexMethodId&#30340;&#32034;&#24341;*/&#10;    u4 accessFlags;     /*&#35775;&#38382;&#26631;&#24535;*/&#10;    u4 codeOff;     /*&#25351;&#21521;DexCode&#32467;&#26500;&#30340;&#20559;&#31227;*/&#10;&#125;&#10;&#10;struct DexCode &#123;&#10;    u2  registersSize;//&#20351;&#29992;&#23492;&#23384;&#22120;&#20010;&#25968;&#10;    u2  insSize;//&#21442;&#25968;&#20010;&#25968;&#10;    u2  outsSize;//&#35843;&#29992;&#20854;&#20182;&#26041;&#27861;&#26102;&#20351;&#29992;&#30340;&#23492;&#23384;&#22120;&#20010;&#25968;&#10;    u2  triesSize;//try/catch&#20010;&#25968;&#10;    u4  debugInfoOff;//&#25351;&#21521;&#35843;&#35797;&#20449;&#24687;&#30340;&#20559;&#31227;&#10;    u4  insnsSize;//&#25351;&#20196;&#38598;&#20010;&#25968;&#65292;&#20197;2&#23383;&#33410;&#20026;&#21333;&#20301;&#10;    u2  insns[1];//&#25351;&#20196;&#38598;&#10;    /* followed by optional u2 padding */&#10;    /* followed by try_item[triesSize] */&#10;    /* followed by uleb handlersSize */&#10;    /* followed by catch_handler_item[handlersSize] */&#10;&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="DexMapList"><a href="#DexMapList" class="headerlink" title="DexMapList"></a>DexMapList</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct DexMapList &#123;&#10;    u4  size;               /* &#20010;&#25968; */&#10;    DexMapItem list[1];     /* DexMapItem&#30340;&#32467;&#26500; */&#10;&#125;;&#10;&#10;struct DexMapItem &#123;&#10;    u2 type;              /* kDexType&#24320;&#22836;&#30340;&#31867;&#22411; */&#10;    u2 unused;            /*&#26410;&#20351;&#29992;&#65292;&#29992;&#20110;&#23383;&#33410;&#23545;&#40784; */&#10;    u4 size;              /* &#31867;&#22411;&#30340;&#20010;&#25968; */&#10;    u4 offset;            /* &#31867;&#22411;&#30340;&#25991;&#20214;&#20559;&#31227; */&#10;&#125;;&#10;enum &#123;&#10;    kDexTypeHeaderItem               = 0x0,&#10;    kDexTypeStringIdItem             = 0x1,&#10;    kDexTypeTypeIdItem               = 0x2,&#10;    kDexTypeProtoIdItem              = 0x3,&#10;    kDexTypeFieldIdItem              = 0x4,&#10;    kDexTypeMethodIdItem             = 0x5,&#10;    kDexTypeClassDefItem             = 0x6,&#10;    kDexTypeMapList                  = 0x0,&#10;    kDexTypeTypeList                 = 0x1,&#10;    kDexTypeAnnotationSetRefList     = 0x2,&#10;    kDexTypeAnnotationSetItem        = 0x3,&#10;    kDexTypeClassDataItem            = 0x0,&#10;    kDexTypeCodeItem                 = 0x1,&#10;    kDexTypeStringDataItem           = 0x2,&#10;    kDexTypeDebugInfoItem            = 0x3,&#10;    kDexTypeAnnotationItem           = 0x4,&#10;    kDexTypeEncodedArrayItem         = 0x5,&#10;    kDexTypeAnnotationsDirectoryItem = 0x6,&#10;&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="u603B_u7ED3_u56FE"><a href="#u603B_u7ED3_u56FE" class="headerlink" title="总结图"></a>总结图</h3><p>　　在结尾通过一张图把前面的东西串起来,如下所示,便于了解.<br><img src="//nanshihui.github.io/public/dex.png" alt="dex图"></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/03/30/dex格式分析/">dex格式分析</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Sherwel</a></p>
+        <p><span>发布时间:</span>2017-03-30, 20:03:32</p>
+        <p><span>最后更新:</span>2017-03-30, 21:34:46</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/03/30/dex格式分析/" title="dex格式分析">https://nanshihui.github.io/2017/03/30/dex格式分析/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://nanshihui.github.io/2017/03/30/dex格式分析/　　作者: Sherwel" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+<div id="empty" class="share"align="center" ></div>
+
+
+<div id="cyReward" align="center" role="cylabs" data-use="reward"></div>
+<!-- 代码2：用来读取评论框配置，此代码需放置在代码1之后。 -->
+<!-- 如果当前页面有评论框，代码2请勿放置在评论框代码之前。 -->
+<!-- 如果页面同时使用多个实验室项目，以下代码只需要引入一次，只配置上面的div标签即可 -->
+<script type="text/javascript" charset="utf-8" src="https://changyan.itc.cn/js/lib/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cysUswSe1"></script>
+
+
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/03/29/zmap源码解读之zmap扫描快的原因/">
+                    zmap源码解读之zmap扫描快的原因
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#dex_u683C_u5F0F_u5206_u6790"><span class="toc-number">1.1.</span> <span class="toc-text">dex格式分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5F15_u8A00"><span class="toc-number">2.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DEX"><span class="toc-number">3.</span> <span class="toc-text">DEX</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DEX_u7ED3_u6784"><span class="toc-number">4.</span> <span class="toc-text">DEX结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#header"><span class="toc-number">4.1.</span> <span class="toc-text">header</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DexStringId"><span class="toc-number">4.2.</span> <span class="toc-text">DexStringId</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DexTypeId"><span class="toc-number">4.3.</span> <span class="toc-text">DexTypeId</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DexProtoId"><span class="toc-number">4.4.</span> <span class="toc-text">DexProtoId</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DexTypeList"><span class="toc-number">4.5.</span> <span class="toc-text">DexTypeList</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DexFieldId"><span class="toc-number">4.6.</span> <span class="toc-text">DexFieldId</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DexMethodId"><span class="toc-number">4.7.</span> <span class="toc-text">DexMethodId</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DexClassDef"><span class="toc-number">4.8.</span> <span class="toc-text">DexClassDef</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DexMapList"><span class="toc-number">4.9.</span> <span class="toc-text">DexMapList</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u603B_u7ED3_u56FE"><span class="toc-number">4.10.</span> <span class="toc-text">总结图</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"dex格式分析　| Sherwel-Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/js/share.js?v=89860593.js?'];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section class="youyan" id="comments">
+    <script>
+        var loadComment = function(){
+            // var d = document, s = d.createElement('script');
+            // s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:')+'//v2.uyan.cc/code/uyan.js?uid=2127999';
+            // (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+    <!--PC版-->
+<!-- 代码1：放在页面需要展示的位置  -->
+<!-- 如果您配置过sourceid，建议在div标签中配置sourceid、cid(分类id)，没有请忽略  -->
+
+
+    
+<!--PC和WAP自适应版-->
+<div id="SOHUCS" ></div> 
+<script type="text/javascript"> 
+(function(){ 
+var appid = 'cysUswSe1'; 
+var conf = 'prod_446e18afd0baf760ebaf151f59effb45'; 
+var width = window.innerWidth || document.documentElement.clientWidth; 
+if (width < 960) { 
+window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
+
+
+
+
+    <!-- <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div> -->
+
+<script>
+  // var cloudTieConfig = {
+  //   url: document.location.href, 
+  //   sourceId: "",
+  //   productKey: "b5e745da886b40bbac100f4e58b55f04",
+  //   target: "cloud-tie-wrapper"
+  // };
+</script>
+<!-- <script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script> -->
+    <div id="uyan_frame"></div>
+</section>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/03/29/zmap源码解读之zmap扫描快的原因/" title="下一篇: zmap源码解读之zmap扫描快的原因">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/03/30/dex格式分析/">dex格式分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/29/zmap源码解读之zmap扫描快的原因/">zmap源码解读之zmap扫描快的原因</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/21/browser-fingerprint/">浏览器指纹追踪</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/08/ipproxy/">细数代理检测</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/05/run-zmap-in-docker/">Run Zmap in docker</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/27/the-spy-in-the-sandbox/">The Spy in the Sandbox :Practical Cache Attacks in JavaScript and their Implications</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/17/A-Search-Engine-Backed-by-Internet-Wide-Scanning/">A Search Engine Backed by Internet-Wide Scanning</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/10/Program-Adaptive-Mutational-Fuzzing/">Program-Adaptive Mutational Fuzzing</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/18/MySQL主从库相关信息整理/">MySQL主从库相关信息整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/25/sqlmaptips/">sqlmap常用技巧整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/21/ToolForSpider简介/">Scan-T简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/19/SQL注入总结/">SQL注入总结（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/18/python 中常见的 import 模块的方法(总结)/">python 中常见的 import 模块的方法(总结)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/15/网络空间指纹识别/">如何构建一个网络空间指纹识别系统（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/08/windows-mac-software/">自用 Windows 和 Mac 软件推荐</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/07/hello-world/">hexo编写笔记</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-right">
+                <i class="fa fa-copyright"></i> 
+                2016-2017 Sherwel
+            </div>
+
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+    <script src="/js/GithubRepoWidget.js" type="text/javascript"></script>
+
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-96161465-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+             github: ".github-widget a", 
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+<a href="https://github.com/nanshihui"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+
+</script>
+<script>
+(function(){
+   var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?bbb0c3446573f18bdbe0fe8060ca72dd":"https://jspassport.ssl.qhimg.com/11.0.1.js?bbb0c3446573f18bdbe0fe8060ca72dd";
+   document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+</body>
+</html>

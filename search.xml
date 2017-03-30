@@ -4,6 +4,174 @@
   
     
     <entry>
+      <title><![CDATA[dex格式分析]]></title>
+      <url>https://nanshihui.github.io/2017/03/30/dex%E6%A0%BC%E5%BC%8F%E5%88%86%E6%9E%90/</url>
+      <content type="html"><![CDATA[<p></p><h2 id="intro">前言</h2>最近接触Android逆向,就开始熟悉dex格式,顺便记录下数据结构,方便下次直接查询.<p></p>
+<h3 id="dex_u683C_u5F0F_u5206_u6790"><a href="#dex_u683C_u5F0F_u5206_u6790" class="headerlink" title="dex格式分析"></a>dex格式分析</h3><ul>
+<li><strong>dex:</strong> 什么是DEX</li>
+<li><strong>dex结构:</strong> 详细的dex数据结构<a id="more"></a>
+<h2 id="u5F15_u8A00"><a href="#u5F15_u8A00" class="headerlink" title="引言"></a>引言</h2>　　很久之前曾接触过Android,那时候对逆向感到畏惧,当真正的开始接触他的时候,感觉其实也就那样.需要很大的耐心去看.</li>
+</ul>
+<h2 id="DEX"><a href="#DEX" class="headerlink" title="DEX"></a>DEX</h2><p>　　Dex是Android平台上可执行文件的类型。包含应用程序的全部操作指令以及运行时数据。由于dalvik是一种针对嵌入式设备而特殊设计的java虚拟机，所以dex文件与标准的class文件在结构设计上有着本质的区别.当java程序编译成class后，还需要使用dx工具将所有的class文件整合到一个dex文件，目的是其中各个类能够共享数据，在一定程度上降低了冗余，同时也是文件结构更加经凑，实验表明，dex文件是传统jar文件大小的50%左右.</p>
+<h2 id="DEX_u7ED3_u6784"><a href="#DEX_u7ED3_u6784" class="headerlink" title="DEX结构"></a>DEX结构</h2><p>　　下面就逐步开始描述这个dex文件,首先先上一张整体dex格式图,以便有一个宏观的了解.<br><img src="//nanshihui.github.io/public/dexmain.png" alt="dex整体图"><br>　　通过图我们可以直观的发现整个结构的分布.<br>其数据结构为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct DexFile  &#10;&#123;  &#10;    DexHeader           Header;  &#10;    DexStringId          StringIds[stringIdsSize];  &#10;    DexTypeId           TypeIds[typeIdsSize];  &#10;    DexProtoId           ProtoIds[protoIdsSize];  &#10;    DexFieldId            FieldIds[fieldIdsSize];  &#10;    DexMethodId       MethodIds[methodIdsSize];  &#10;    DexClassDef         ClassDefs[classDefsSize];  &#10;    DexData                Data[];  &#10;    DexLink                 LinkData;  &#10;&#125;;</span><br></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th style="text-align:center">格式</th>
+<th style="text-align:right">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>header</td>
+<td style="text-align:center">header_item</td>
+<td style="text-align:right">文件头。</td>
+</tr>
+<tr>
+<td>string_ids</td>
+<td style="text-align:center">string_id_item[]</td>
+<td style="text-align:right">字符串索引表，记录了各个字符所在的偏移值，使用UTF-16编码。</td>
+</tr>
+<tr>
+<td>type_ids</td>
+<td style="text-align:center">type_id_item[]</td>
+<td style="text-align:right">类型数据索引，记录了各个类型的字符串索引。</td>
+</tr>
+<tr>
+<td>proto_id</td>
+<td style="text-align:center">proto_id_item[]</td>
+<td style="text-align:right">函数原型数据索引，记录了方法声明的字符串，返回类型和参数列表。</td>
+</tr>
+<tr>
+<td>field_ids</td>
+<td style="text-align:center">field_id_item[]</td>
+<td style="text-align:right">字段数据索引，记录了所属类，声明类型和方法名等信息。</td>
+</tr>
+<tr>
+<td>method_ids</td>
+<td style="text-align:center">method_id_item[]</td>
+<td style="text-align:right">类方法索引，记录了方法所属类，声明类型以及方法名等信息。</td>
+</tr>
+<tr>
+<td>class_defs</td>
+<td style="text-align:center">class_def_item[]</td>
+<td style="text-align:right">类定义数据，记录了指定类的各类信息，包括接口，超类，类数据偏移量等。</td>
+</tr>
+<tr>
+<td>data</td>
+<td style="text-align:center">type_id_item[]</td>
+<td style="text-align:right">类型数据索引，记录了各个类型的字符串索引。</td>
+</tr>
+<tr>
+<td>type_ids</td>
+<td style="text-align:center">ubyte[]</td>
+<td style="text-align:right">数据区，保存着各个类的数据。</td>
+</tr>
+<tr>
+<td>link_data</td>
+<td style="text-align:center">ubyte[]</td>
+<td style="text-align:right">静态连接数据</td>
+</tr>
+</tbody>
+</table>
+<h3 id="header"><a href="#header" class="headerlink" title="header"></a>header</h3><p>　　header的结构如下所示.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _DexHeader  &#10;&#123;  &#10;    u1  magic[8];                       // dex &#29256;&#26412;&#26631;&#35782;&#65292;&#34;dex.035&#34;  &#10;    u4  checksum;                       // adler32 &#26816;&#39564;  &#10;    u1  signature[kSHA1DigestLen];      // SHA-1 &#21704;&#24076;&#20540;&#65292;20&#20010;&#23383;&#33410;  &#10;    u4  fileSize;                       // &#25972;&#20010; dex &#25991;&#20214;&#22823;&#23567;  &#10;    u4  headerSize;                     // DexHeader &#32467;&#26500;&#22823;&#23567;&#65292;0x70  &#10;    u4  endianTag;                      // &#23383;&#33410;&#24207;&#26631;&#35760;&#65292;&#23567;&#31471; &#34;0x12345678&#34;&#65292;&#22823;&#31471;&#34;0x78563412&#34;  &#10;    u4  linkSize;                       // &#38142;&#25509;&#27573;&#22823;&#23567;  &#10;    u4  linkOff;                        // &#38142;&#25509;&#27573;&#20559;&#31227;  &#10;    u4  mapOff;                         // DexMapList &#30340;&#20559;&#31227;  &#10;    u4  stringIdsSize;                  // DexStringId &#30340;&#20010;&#25968;  &#10;    u4  stringIdsOff;                   // DexStringId &#30340;&#20559;&#31227;         &#23383;&#31526;&#20018;  &#10;    u4  typeIdsSize;                    // DexTypeId &#30340;&#20010;&#25968;  &#10;    u4  typedeIdsOff;                   // DexTypeId &#30340;&#20559;&#31227;            &#31867;&#22411;  &#10;    u4  protoIdsSize;                   // DexProtoId &#30340;&#20010;&#25968;  &#10;    u4  protoIdsOff;                    // DexProtoId &#30340;&#20559;&#31227;           &#22768;&#26126;  &#10;    u4  fieldIdsSize;                   // DexFieldId &#30340;&#20010;&#25968;  &#10;    u4  fieldIdsOff;                    // DexFieldId &#30340;&#20559;&#31227;           &#23383;&#27573;  &#10;    u4  methodIdsSize;                  // DexMethodId &#30340;&#20010;&#25968;  &#10;    u4  methodIdsOff;                   // DexMethodId &#30340;&#20559;&#31227;          &#26041;&#27861;  &#10;    u4  classDefsSize;                  // DexClassDef &#30340;&#20010;&#25968;  &#10;    u4  classDefsOff;                   // DexClassDef &#30340;&#20559;&#31227;          &#31867;  &#10;    u4  dataSize;                       // &#25968;&#25454;&#27573;&#30340;&#22823;&#23567;  &#10;    u4  dataOff;                        // &#25968;&#25454;&#27573;&#30340;&#20559;&#31227;  &#10;&#125;DexHeader, *PDexHeader;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>magic: 它代表dex中的文件标识，一般被称为魔数。是用来识别dex这种文件的，它可以判断当前的dex文件是否有效，可以看到它用了8个1字节的无符号数来表示.</li>
+<li>checksum: 它是dex文件的校验和，通过它可以判断dex文件是否被损坏或者被篡改。它占用4个字节.</li>
+<li>signature[kSHA1DigestLen]: signature字段用于检验dex文件，其实就是把整个dex文件用SHA-1签名得到的一个值。这里占用20个字节.</li>
+<li>fileSize: 表示整个文件的大小，占用4个字节。</li>
+<li>headerSize: 表示DexHeader头结构的大小，占用4个字节。</li>
+<li>endianTag: 代表 字节序标记，用于指定dex运行环境的cpu，预设值为0x12345678</li>
+<li>linkSize ,linkOff: 这两个字段，它们分别指定了链接段的大小和文件偏移，通常情况下它们都为0。linkSize为0的话表示静态链接</li>
+<li>mapOff: 它指定了DexMapList的文件偏移</li>
+</ul>
+<h3 id="DexStringId"><a href="#DexStringId" class="headerlink" title="DexStringId"></a>DexStringId</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct DexStringId &#123; &#10;u4 stringDataOff;        /* string_data_item &#20559;&#31227;&#22320;&#22336;*/ &#10;&#125;; &#10;struct string_data_item &#10;&#123;&#10;    uleb128 utf16_size;&#10;    ubyte   data; &#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>其中 data 保存的就是字符串的值。string_ids 是比较关键的，后续的区段很多都是直接指向 string_ids 的 index</p>
+<h3 id="DexTypeId"><a href="#DexTypeId" class="headerlink" title="DexTypeId"></a>DexTypeId</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct DexTypeId&#123;&#10;    u4 descriptorIdx;   /*&#25351;&#21521;DexStringId&#21015;&#34920;&#30340;&#32034;&#24341;*/&#10;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="DexProtoId"><a href="#DexProtoId" class="headerlink" title="DexProtoId"></a>DexProtoId</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct DexProtoId&#123;&#10;    u4 shortyIdx;           /*&#25351;&#21521;DexStringId&#21015;&#34920;&#30340;&#32034;&#24341;*/&#10;    u4 returnTypeIdx;       /*&#25351;&#21521;DexTypeId&#21015;&#34920;&#30340;&#32034;&#24341;*/&#10;    u4 parametersOff;       /*&#25351;&#21521;DexTypeList&#30340;&#20301;&#32622;&#20559;&#31227;*/&#10;&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>shorty_idx: 跟 type_ids 一样，它的值是一个 string_ids 的 index 号，最终是一个简短的字符串描述，用来说明该 method 原型。</li>
+<li>return_type_idx: 它的值是一个 type_ids 的 index 号 ，表示该 method 原型的返回值类型。</li>
+<li>parameters_off: 指向 method 原型的参数列表 type_list，若 method 没有参数，值为0。参数列表的格式是 type_list，下面会有描述。<h3 id="DexTypeList"><a href="#DexTypeList" class="headerlink" title="DexTypeList"></a>DexTypeList</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct DexTypeList&#123;&#10;    u4 size;        /*DexTypeItem&#30340;&#20010;&#25968;*/&#10;    DexTypeItem list[1];    /*DexTypeItem&#32467;&#26500;*/&#10;&#125;&#10;&#10;struct DexTypeItem&#123;&#10;    u2 typeIdx;             /*&#25351;&#21521;DexTypeId&#21015;&#34920;&#30340;&#32034;&#24341;*/&#10;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="DexFieldId"><a href="#DexFieldId" class="headerlink" title="DexFieldId"></a>DexFieldId</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct DexFieldId&#123;&#10;    u2 classIdx;        /*&#31867;&#30340;&#31867;&#22411;&#65292;&#25351;&#21521;DexTypeId&#21015;&#34920;&#30340;&#32034;&#24341;*/&#10;    u2 typeIdx;     /*&#23383;&#27573;&#31867;&#22411;&#65292;&#25351;&#21521;DexTypeId&#21015;&#34920;&#30340;&#32034;&#24341;*/&#10;    u4 nameIdx;     /*&#23383;&#27573;&#21517;&#65292;&#25351;&#21521;DexStringId&#21015;&#34920;&#30340;&#32034;&#24341;*/&#10;&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>class_idx: 表示 field 所属的 class 类型，class_idx 的值是 type_ids 的一个 index，并且必须指向一个 class 类型。</li>
+<li>type_idx: 表示本 field 的类型，它的值也是 type_ids 的一个 index 。</li>
+<li>name_idx: 表示本 field 的名称，它的值是 string_ids 的一个 index 。</li>
+</ul>
+<h3 id="DexMethodId"><a href="#DexMethodId" class="headerlink" title="DexMethodId"></a>DexMethodId</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct DexMethodId&#123;&#10;    u2 classIdx;        /*&#31867;&#30340;&#31867;&#22411;&#65292;&#25351;&#21521;DexTypeId&#21015;&#34920;&#30340;&#32034;&#24341;*/&#10;    u2 protoIdx;        /*&#22768;&#26126;&#31867;&#22411;&#65292;&#25351;&#21521;DexProtoId&#21015;&#34920;&#30340;&#32034;&#24341;*/&#10;    u4 nameIdx;     /*&#26041;&#27861;&#21517;&#65292;&#25351;&#21521;DexStringId&#21015;&#34920;&#30340;&#32034;&#24341;*/&#10;&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>class_idx: 表示 method 所属的 class 类型，class_idx 的值是 type_ids 的一个 index，并且必须指向一个 class 类型。ushort类型也是为什么我们说一个 dex 只能有 65535 个方法的原因，多了必须分包。</li>
+<li>proto_idx: 表示 method 的类型，它的值也是 type_ids 的一个 index。</li>
+<li>name_idx: 表示 method 的名称，它的值是 string_ids 的一个 index。</li>
+</ul>
+<h3 id="DexClassDef"><a href="#DexClassDef" class="headerlink" title="DexClassDef"></a>DexClassDef</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct DexClassDef&#123;&#10;    u4 classIdx;        /*&#31867;&#30340;&#31867;&#22411;&#65292;&#25351;&#21521;DexTypeId&#21015;&#34920;&#30340;&#32034;&#24341;*/&#10;    u4 accessFlags;     /*&#35775;&#38382;&#26631;&#24535;*/&#10;    u4 superclassIdx;   /*&#29238;&#31867;&#31867;&#22411;&#65292;&#25351;&#21521;DexTypeId&#21015;&#34920;&#30340;&#32034;&#24341;*/&#10;    u4 interfacesOff;   /*&#25509;&#21475;&#65292;&#25351;&#21521;DexTypeList&#30340;&#20559;&#31227;*/&#10;    u4 sourceFileIdx;   /*&#28304;&#25991;&#20214;&#21517;&#65292;&#25351;&#21521;DexStringId&#21015;&#34920;&#30340;&#32034;&#24341;*/&#10;    u4 annotationsOff;  /*&#27880;&#35299;&#65292;&#25351;&#21521;DexAnnotationsDirectoryItem&#32467;&#26500;*/&#10;    u4 classDataOff;    /*&#25351;&#21521;DexClassData&#32467;&#26500;&#30340;&#20559;&#31227;*/&#10;    u4 staticValuesOff; /*&#25351;&#21521;DexEncodedArray&#32467;&#26500;&#30340;&#20559;&#31227;*/&#10;&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>class_idx: 描述具体的 class 类型，值是 type_ids 的一个 index 。值必须是一个 class 类型，不能是数组类型或者基本类型。</li>
+<li>access_flags: 描述 class 的访问类型，诸如 public , final , static 等。在 dex-format.html 里 “access_flags Definitions” 有具体的描述 。</li>
+<li>superclass_idx: 描述 supperclass 的类型，值的形式跟 class_idx 一样 。</li>
+<li>interfaces_off: 值为偏移地址，指向 class 的 interfaces，被指向的数据结构为 type_list 。class 若没有 interfaces 值为 0。</li>
+<li>source_file_idx: 表示源代码文件的信息，值是 string_ids 的一个 index。若此项信息缺失，此项值赋值为 NO_INDEX=0xffff ffff。</li>
+<li>annotions_off: 值是一个偏移地址，指向的内容是该 class 的注释，位置在 data 区，格式为 annotations_direcotry_item。若没有此项内容，值为 0 。</li>
+<li>class_data_off: 值是一个偏移地址，指向的内容是该 class 的使用到的数据，位置在 data 区，格式为 class_data_item。若没有此项内容值为 0。该结构里有很多内容，详细描述该 class 的 field、method, method 里的执行代码等信息，后面会介绍 class_data_item。</li>
+<li>static_value_off: 值是一个偏移地址 ，指向 data 区里的一个列表 (list)，格式为 encoded_array_item。若没有此项内容值为 0。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct DexTypeList&#10;&#123;&#10;    uint       size;&#10;    type_item  list [size] &#10;&#125;&#10;&#10;struct type_item&#10;&#123;&#10;    ushort type_idx   //--&#62;type_ids&#10;&#125;&#10;&#10;struct DexAnnotationsDirectoryItem&#10;&#123;&#10;    uint class_annotations_off;        //--&#62;annotation_set_item&#10;    uint fields_size;&#10;    uint annotated_methods_size;&#10;    uint annotated_parameters_size;&#10;    &#10;    field_annotation field_annotations[fields_size];&#10;    method_annotation method_annotations[annotated_methods_size];&#10;    parameter_annotation parameter_annotations[annotated_parameters_size];&#10;&#125;&#10;&#10;struct field_annotation&#10;&#123;&#10;    uint field_idx;&#10;    uint annotations_off;    //--&#62;annotation_set_item&#10;&#125;&#10;&#10;struct method_annotation&#10;&#123;&#10;    uint method_idx;&#10;    uint annotations_off;    //--&#62;annotation_set_item&#10;&#125;&#10;&#10;struct parameter_annotation&#10;&#123;&#10;    uint method_idx;&#10;    uint annotations_off;    //--&#62;annotation_set_ref_list&#10;&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>class_annotations_off: 这个偏移指向了 annotation_set_item 具体的可以看 dex-format.html 上的介绍。</li>
+<li>fields_size: 表示属性的个数</li>
+<li>annotated_methods_size: 表示方法的个数</li>
+<li><p>annotated_parameters_size: 表示参数的个数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;struct DexClassData&#123;&#10;    DexClassDataHeader          header;         /*&#25351;&#23450;&#23383;&#27573;&#19982;&#26041;&#27861;&#30340;&#20010;&#25968;*/&#10;    DexField*           staticFields;       /*&#38745;&#24577;&#23383;&#27573;&#65292;DexField&#32467;&#26500;*/&#10;    DexField*           instanceFields&#65307; /*&#23454;&#20363;&#23383;&#27573;&#65292;DexField&#32467;&#26500;*/&#10;    DexMethod*          directMethods;      /*&#30452;&#25509;&#26041;&#27861;&#65292;DexMethod&#32467;&#26500;*/&#10;    DexMethod*          virtualMethods;     /*&#34394;&#26041;&#27861;&#65292;DexMethod&#32467;&#26500;*/&#10;&#125;&#10;&#10;&#10;struct DexClassDataHeader&#123;&#10;    u4 staticFieldsSize;    /*&#38745;&#24577;&#23383;&#27573;&#20010;&#25968;*/&#10;    u4 instanceFieldsSize;  /*&#23454;&#20363;&#23383;&#27573;&#20010;&#25968;*/&#10;    u4 directMethodsSize;   /*&#30452;&#25509;&#26041;&#27861;&#20010;&#25968;*/&#10;    u4 virtualMethodsSize;  /*&#34394;&#26041;&#27861;&#20010;&#25968;*/&#10;&#125;&#10;&#10;struct encoded_field&#10;&#123;&#10;    uleb128 filed_idx_diff; &#10;    uleb128 access_flags;  &#10;&#125;&#10;&#10;struct encoded_method&#10;&#123;&#10;    uleb128 method_idx_diff; &#10;    uleb128 access_flags; &#10;    uleb128 code_off;&#10;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>method_idx_diff: 前缀 methd_idx 表示它的值是 method_ids 的一个 index ，后缀 _diff 表示它是于另 外一个 method_idx 的一个差值 ，就是相对于 encodeed_method [] 数组里上一个元素的 method_idx 的差值 。 其实 encoded_filed - &gt; field_idx_diff 表示的也是相同的意思 ，只是编译出来的 Hello.dex 文件里没有使用到 class filed 所以没有仔细讲 ，详细的参考 dex_format.html 的官网文档。</p>
+</li>
+<li>access_flags: 访问权限，比如 public、private、static、final 等。</li>
+<li>code_off: 一个指向 data 区的偏移地址，目标是本 method 的代码实现。被指向的结构是code_item，有近 10 项元素。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct code_item &#10;&#123;&#10;    ushort                         registers_size;&#10;    ushort                         ins_size;&#10;    ushort                         outs_size;&#10;    ushort                         tries_size;&#10;    uint                         debug_info_off;&#10;    uint                         insns_size;&#10;    ushort                         insns [insns_size]; &#10;    ushort                         paddding;             // optional&#10;    try_item                     tries [tyies_size]; // optional&#10;    encoded_catch_handler_list  handlers;             // optional&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>code_item 结构里描述着某个 method 的具体实现.</p>
+<ul>
+<li>registers_size: 本段代码使用到的寄存器数目。</li>
+<li>ins_size: method 传入参数的数目 。</li>
+<li>outs_size: 本段代码调用其它 method 时需要的参数个数 。</li>
+<li>tries_size: try_item 结构的个数 。</li>
+<li>debug_off: 偏移地址，指向本段代码的 debug 信息存放位置，是一个 debug_info_item 结构。</li>
+<li>insns_size: 指令列表的大小，以 16-bit 为单位。 insns 是 instructions 的缩写 。</li>
+<li>padding: 值为 0，用于对齐字节 。</li>
+<li>tries 和 handlers: 用于处理 java 中的 exception，常见的语法有 try catch。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct encoded_array_item&#10;&#123;&#10;    encoded_array value;&#10;&#125;&#10;&#10;struct encoded_array&#10;&#123;    &#10;    uleb128 size;&#10;    encoded_value values[size];&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>class_def_item-&gt;static_value_off 偏移指向该区段数据。</p>
+<ul>
+<li>size : 表示encoded_value 个数<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct DexField&#123;&#10;    u4 fieldIdx;        /*&#25351;&#21521;DexFieldId&#30340;&#32034;&#24341;*/&#10;    u4 accessFlags;     /*&#35775;&#38382;&#26631;&#24535;*/&#10;&#125;&#10;&#10;struct DexMethod&#123;&#10;    u4 methodIdx;       /*&#25351;&#21521;DexMethodId&#30340;&#32034;&#24341;*/&#10;    u4 accessFlags;     /*&#35775;&#38382;&#26631;&#24535;*/&#10;    u4 codeOff;     /*&#25351;&#21521;DexCode&#32467;&#26500;&#30340;&#20559;&#31227;*/&#10;&#125;&#10;&#10;struct DexCode &#123;&#10;    u2  registersSize;//&#20351;&#29992;&#23492;&#23384;&#22120;&#20010;&#25968;&#10;    u2  insSize;//&#21442;&#25968;&#20010;&#25968;&#10;    u2  outsSize;//&#35843;&#29992;&#20854;&#20182;&#26041;&#27861;&#26102;&#20351;&#29992;&#30340;&#23492;&#23384;&#22120;&#20010;&#25968;&#10;    u2  triesSize;//try/catch&#20010;&#25968;&#10;    u4  debugInfoOff;//&#25351;&#21521;&#35843;&#35797;&#20449;&#24687;&#30340;&#20559;&#31227;&#10;    u4  insnsSize;//&#25351;&#20196;&#38598;&#20010;&#25968;&#65292;&#20197;2&#23383;&#33410;&#20026;&#21333;&#20301;&#10;    u2  insns[1];//&#25351;&#20196;&#38598;&#10;    /* followed by optional u2 padding */&#10;    /* followed by try_item[triesSize] */&#10;    /* followed by uleb handlersSize */&#10;    /* followed by catch_handler_item[handlersSize] */&#10;&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="DexMapList"><a href="#DexMapList" class="headerlink" title="DexMapList"></a>DexMapList</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct DexMapList &#123;&#10;    u4  size;               /* &#20010;&#25968; */&#10;    DexMapItem list[1];     /* DexMapItem&#30340;&#32467;&#26500; */&#10;&#125;;&#10;&#10;struct DexMapItem &#123;&#10;    u2 type;              /* kDexType&#24320;&#22836;&#30340;&#31867;&#22411; */&#10;    u2 unused;            /*&#26410;&#20351;&#29992;&#65292;&#29992;&#20110;&#23383;&#33410;&#23545;&#40784; */&#10;    u4 size;              /* &#31867;&#22411;&#30340;&#20010;&#25968; */&#10;    u4 offset;            /* &#31867;&#22411;&#30340;&#25991;&#20214;&#20559;&#31227; */&#10;&#125;;&#10;enum &#123;&#10;    kDexTypeHeaderItem               = 0x0,&#10;    kDexTypeStringIdItem             = 0x1,&#10;    kDexTypeTypeIdItem               = 0x2,&#10;    kDexTypeProtoIdItem              = 0x3,&#10;    kDexTypeFieldIdItem              = 0x4,&#10;    kDexTypeMethodIdItem             = 0x5,&#10;    kDexTypeClassDefItem             = 0x6,&#10;    kDexTypeMapList                  = 0x0,&#10;    kDexTypeTypeList                 = 0x1,&#10;    kDexTypeAnnotationSetRefList     = 0x2,&#10;    kDexTypeAnnotationSetItem        = 0x3,&#10;    kDexTypeClassDataItem            = 0x0,&#10;    kDexTypeCodeItem                 = 0x1,&#10;    kDexTypeStringDataItem           = 0x2,&#10;    kDexTypeDebugInfoItem            = 0x3,&#10;    kDexTypeAnnotationItem           = 0x4,&#10;    kDexTypeEncodedArrayItem         = 0x5,&#10;    kDexTypeAnnotationsDirectoryItem = 0x6,&#10;&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="u603B_u7ED3_u56FE"><a href="#u603B_u7ED3_u56FE" class="headerlink" title="总结图"></a>总结图</h3><p>　　在结尾通过一张图把前面的东西串起来,如下所示,便于了解.<br><img src="//nanshihui.github.io/public/dex.png" alt="dex图"></p>
+]]></content>
+      
+        <categories>
+            
+            <category> 移动安全 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Android </tag>
+            
+            <tag> 逆向 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[zmap源码解读之zmap扫描快的原因]]></title>
       <url>https://nanshihui.github.io/2017/03/29/zmap%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB%E4%B9%8Bzmap%E6%89%AB%E6%8F%8F%E5%BF%AB%E7%9A%84%E5%8E%9F%E5%9B%A0/</url>
       <content type="html"><![CDATA[<p></p><h2 id="intro">前言</h2>很多人都会好奇为什么ZMAP能够做到45分钟,扫遍整个互联网,遂去看了下ZMAP的源码,顺便分享知识.<p></p>
