@@ -61,12 +61,7 @@
 <tr>
 <td>data</td>
 <td style="text-align:center">type_id_item[]</td>
-<td style="text-align:right">类型数据索引，记录了各个类型的字符串索引。</td>
-</tr>
-<tr>
-<td>type_ids</td>
-<td style="text-align:center">ubyte[]</td>
-<td style="text-align:right">数据区，保存着各个类的数据。</td>
+<td style="text-align:right">数据区，保存着各个类的数据</td>
 </tr>
 <tr>
 <td>link_data</td>
@@ -145,7 +140,7 @@
 <li>tries 和 handlers: 用于处理 java 中的 exception，常见的语法有 try catch。</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct encoded_array_item&#10;&#123;&#10;    encoded_array value;&#10;&#125;&#10;&#10;struct encoded_array&#10;&#123;    &#10;    uleb128 size;&#10;    encoded_value values[size];&#10;&#125;</span><br></pre></td></tr></table></figure>
-<p>class_def_item-&gt;static_value_off 偏移指向该区段数据。</p>
+<p>encoded_array_item是class_def_item-&gt;static_value_off 偏移指向的区段数据。</p>
 <ul>
 <li>size : 表示encoded_value 个数<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct DexField&#123;&#10;    u4 fieldIdx;        /*&#25351;&#21521;DexFieldId&#30340;&#32034;&#24341;*/&#10;    u4 accessFlags;     /*&#35775;&#38382;&#26631;&#24535;*/&#10;&#125;&#10;&#10;struct DexMethod&#123;&#10;    u4 methodIdx;       /*&#25351;&#21521;DexMethodId&#30340;&#32034;&#24341;*/&#10;    u4 accessFlags;     /*&#35775;&#38382;&#26631;&#24535;*/&#10;    u4 codeOff;     /*&#25351;&#21521;DexCode&#32467;&#26500;&#30340;&#20559;&#31227;*/&#10;&#125;&#10;&#10;struct DexCode &#123;&#10;    u2  registersSize;//&#20351;&#29992;&#23492;&#23384;&#22120;&#20010;&#25968;&#10;    u2  insSize;//&#21442;&#25968;&#20010;&#25968;&#10;    u2  outsSize;//&#35843;&#29992;&#20854;&#20182;&#26041;&#27861;&#26102;&#20351;&#29992;&#30340;&#23492;&#23384;&#22120;&#20010;&#25968;&#10;    u2  triesSize;//try/catch&#20010;&#25968;&#10;    u4  debugInfoOff;//&#25351;&#21521;&#35843;&#35797;&#20449;&#24687;&#30340;&#20559;&#31227;&#10;    u4  insnsSize;//&#25351;&#20196;&#38598;&#20010;&#25968;&#65292;&#20197;2&#23383;&#33410;&#20026;&#21333;&#20301;&#10;    u2  insns[1];//&#25351;&#20196;&#38598;&#10;    /* followed by optional u2 padding */&#10;    /* followed by try_item[triesSize] */&#10;    /* followed by uleb handlersSize */&#10;    /* followed by catch_handler_item[handlersSize] */&#10;&#125;;</span><br></pre></td></tr></table></figure>
 </li>

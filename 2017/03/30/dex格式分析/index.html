@@ -29,7 +29,7 @@ dex: 什么是DEX
 dex结构: 详细的dex数据结构">
 <meta property="og:image" content="https://nanshihui.github.io//nanshihui.github.io/public/dexmain.png">
 <meta property="og:image" content="https://nanshihui.github.io//nanshihui.github.io/public/dex.png">
-<meta property="og:updated_time" content="2017-03-30T13:43:14.768Z">
+<meta property="og:updated_time" content="2017-03-31T01:47:03.949Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="dex格式分析">
 <meta name="twitter:description" content="前言最近接触Android逆向,就开始熟悉dex格式,顺便记录下数据结构,方便下次直接查询.
@@ -395,12 +395,7 @@ dex结构: 详细的dex数据结构">
 <tr>
 <td>data</td>
 <td style="text-align:center">type_id_item[]</td>
-<td style="text-align:right">类型数据索引，记录了各个类型的字符串索引。</td>
-</tr>
-<tr>
-<td>type_ids</td>
-<td style="text-align:center">ubyte[]</td>
-<td style="text-align:right">数据区，保存着各个类的数据。</td>
+<td style="text-align:right">数据区，保存着各个类的数据</td>
 </tr>
 <tr>
 <td>link_data</td>
@@ -479,7 +474,7 @@ dex结构: 详细的dex数据结构">
 <li>tries 和 handlers: 用于处理 java 中的 exception，常见的语法有 try catch。</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct encoded_array_item&#10;&#123;&#10;    encoded_array value;&#10;&#125;&#10;&#10;struct encoded_array&#10;&#123;    &#10;    uleb128 size;&#10;    encoded_value values[size];&#10;&#125;</span><br></pre></td></tr></table></figure>
-<p>class_def_item-&gt;static_value_off 偏移指向该区段数据。</p>
+<p>encoded_array_item是class_def_item-&gt;static_value_off 偏移指向的区段数据。</p>
 <ul>
 <li>size : 表示encoded_value 个数<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct DexField&#123;&#10;    u4 fieldIdx;        /*&#25351;&#21521;DexFieldId&#30340;&#32034;&#24341;*/&#10;    u4 accessFlags;     /*&#35775;&#38382;&#26631;&#24535;*/&#10;&#125;&#10;&#10;struct DexMethod&#123;&#10;    u4 methodIdx;       /*&#25351;&#21521;DexMethodId&#30340;&#32034;&#24341;*/&#10;    u4 accessFlags;     /*&#35775;&#38382;&#26631;&#24535;*/&#10;    u4 codeOff;     /*&#25351;&#21521;DexCode&#32467;&#26500;&#30340;&#20559;&#31227;*/&#10;&#125;&#10;&#10;struct DexCode &#123;&#10;    u2  registersSize;//&#20351;&#29992;&#23492;&#23384;&#22120;&#20010;&#25968;&#10;    u2  insSize;//&#21442;&#25968;&#20010;&#25968;&#10;    u2  outsSize;//&#35843;&#29992;&#20854;&#20182;&#26041;&#27861;&#26102;&#20351;&#29992;&#30340;&#23492;&#23384;&#22120;&#20010;&#25968;&#10;    u2  triesSize;//try/catch&#20010;&#25968;&#10;    u4  debugInfoOff;//&#25351;&#21521;&#35843;&#35797;&#20449;&#24687;&#30340;&#20559;&#31227;&#10;    u4  insnsSize;//&#25351;&#20196;&#38598;&#20010;&#25968;&#65292;&#20197;2&#23383;&#33410;&#20026;&#21333;&#20301;&#10;    u2  insns[1];//&#25351;&#20196;&#38598;&#10;    /* followed by optional u2 padding */&#10;    /* followed by try_item[triesSize] */&#10;    /* followed by uleb handlersSize */&#10;    /* followed by catch_handler_item[handlersSize] */&#10;&#125;;</span><br></pre></td></tr></table></figure>
 </li>
@@ -497,7 +492,7 @@ dex结构: 详细的dex数据结构">
         <p><span>本文标题:</span><a href="/2017/03/30/dex格式分析/">dex格式分析</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Sherwel</a></p>
         <p><span>发布时间:</span>2017-03-30, 20:03:32</p>
-        <p><span>最后更新:</span>2017-03-30, 21:43:14</p>
+        <p><span>最后更新:</span>2017-03-31, 09:47:03</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/03/30/dex格式分析/" title="dex格式分析">https://nanshihui.github.io/2017/03/30/dex格式分析/</a>
             <span class="copy-path" data-clipboard-text="原文: https://nanshihui.github.io/2017/03/30/dex格式分析/　　作者: Sherwel" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
