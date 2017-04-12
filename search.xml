@@ -129,7 +129,7 @@
 } Elf32_Shdr;
 </code></pre><p><img src="//nanshihui.github.io/public/section_head.png" alt="ELF_Sections_head图"></p>
 <p>##　总结<br>　　通过以上的分析，最后通过一个整体的图，使得对整体的结构有一个宏观的了解。</p>
-<p><img src="//nanshihui.github.io/public/elfmain.png" alt="整体图"></p>
+<p><img src="//nanshihui.github.io/public/elfmain.png" alt="整体结果分析图"></p>
 ]]></content>
       
         <categories>
