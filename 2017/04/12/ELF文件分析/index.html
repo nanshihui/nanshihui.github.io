@@ -28,11 +28,11 @@ ELF格式分析
 ELF: 什么是ELF
 ELF结构: 详细的ELF数据结构">
 <meta property="og:image" content="https://nanshihui.github.io//nanshihui.github.io/public/elfhead.jpg">
-<meta property="og:image" content="https://nanshihui.github.io//nanshihui.github.io/public/elfident.jpg">
+<meta property="og:image" content="https://nanshihui.github.io//nanshihui.github.io/public/elfident.png">
 <meta property="og:image" content="https://nanshihui.github.io//nanshihui.github.io/public/section_normal.png">
 <meta property="og:image" content="https://nanshihui.github.io//nanshihui.github.io/public/section_head.png">
 <meta property="og:image" content="https://nanshihui.github.io//nanshihui.github.io/public/elfmain.png">
-<meta property="og:updated_time" content="2017-04-12T03:46:28.469Z">
+<meta property="og:updated_time" content="2017-04-12T03:47:41.562Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ELF文件分析">
 <meta name="twitter:description" content="前言由于Android中的so文件就是elf文件，所以想要了解so文件，必须先了解elf文件的格式，网上虽然ELF格式的分析不少,但是感觉不透彻,便耐着性子,慢慢开始了elf格式分析。
@@ -415,7 +415,7 @@ ELF结构: 详细的ELF数据结构">
 <h3 id="ELF_Hearder"><a href="#ELF_Hearder" class="headerlink" title="ELF Hearder"></a>ELF Hearder</h3><p>　　我们知道了基本的数据结构,就可以开始了解整个header部分.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/* ELF Header */&#10;typedef struct elfhdr &#123;&#10;    unsigned char   e_ident[EI_NIDENT];         /* ELF Identification */&#10;    Elf32_Half  e_type;                         /* object file type */&#10;    Elf32_Half  e_machine;                      /* machine */&#10;    Elf32_Word  e_version;                      /* object file version */&#10;    Elf32_Addr  e_entry;                        /* virtual entry point */&#10;    Elf32_Off   e_phoff;                        /* program header table offset */&#10;    Elf32_Off   e_shoff;                        /* section header table offset */&#10;    Elf32_Word  e_flags;                        /* processor-specific flags */&#10;    Elf32_Half  e_ehsize;                       /* ELF header size */&#10;    Elf32_Half  e_phentsize;                    /* program header entry size */&#10;    Elf32_Half  e_phnum;                        /* number of program header entries */&#10;    Elf32_Half  e_shentsize;                    /* section header entry size */&#10;    Elf32_Half  e_shnum;                        /* number of section header entries */&#10;    Elf32_Half  e_shstrndx;                     /* section header table&#39;s &#34;section header string table&#34; entry offset */&#10;&#125; Elf32_Ehdr;</span><br></pre></td></tr></table></figure></p>
 <p>　　最开头是16个字节的e_ident, 其中包含用以表示ELF文件的字符，以及其他一些与机器无关的信息。开头的4个字节值固定不变，为0x7f和ELF三个字符。</p>
 <ul>
-<li>e_ident 数组给出了 ELF 的一些标识信息，这个数组中不同下标的含义如表所示:<br><img src="//nanshihui.github.io/public/elfident.jpg" alt="ELF整体图"></li>
+<li>e_ident 数组给出了 ELF 的一些标识信息，这个数组中不同下标的含义如表所示:<br><img src="//nanshihui.github.io/public/elfident.png" alt="e_ident类型图"></li>
 <li>e_type 它标识的是该文件的类型。</li>
 <li>e_machine 表明运行该程序需要的体系结构。</li>
 <li>e_version 表示文件的版本。</li>
@@ -478,7 +478,7 @@ ELF结构: 详细的ELF数据结构">
         <p><span>本文标题:</span><a href="/2017/04/12/ELF文件分析/">ELF文件分析</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Sherwel</a></p>
         <p><span>发布时间:</span>2017-04-12, 10:43:12</p>
-        <p><span>最后更新:</span>2017-04-12, 11:46:28</p>
+        <p><span>最后更新:</span>2017-04-12, 11:47:41</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/04/12/ELF文件分析/" title="ELF文件分析">https://nanshihui.github.io/2017/04/12/ELF文件分析/</a>
             <span class="copy-path" data-clipboard-text="原文: https://nanshihui.github.io/2017/04/12/ELF文件分析/　　作者: Sherwel" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
