@@ -32,7 +32,7 @@ ELF结构: 详细的ELF数据结构">
 <meta property="og:image" content="https://nanshihui.github.io//nanshihui.github.io/public/section_normal.png">
 <meta property="og:image" content="https://nanshihui.github.io//nanshihui.github.io/public/section_head.png">
 <meta property="og:image" content="https://nanshihui.github.io//nanshihui.github.io/public/elfmain.png">
-<meta property="og:updated_time" content="2017-04-12T03:44:39.996Z">
+<meta property="og:updated_time" content="2017-04-12T03:46:28.469Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ELF文件分析">
 <meta name="twitter:description" content="前言由于Android中的so文件就是elf文件，所以想要了解so文件，必须先了解elf文件的格式，网上虽然ELF格式的分析不少,但是感觉不透彻,便耐着性子,慢慢开始了elf格式分析。
@@ -465,7 +465,7 @@ ELF结构: 详细的ELF数据结构">
   Elf32_Word    sh_entsize;             /* Entry size if section holds table */
 } Elf32_Shdr;
 </code></pre><p><img src="//nanshihui.github.io/public/section_head.png" alt="ELF_Sections_head图"></p>
-<p>##　总结<br>　　通过以上的分析，最后通过一个整体的图，使得对整体的结构有一个宏观的了解。</p>
+<h2 id="u603B_u7ED3"><a href="#u603B_u7ED3" class="headerlink" title="总结"></a>总结</h2><p>　　通过以上的分析，最后通过一个整体的图，使得对整体的结构有一个宏观的了解。</p>
 <p><img src="//nanshihui.github.io/public/elfmain.png" alt="整体结果分析图"></p>
 
       
@@ -478,7 +478,7 @@ ELF结构: 详细的ELF数据结构">
         <p><span>本文标题:</span><a href="/2017/04/12/ELF文件分析/">ELF文件分析</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Sherwel</a></p>
         <p><span>发布时间:</span>2017-04-12, 10:43:12</p>
-        <p><span>最后更新:</span>2017-04-12, 11:44:39</p>
+        <p><span>最后更新:</span>2017-04-12, 11:46:28</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/04/12/ELF文件分析/" title="ELF文件分析">https://nanshihui.github.io/2017/04/12/ELF文件分析/</a>
             <span class="copy-path" data-clipboard-text="原文: https://nanshihui.github.io/2017/04/12/ELF文件分析/　　作者: Sherwel" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -521,7 +521,7 @@ ELF结构: 详细的ELF数据结构">
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ELF_u683C_u5F0F_u5206_u6790"><span class="toc-number">1.1.</span> <span class="toc-text">ELF格式分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5F15_u8A00"><span class="toc-number">2.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ELF_u7EC4_u6210"><span class="toc-number">3.</span> <span class="toc-text">ELF组成</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ELF_u6570_u636E_u7C7B_u578B"><span class="toc-number">3.0.1.</span> <span class="toc-text">ELF数据类型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ELF_Hearder"><span class="toc-number">3.1.</span> <span class="toc-text">ELF Hearder</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Program_Header"><span class="toc-number">3.2.</span> <span class="toc-text">Program Header</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sections"><span class="toc-number">3.3.</span> <span class="toc-text">Sections</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sections_head_table"><span class="toc-number">3.4.</span> <span class="toc-text">Sections head table</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ELF_u683C_u5F0F_u5206_u6790"><span class="toc-number">1.1.</span> <span class="toc-text">ELF格式分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5F15_u8A00"><span class="toc-number">2.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ELF_u7EC4_u6210"><span class="toc-number">3.</span> <span class="toc-text">ELF组成</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ELF_u6570_u636E_u7C7B_u578B"><span class="toc-number">3.0.1.</span> <span class="toc-text">ELF数据类型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ELF_Hearder"><span class="toc-number">3.1.</span> <span class="toc-text">ELF Hearder</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Program_Header"><span class="toc-number">3.2.</span> <span class="toc-text">Program Header</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sections"><span class="toc-number">3.3.</span> <span class="toc-text">Sections</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sections_head_table"><span class="toc-number">3.4.</span> <span class="toc-text">Sections head table</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u603B_u7ED3"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
         
     </div>
     <style>
