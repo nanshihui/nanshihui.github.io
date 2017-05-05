@@ -15,30 +15,28 @@
 
 
 
-<meta name="description" content="前言由于Android中的so文件就是elf文件，所以想要了解so文件，必须先了解elf文件的格式，网上虽然ELF格式的分析不少,但是感觉不透彻,便耐着性子,慢慢开始了elf格式分析。
-ELF格式分析
-ELF: 什么是ELF
-ELF结构: 详细的ELF数据结构">
+<meta name="description" content="前言android的so文件调试,网上写了不少,但是按着网上来,却不一定是正确的,于是自己便总结了一份,给需要的人,同时也方便自己查阅。
+SO动态调试技巧
+SO加载流程 
+调试前奏: 在调试前需要那些工具
+调试流程: 调试的相关细节">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ELF文件分析">
-<meta property="og:url" content="https://nanshihui.github.io/2017/04/12/ELF文件分析/index.html">
+<meta property="og:title" content="Adnroid so文件动态调试技巧">
+<meta property="og:url" content="https://nanshihui.github.io/2017/05/05/安卓so动态调试技巧/index.html">
 <meta property="og:site_name" content="Sherwel-Blog">
-<meta property="og:description" content="前言由于Android中的so文件就是elf文件，所以想要了解so文件，必须先了解elf文件的格式，网上虽然ELF格式的分析不少,但是感觉不透彻,便耐着性子,慢慢开始了elf格式分析。
-ELF格式分析
-ELF: 什么是ELF
-ELF结构: 详细的ELF数据结构">
-<meta property="og:image" content="https://nanshihui.github.io//nanshihui.github.io/public/elfhead.jpg">
-<meta property="og:image" content="https://nanshihui.github.io//nanshihui.github.io/public/elfident.png">
-<meta property="og:image" content="https://nanshihui.github.io//nanshihui.github.io/public/section_normal.png">
-<meta property="og:image" content="https://nanshihui.github.io//nanshihui.github.io/public/section_head.png">
-<meta property="og:image" content="https://nanshihui.github.io//nanshihui.github.io/public/elfmain.png">
-<meta property="og:updated_time" content="2017-04-12T11:53:30.000Z">
+<meta property="og:description" content="前言android的so文件调试,网上写了不少,但是按着网上来,却不一定是正确的,于是自己便总结了一份,给需要的人,同时也方便自己查阅。
+SO动态调试技巧
+SO加载流程 
+调试前奏: 在调试前需要那些工具
+调试流程: 调试的相关细节">
+<meta property="og:updated_time" content="2017-05-05T10:11:44.351Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ELF文件分析">
-<meta name="twitter:description" content="前言由于Android中的so文件就是elf文件，所以想要了解so文件，必须先了解elf文件的格式，网上虽然ELF格式的分析不少,但是感觉不透彻,便耐着性子,慢慢开始了elf格式分析。
-ELF格式分析
-ELF: 什么是ELF
-ELF结构: 详细的ELF数据结构">
+<meta name="twitter:title" content="Adnroid so文件动态调试技巧">
+<meta name="twitter:description" content="前言android的so文件调试,网上写了不少,但是按着网上来,却不一定是正确的,于是自己便总结了一份,给需要的人,同时也方便自己查阅。
+SO动态调试技巧
+SO加载流程 
+调试前奏: 在调试前需要那些工具
+调试流程: 调试的相关细节">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -70,7 +68,7 @@ ELF结构: 详细的ELF数据结构">
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>ELF文件分析 | Sherwel-Blog</title>
+<title>Adnroid so文件动态调试技巧 | Sherwel-Blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -299,11 +297,11 @@ ELF结构: 详细的ELF数据结构">
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-ELF文件分析" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-安卓so动态调试技巧" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/04/12/ELF文件分析/" class="article-date">
-      <time datetime="2017-04-12T02:43:12.000Z" itemprop="datePublished">2017-04-12</time>
+      <a href="/2017/05/05/安卓so动态调试技巧/" class="article-date">
+      <time datetime="2017-05-05T08:35:18.000Z" itemprop="datePublished">2017-05-05</time>
 </a>
 
 
@@ -318,7 +316,7 @@ ELF结构: 详细的ELF数据结构">
         
   
     <h1 class="article-title" itemprop="name">
-      ELF文件分析
+      Adnroid so文件动态调试技巧
     </h1>
   
 
@@ -343,130 +341,33 @@ ELF结构: 详细的ELF数据结构">
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p></p><h2 id="intro">前言</h2>由于Android中的so文件就是elf文件，所以想要了解so文件，必须先了解elf文件的格式，网上虽然ELF格式的分析不少,但是感觉不透彻,便耐着性子,慢慢开始了elf格式分析。<p></p>
-<h3 id="ELF_u683C_u5F0F_u5206_u6790"><a href="#ELF_u683C_u5F0F_u5206_u6790" class="headerlink" title="ELF格式分析"></a>ELF格式分析</h3><ul>
-<li><strong>ELF:</strong> 什么是ELF</li>
-<li><strong>ELF结构:</strong> 详细的ELF数据结构</li>
+        <p></p><h2 id="intro">前言</h2>android的so文件调试,网上写了不少,但是按着网上来,却不一定是正确的,于是自己便总结了一份,给需要的人,同时也方便自己查阅。<p></p>
+<h3 id="SO_u52A8_u6001_u8C03_u8BD5_u6280_u5DE7"><a href="#SO_u52A8_u6001_u8C03_u8BD5_u6280_u5DE7" class="headerlink" title="SO动态调试技巧"></a>SO动态调试技巧</h3><ul>
+<li><strong>SO加载流程</strong> </li>
+<li><strong>调试前奏:</strong> 在调试前需要那些工具</li>
+<li><strong>调试流程:</strong> 调试的相关细节</li>
 </ul>
 <a id="more"></a>
-<h2 id="u5F15_u8A00"><a href="#u5F15_u8A00" class="headerlink" title="引言"></a>引言</h2><p>　　ELF(Executable and Linkable Format)即可执行连接文件格式，是一种比较复杂的文件格式，但其应用广泛。与linux下的其他可执行文件(a.out，cof)相比，它对节的定义和gnu工具链对它的支持使它十分灵活，它保存的足够了系统相关信息使它能支持不同平台上的交叉编译和交叉链接，可移植性很强．同时它在执行中支持动态链接共享库。</p>
-<p>目标文件有三种类型:</p>
+<h2 id="u5F15_u8A00"><a href="#u5F15_u8A00" class="headerlink" title="引言"></a>引言</h2><p>　　随着攻防对抗的升级，或者是java没有相应的API函数，需要借助更底层的函数来支撑，也就有了JNI技术，让JAVA可以调用其他语言封装的库函数，在ANDROID上，也有对应的NDK技术，因此在调试之前，我们最好先了解JNI的相关技术,这样寻找问题的时候定位会更加快.比如常见的断点处。</p>
+<h2 id="SO_u52A0_u8F7D_u6D41_u7A0B"><a href="#SO_u52A0_u8F7D_u6D41_u7A0B" class="headerlink" title="SO加载流程"></a>SO加载流程</h2><p>　　so文件在加载的时候，粗略的流程，通常会经过 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.init-&#62;-&#62;.init array-&#62;-&#62;JNI_Onload-&#62;-&#62;java_com_XXX;</span><br></pre></td></tr></table></figure></p>
+<p> 这几个步骤，根据断点的位置,可以初步划分为如下几种：</p>
 <ul>
-<li>可重定位文件(Relocatable File) .o)包含适合于与其他目标文件链接来创建可执行文件或者共享目标文件的代码和数据。</li>
-<li>可执行文件(Executable File) .exe) 包含适合于执行的一个程序，此文件规定了exec() 如何创建一个程序的进程映像。</li>
-<li>共享目标文件(Shared Object File) .so) 包含可在两种上下文中链接的代码和数据。首先链接编辑器可以将它和其它可重定位文件和共享目标文件一起处理， 生成另外一个目标文件。其次动态链接器(Dynamic Linker)可能将它与某 个可执行文件以及其它共享目标一起组合，创建进程映像。</li>
+<li>应用级：java_com_XXX；</li>
+<li>外壳级：JNI_Onload,.init,.init_array;</li>
+<li>系统级：fopen,fget,dvmdexfileopen；</li>
 </ul>
-<p>目标文件全部是程序的二进制表示，目的是直接在某种处理器上直接执行。</p>
-<h2 id="ELF_u7EC4_u6210"><a href="#ELF_u7EC4_u6210" class="headerlink" title="ELF组成"></a>ELF组成</h2><p>　　ELF文件由4部分组成，分别是ELF头（ELF header）、程序头表（Program header table）、节（Section）和节头表（Section header table）。实际上，一个文件中不一定包含全部内容，而且他们的位置也未必如同所示这样安排，只有ELF头的位置是固定的，其余各部分的位置、大小等信息由ELF头中的各项值来决定.</p>
-<p><img src="//nanshihui.github.io/public/elfhead.jpg" alt="ELF整体图"><br>　　通过图,我们可以直观的了解整个结构.</p>
-<ul>
-<li>ELF 头部(ELF Header)，用来描述整个文件的组织。节区部 分包含链接视图的大量信息:指令、数据、符号表、重定位信息等等。</li>
-<li>程序头部表(Program Header Table)，如果存在的话，告诉系统如何创建进程映像。 用来构造进程映像的目标文件必须具有程序头部表，可重定位文件不需要这个表。</li>
-<li>节区头部表(Section Heade Table)包含了描述文件节区的信息，每个节区在表中 都有一项，每一项给出诸如节区名称、节区大小这类信息。用于链接的目标文件必须包 含节区头部表，其他目标文件可以有，也可以没有这个表。</li>
-</ul>
-<h4 id="ELF_u6570_u636E_u7C7B_u578B"><a href="#ELF_u6570_u636E_u7C7B_u578B" class="headerlink" title="ELF数据类型"></a>ELF数据类型</h4><table>
-<thead>
-<tr>
-<th>名称</th>
-<th style="text-align:center">大小</th>
-<th style="text-align:right">对齐</th>
-<th style="text-align:right">用途</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Elf32_Addr</td>
-<td style="text-align:center">4</td>
-<td style="text-align:right">4</td>
-<td style="text-align:right">无符号程序地址</td>
-</tr>
-<tr>
-<td>Elf32_Half</td>
-<td style="text-align:center">2</td>
-<td style="text-align:right">2</td>
-<td style="text-align:right">无符号中等大小整数</td>
-</tr>
-<tr>
-<td>Elf32_Off</td>
-<td style="text-align:center">4</td>
-<td style="text-align:right">4</td>
-<td style="text-align:right">无符号文件偏移</td>
-</tr>
-<tr>
-<td>Elf32_Sword</td>
-<td style="text-align:center">4</td>
-<td style="text-align:right">4</td>
-<td style="text-align:right">有符号大整数</td>
-</tr>
-<tr>
-<td>Elf32_Word</td>
-<td style="text-align:center">4</td>
-<td style="text-align:right">4</td>
-<td style="text-align:right">无符号大整数</td>
-</tr>
-<tr>
-<td>unsigned char</td>
-<td style="text-align:center">1</td>
-<td style="text-align:right">1</td>
-<td style="text-align:right">无符号小整数</td>
-</tr>
-</tbody>
-</table>
-<h3 id="ELF_Hearder"><a href="#ELF_Hearder" class="headerlink" title="ELF Hearder"></a>ELF Hearder</h3><p>　　我们知道了基本的数据结构,就可以开始了解整个header部分.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/* ELF Header */&#10;typedef struct elfhdr &#123;&#10;    unsigned char   e_ident[EI_NIDENT];         /* ELF Identification */&#10;    Elf32_Half  e_type;                         /* object file type */&#10;    Elf32_Half  e_machine;                      /* machine */&#10;    Elf32_Word  e_version;                      /* object file version */&#10;    Elf32_Addr  e_entry;                        /* virtual entry point */&#10;    Elf32_Off   e_phoff;                        /* program header table offset */&#10;    Elf32_Off   e_shoff;                        /* section header table offset */&#10;    Elf32_Word  e_flags;                        /* processor-specific flags */&#10;    Elf32_Half  e_ehsize;                       /* ELF header size */&#10;    Elf32_Half  e_phentsize;                    /* program header entry size */&#10;    Elf32_Half  e_phnum;                        /* number of program header entries */&#10;    Elf32_Half  e_shentsize;                    /* section header entry size */&#10;    Elf32_Half  e_shnum;                        /* number of section header entries */&#10;    Elf32_Half  e_shstrndx;                     /* section header table&#39;s &#34;section header string table&#34; entry offset */&#10;&#125; Elf32_Ehdr;</span><br></pre></td></tr></table></figure></p>
-<p>　　最开头是16个字节的e_ident, 其中包含用以表示ELF文件的字符，以及其他一些与机器无关的信息。开头的4个字节值固定不变，为0x7f和ELF三个字符。</p>
-<ul>
-<li>e_ident 数组给出了 ELF 的一些标识信息，这个数组中不同下标的含义如表所示:<br><img src="//nanshihui.github.io/public/elfident.png" alt="e_ident类型图"></li>
-<li>e_type 它标识的是该文件的类型。</li>
-<li>e_machine 表明运行该程序需要的体系结构。</li>
-<li>e_version 表示文件的版本。</li>
-<li>e_entry 程序的入口地址。</li>
-<li>e_phoff 表示Program header table 在文件中的偏移量（以字节计数）。</li>
-<li>e_shoff 表示Section header table 在文件中的偏移量（以字节计数）。</li>
-<li>e_flags 对IA32而言，此项为0。</li>
-<li>e_ehsize 表示ELF header大小（以字节计数）。</li>
-<li>e_phentsize 表示Program header table中每一个条目的大小。</li>
-<li>e_phnum 表示Program header table中有多少个条目。</li>
-<li>e_shentsize 表示Section header table中的每一个条目的大小。</li>
-<li>e_shnum 表示Section header table中有多少个条目。</li>
-<li>e_shstrndx 包含节名称的字符串是第几个节（从零开始计数）</li>
-</ul>
-<p>　　在linux下,我们可以使用readelf指令观察<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$kali -h test.so&#10;ELF &#22836;&#65306;&#10;  Magic&#65306;  7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00&#10;  &#31867;&#21035;:                             ELF32&#10;  &#25968;&#25454;:                             2 &#34917;&#30721;&#65292;&#23567;&#31471;&#24207; (little endian)&#10;  &#29256;&#26412;:                             1 (current)&#10;  OS/ABI:                           UNIX - System V&#10;  ABI &#29256;&#26412;:                         0&#10;  &#31867;&#22411;:                             DYN (&#20849;&#20139;&#30446;&#26631;&#25991;&#20214;)&#10;  &#31995;&#32479;&#26550;&#26500;:                          ARM&#10;  &#29256;&#26412;:                             0x1&#10;  &#20837;&#21475;&#28857;&#22320;&#22336;&#65306;                       0x0&#10;  &#31243;&#24207;&#22836;&#36215;&#28857;&#65306;                       52 (bytes into file)&#10;  Start of section headers:        61816 (bytes into file)&#10;  &#26631;&#24535;&#65306;                            0x5000000, Version5 EABI&#10;  &#26412;&#22836;&#30340;&#22823;&#23567;&#65306;                       52 (&#23383;&#33410;)&#10;  &#31243;&#24207;&#22836;&#22823;&#23567;&#65306;                       32 (&#23383;&#33410;)&#10;  Number of program headers:       9&#10;  &#33410;&#22836;&#22823;&#23567;&#65306;                        40 (&#23383;&#33410;)&#10;  &#33410;&#22836;&#25968;&#37327;&#65306;                        24&#10;  &#23383;&#31526;&#20018;&#34920;&#32034;&#24341;&#33410;&#22836;&#65306;                 23</span><br></pre></td></tr></table></figure></p>
-<h3 id="Program_Header"><a href="#Program_Header" class="headerlink" title="Program Header"></a>Program Header</h3><p>　　可执行文件或者共享目标文件的程序头部是一个结构数组，每个结构描述了一个段 或者系统准备程序执行所必需的其它信息。目标文件的“段”包含一个或者多个“节区”， 也就是“段内容(Segment Contents)”。程序头部仅对于可执行文件和共享目标文件有意义。<br>可执行目标文件在 ELF 头部的 e_phentsize 和 e_phnum 成员中给出其自身程序头部的大小.<br>　　其数据结构如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/* Program Header */&#10;typedef struct &#123;&#10;    Elf32_Word  p_type;     /* segment type */&#10;    Elf32_Off   p_offset;   /* segment offset */&#10;    Elf32_Addr  p_vaddr;    /* virtual address of segment */&#10;    Elf32_Addr  p_paddr;    /* physical address - ignored? */&#10;    Elf32_Word  p_filesz;   /* number of bytes in file for seg. */&#10;    Elf32_Word  p_memsz;    /* number of bytes in mem. for seg. */&#10;    Elf32_Word  p_flags;    /* flags */&#10;    Elf32_Word  p_align;    /* memory alignment */&#10;&#125; Elf32_Phdr;</span><br></pre></td></tr></table></figure></p>
-<p>　　其具体的内容如下：</p>
-<ul>
-<li>p_type 此数组元素描述的段的类型，或者如何解释此数组元素的信息。</li>
-<li>p_offset 此成员给出从文件头到该段第一个字节的偏移。</li>
-<li>p_vaddr 此成员给出段的第一个字节将被放到内存中的虚拟地址。</li>
-<li>p_paddr 此成员仅用于与物理地址相关的系统中。因为 System V 忽略所有应用程序的物理地址信息，此字段对与可执行文件和共享目标文件而言具体内容是指定的。</li>
-<li>p_filesz 此成员给出段在文件映像中所占的字节数。可以为 0。</li>
-<li>p_memsz 此成员给出段在内存映像中占用的字节数。可以为 0。</li>
-<li>p_flags 此成员给出与段相关的标志。</li>
-<li>p_align 可加载的进程段的 p_vaddr 和 p_offset 取值必须合适，相对于对页面大小的取模而言。此成员给出段在文件中和内存中如何 对齐。数值 0 和 1 表示不需要对齐。否则 p_align 应该是个正整数，并且是 2 的幂次数，p_vaddr 和 p_offset 对 p_align 取模后应该相等。</li>
-</ul>
-<h3 id="Sections"><a href="#Sections" class="headerlink" title="Sections"></a>Sections</h3><p>　　节区中包含目标文件中的所有信息(除ELF头部、程序头部表格、节区头部表格)。节区满足以下条件:</p>
-<ul>
-<li>目标文件中的每个节区都有对应的节区头部描述它，反过来，有节区头部不意 味着有节区。</li>
-<li>每个节区占用文件中一个连续字节区域(这个区域可能长度为 0)。</li>
-<li>文件中的节区不能重叠，不允许一个字节存在于两个节区中的情况发生。</li>
-<li>目标文件中可能包含非活动空间(INACTIVE SPACE)。这些区域不属于任何头部和节区，其内容指定<br>　　详见的节区如下所示：<br><img src="//nanshihui.github.io/public/section_normal.png" alt="常见节区图"></li>
-</ul>
-<h3 id="Sections_head_table"><a href="#Sections_head_table" class="headerlink" title="Sections head table"></a>Sections head table</h3><p>　　节区头部表格,每个节区头部数据结构描述如下:</p>
-<pre><code>typedef struct
-{
-  Elf32_Word    sh_name;                /* Section name (string tbl index) */
-  Elf32_Word    sh_type;                /* Section type */
-  Elf32_Word    sh_flags;               /* Section flags */
-  Elf32_Addr    sh_addr;                /* Section virtual addr at execution */
-  Elf32_Off     sh_offset;              /* Section file offset */
-  Elf32_Word    sh_size;                /* Section size in bytes */
-  Elf32_Word    sh_link;                /* Link to another section */
-  Elf32_Word    sh_info;                /* Additional section information */
-  Elf32_Word    sh_addralign;           /* Section alignment */
-  Elf32_Word    sh_entsize;             /* Entry size if section holds table */
-} Elf32_Shdr;
-</code></pre><p><img src="//nanshihui.github.io/public/section_head.png" alt="ELF_Sections_head图"></p>
-<h2 id="u603B_u7ED3"><a href="#u603B_u7ED3" class="headerlink" title="总结"></a>总结</h2><p>　　通过以上的分析，最后通过一个整体的图，使得对整体的结构有一个宏观的了解。</p>
-<p><img src="//nanshihui.github.io/public/elfmain.png" alt="整体结果分析图"><br>此处推荐一篇实践的ELF格式分析，便于更加直观的了解。<a href="http://www.jianshu.com/p/7a75324e98ab" target="_blank" rel="external">http://www.jianshu.com/p/7a75324e98ab</a></p>
+<p>　　.init和.init array常做为壳的入口，对于so反调试的情况，可以在这两个函数上下断点，而对于应用具体的函数调用就会在相应的<br>特殊情况下文会细述。函数下断点，而对于加壳函数不管怎么操作，最后都会去读取dex文件或者其他文件，那就需要系统函数，那在系统函数上下断点就显得有必要。</p>
+<h2 id="u8C03_u8BD5_u51C6_u5907"><a href="#u8C03_u8BD5_u51C6_u5907" class="headerlink" title="调试准备"></a>调试准备</h2><p>　　调试的时候我们需要的工具有IDA，APKtool，adb，常见的工具可以在这里<a href="https://github.com/nanshihui/Android-reverse-tool" target="_blank" rel="external">https://github.com/nanshihui/Android-reverse-tool</a>获得</p>
+<h2 id="u8C03_u8BD5_u6D41_u7A0B"><a href="#u8C03_u8BD5_u6D41_u7A0B" class="headerlink" title="调试流程"></a>调试流程</h2><p>　　在调试的时候，确保apk的AndroidManifest.xml文件中android:debuggable=”true”字段为true。如果不是的话，可以先解包修改，然后再打包签名。</p>
+<h3 id="u6DFB_u52A0android_server"><a href="#u6DFB_u52A0android_server" class="headerlink" title="添加android_server"></a>添加android_server</h3><p>　　需要在一个root手机上或者是模拟器上，添加一个android_server文件，这个文件来源于ida的dbgsrv文件夹。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">adb push d:\android_server（IDA的dbgsrv目录下）  /data/<span class="built_in">local</span>/tmp/android_server（这个目录其实可以随便放，有的反调试会检测这)</span><br><span class="line">adb shell</span><br><span class="line">su(一定要有root权限)</span><br><span class="line"><span class="built_in">cd</span> /data/<span class="built_in">local</span>/tmp</span><br><span class="line">chmod <span class="number">777</span> android_server(执行权限要给)</span><br></pre></td></tr></table></figure></p>
+<h3 id="u542F_u52A8_u7AEF_u53E3_u8F6C_u53D1"><a href="#u542F_u52A8_u7AEF_u53E3_u8F6C_u53D1" class="headerlink" title="启动端口转发"></a>启动端口转发</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./android_server</span><br></pre></td></tr></table></figure>
+<p>　　重新打开一个窗口<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb forward tcp:<span class="number">23946</span> tcp:<span class="number">23946</span></span><br><span class="line">adb shell am start -D -n 包名/类名；<span class="comment">#包名和类名，可以在AndroidManifest.xml里找到</span></span><br></pre></td></tr></table></figure></p>
+<p>　　打开IDA，加载需要的so文件，并设置好断点，点击debugger，选择attch to process选择对应的进程。在debug option勾选suspend on process entry point，suspend on thread start/exit，suspend on library load/unload.</p>
+<h3 id="u542F_u52A8JDWP_u7AEF_u53E3_u8F6C_u53D1"><a href="#u542F_u52A8JDWP_u7AEF_u53E3_u8F6C_u53D1" class="headerlink" title="启动JDWP端口转发"></a>启动JDWP端口转发</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb forword tcp:<span class="number">8700</span> jdwp:进程号 <span class="comment">#可通过ps|grep 进程名  查找</span></span><br><span class="line">jdb -connect com.sun.jdi.SocketAttach:hostname=<span class="number">127.0</span>.<span class="number">0.1</span>,port=<span class="number">8700</span></span><br></pre></td></tr></table></figure>
+<h3 id="IDA_u8C03_u8BD5"><a href="#IDA_u8C03_u8BD5" class="headerlink" title="IDA调试"></a>IDA调试</h3><p>　　通过以上步骤，在IDA界面按F9执行，程序将会在相应的断点停下，然后可以按f8进行单步调试。<br>如果之前没有断点，可以计算基地址和so代码的相对地址，通过跳转并添加断点（按F2），基地址可以通过<br>基地址为：ctrl+s显示对应的so模块地址，相对地址，可以通过静态加载so取得。</p>
+<h2 id="u7279_u6B8A_u60C5_u51B5"><a href="#u7279_u6B8A_u60C5_u51B5" class="headerlink" title="特殊情况"></a>特殊情况</h2><h3 id="u6A21_u62DF_u673A_u65E0_u6CD5_u4F7F_u7528android_server"><a href="#u6A21_u62DF_u673A_u65E0_u6CD5_u4F7F_u7528android_server" class="headerlink" title="模拟机无法使用android_server"></a>模拟机无法使用android_server</h3><p>　　在使用模拟器的时候，由于是x86架构，无法启动android_server,这时候可以使用gbdserver一样可以调试</p>
+<h3 id="so_u6587_u4EF6_u53CD_u8C03_u8BD5"><a href="#so_u6587_u4EF6_u53CD_u8C03_u8BD5" class="headerlink" title="so文件反调试"></a>so文件反调试</h3><p>　　如果下断点，无法越过so文件的反调试，可以通过自己写代码加载so对应的函数绕过。调用JNI_Onload代码如下所示。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;dlfcn.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;jni.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    JavaVM* vm;</span><br><span class="line">    JNIEnv* env;</span><br><span class="line">    jint res;</span><br><span class="line">     </span><br><span class="line">    JavaVMInitArgs vm_args;</span><br><span class="line">    JavaVMOption options[<span class="number">1</span>];</span><br><span class="line">    options[<span class="number">0</span>].optionString = <span class="string">"-Djava.class.path=."</span>;</span><br><span class="line">    vm_args.version=<span class="number">0x00010002</span>;</span><br><span class="line">    vm_args.options=options;</span><br><span class="line">    vm_args.nOptions =<span class="number">1</span>;</span><br><span class="line">    vm_args.ignoreUnrecognized=JNI_TRUE;</span><br><span class="line">     </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"[+] dlopen libdvm.so\n"</span>);</span><br><span class="line">    <span class="keyword">void</span> *handle = dlopen(<span class="string">"/system/lib/libdvm.so"</span>, RTLD_LAZY);<span class="comment">//RTLD_LAZY RTLD_NOW</span></span><br><span class="line">    <span class="keyword">if</span>(!handle)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"[-] dlopen libdvm.so failed!!\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//这里我先创建一个java虚拟机。因为JNI_ONload函数参数第一个参数为JavaVM。</span></span><br><span class="line">    <span class="function"><span class="keyword">typedef</span> <span class="title">int</span> <span class="params">(*JNI_CreateJavaVM_Type)</span><span class="params">(JavaVM**, JNIEnv**, <span class="keyword">void</span>*)</span></span>;</span><br><span class="line">    JNI_CreateJavaVM_Type JNI_CreateJavaVM_Func = (JNI_CreateJavaVM_Type)dlsym(handle, <span class="string">"JNI_CreateJavaVM"</span>);</span><br><span class="line">    <span class="keyword">if</span>(!JNI_CreateJavaVM_Func)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"[-] dlsym failed\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    res=JNI_CreateJavaVM_Func(&amp;vm,&amp;env,&amp;vm_args)</span><br><span class="line">    <span class="keyword">void</span>* si=dlopen(<span class="string">"/data/local/tmp/libbaiduprotect.so"</span>,RTLD_LAZY);</span><br><span class="line">    <span class="keyword">if</span>(si == <span class="literal">NULL</span>)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"[-] dlopen err!\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">typedef</span> <span class="title">jint</span> <span class="params">(*FUN)</span><span class="params">(JavaVM* vm,<span class="keyword">void</span>* res)</span></span>;</span><br><span class="line">    FUN func_onload=(FUN)dlsym(si,<span class="string">"JNI_OnLoad"</span>);</span><br><span class="line">    <span class="keyword">if</span>(func_onload==<span class="literal">NULL</span>)<span class="comment">//我将断点下在了这里可以正好获取到JNI_Onload的函数地址。</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    func_onload(vm,<span class="literal">NULL</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>　　通过这样的方法可以绕过。当然反调试的情况不止这一种，将会在下篇中继续添加。</p>
 
       
     </div>
@@ -475,13 +376,13 @@ ELF结构: 详细的ELF数据结构">
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/04/12/ELF文件分析/">ELF文件分析</a></p>
+        <p><span>本文标题:</span><a href="/2017/05/05/安卓so动态调试技巧/">Adnroid so文件动态调试技巧</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Sherwel</a></p>
-        <p><span>发布时间:</span>2017-04-12, 10:43:12</p>
-        <p><span>最后更新:</span>2017-04-12, 19:53:30</p>
+        <p><span>发布时间:</span>2017-05-05, 16:35:18</p>
+        <p><span>最后更新:</span>2017-05-05, 18:11:44</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/04/12/ELF文件分析/" title="ELF文件分析">https://nanshihui.github.io/2017/04/12/ELF文件分析/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://nanshihui.github.io/2017/04/12/ELF文件分析/　　作者: Sherwel" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/05/05/安卓so动态调试技巧/" title="Adnroid so文件动态调试技巧">https://nanshihui.github.io/2017/05/05/安卓so动态调试技巧/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://nanshihui.github.io/2017/05/05/安卓so动态调试技巧/　　作者: Sherwel" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -506,16 +407,10 @@ ELF结构: 详细的ELF数据结构">
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/05/05/安卓so动态调试技巧/">
-                    Adnroid so文件动态调试技巧
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/03/30/dex格式分析/">
-                    dex格式分析
+                <a href="/2017/04/12/ELF文件分析/">
+                    ELF文件分析
                 </a>
             </div>
         
@@ -527,7 +422,7 @@ ELF结构: 详细的ELF数据结构">
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ELF_u683C_u5F0F_u5206_u6790"><span class="toc-number">1.1.</span> <span class="toc-text">ELF格式分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5F15_u8A00"><span class="toc-number">2.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ELF_u7EC4_u6210"><span class="toc-number">3.</span> <span class="toc-text">ELF组成</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ELF_u6570_u636E_u7C7B_u578B"><span class="toc-number">3.0.1.</span> <span class="toc-text">ELF数据类型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ELF_Hearder"><span class="toc-number">3.1.</span> <span class="toc-text">ELF Hearder</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Program_Header"><span class="toc-number">3.2.</span> <span class="toc-text">Program Header</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sections"><span class="toc-number">3.3.</span> <span class="toc-text">Sections</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sections_head_table"><span class="toc-number">3.4.</span> <span class="toc-text">Sections head table</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u603B_u7ED3"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SO_u52A8_u6001_u8C03_u8BD5_u6280_u5DE7"><span class="toc-number">1.1.</span> <span class="toc-text">SO动态调试技巧</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5F15_u8A00"><span class="toc-number">2.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SO_u52A0_u8F7D_u6D41_u7A0B"><span class="toc-number">3.</span> <span class="toc-text">SO加载流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u8C03_u8BD5_u51C6_u5907"><span class="toc-number">4.</span> <span class="toc-text">调试准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u8C03_u8BD5_u6D41_u7A0B"><span class="toc-number">5.</span> <span class="toc-text">调试流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u6DFB_u52A0android_server"><span class="toc-number">5.1.</span> <span class="toc-text">添加android_server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u542F_u52A8_u7AEF_u53E3_u8F6C_u53D1"><span class="toc-number">5.2.</span> <span class="toc-text">启动端口转发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u542F_u52A8JDWP_u7AEF_u53E3_u8F6C_u53D1"><span class="toc-number">5.3.</span> <span class="toc-text">启动JDWP端口转发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IDA_u8C03_u8BD5"><span class="toc-number">5.4.</span> <span class="toc-text">IDA调试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u7279_u6B8A_u60C5_u51B5"><span class="toc-number">6.</span> <span class="toc-text">特殊情况</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u6A21_u62DF_u673A_u65E0_u6CD5_u4F7F_u7528android_server"><span class="toc-number">6.1.</span> <span class="toc-text">模拟机无法使用android_server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#so_u6587_u4EF6_u53CD_u8C03_u8BD5"><span class="toc-number">6.2.</span> <span class="toc-text">so文件反调试</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -563,7 +458,7 @@ ELF结构: 详细的ELF数据结构">
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"ELF文件分析　| Sherwel-Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/js/share.js?v=89860593.js?'];
+                "common":{"bdSnsKey":{},"bdText":"Adnroid so文件动态调试技巧　| Sherwel-Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/js/share.js?v=89860593.js?'];
         </script>
     
 
@@ -627,15 +522,13 @@ window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="tex
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/05/05/安卓so动态调试技巧/" title="上一篇: Adnroid so文件动态调试技巧">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/03/30/dex格式分析/" title="下一篇: dex格式分析">
+            <a href="/2017/04/12/ELF文件分析/" title="下一篇: ELF文件分析">
                 <i class="fa fa-angle-right"></i>
             </a>
         
