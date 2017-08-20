@@ -4,6 +4,42 @@
   
     
     <entry>
+      <title><![CDATA[python相关僵尸进程问题避免]]></title>
+      <url>https://nanshihui.github.io/2017/08/20/python-zombie-process/</url>
+      <content type="html"><![CDATA[<p></p><h2 id="intro">前言</h2>在使用Python的过程中,偶然发现进程列表出现一些defunct的字样,于是开始摸索是哪里出现问题。<br><a id="more"></a><p></p>
+<h2 id="u50F5_u5C38_u8FDB_u7A0B"><a href="#u50F5_u5C38_u8FDB_u7A0B" class="headerlink" title="僵尸进程"></a>僵尸进程</h2><p>　　僵尸进程，顾名思义，就是已经死去没有意义的进程。即⼦进程运⾏完成，但是⽗进程迟迟没有进⾏回收，此时⼦进程实际上并没有退出，其仍然占⽤着系统资源，这样的⼦进程称为僵⼫进程。<br>　　因为僵⼫进程的资源⼀直未被回收，造成了系统资源的浪费，过多的僵⼫进程将造成系统性能下降，所以应避免出现僵⼫进程。将时间<br><br></p>
+<h3 id="u4EA7_u751F_u50F5_u5C38_u8FDB_u7A0B_u7684_u60C5_u51B5"><a href="#u4EA7_u751F_u50F5_u5C38_u8FDB_u7A0B_u7684_u60C5_u51B5" class="headerlink" title="产生僵尸进程的情况"></a>产生僵尸进程的情况</h3><ul>
+<li>如果父进程先退出<br>子进程自动被 init 进程收养，不会产生僵尸进程</li>
+<li>如果子进程先退出<br><strong>如果父进程 wait() 处理</strong> ，则僵尸进程会被父进程清理<br><strong>如果父进程不用wait()处理</strong>，则僵尸进程会在父进程退出之前一直存在。当然，父进程退出后，僵尸子进程会被 init 收养，init 进程会自动调用 wait() 处理。但是对于处理网络请求的服务器进程来说，父进程可能会一直存在，子进程处理完任务就退出，这种情况下会产生很多僵尸进程，这种场景就需要对僵尸进程的处理提高警惕了。</li>
+</ul>
+<p><br></p>
+<h3 id="u5982_u4F55_u907F_u514D_u4EA7_u751F_u50F5_u5C38_u8FDB_u7A0B"><a href="#u5982_u4F55_u907F_u514D_u4EA7_u751F_u50F5_u5C38_u8FDB_u7A0B" class="headerlink" title="如何避免产生僵尸进程"></a>如何避免产生僵尸进程</h3><ul>
+<li>推荐方法：fock twice, 用孙子进程去完成子进程的任务（注意这种方法的使用情景）</li>
+<li>wait(), 但是会使父进程阻塞</li>
+<li>signal(SIGCHLD,SIG_IGN), 并不是所有系统都兼容<br>即主进程程序中加入一句<code>import signalsignal.signal(signal.SIGCHLD,signal.SIG_IGN)</code></li>
+<li>sigaction + SA_NOCLDWAIT, 并不是所有系统都兼容</li>
+<li>在signal handler中调用 waitpid ，这样父进程不用阻塞。</li>
+</ul>
+<p>注意：每一种方法都有它适用的场合，比如最后一种方法适用于 one-request-one-process 的网络服务器程序，而方法 1 则不适合。</p>
+<p>　　在使用subprocess 模块的 Popen 调用外部程序时，如果调用命令，没有去等待，就会产生僵尸进程，即使你有异常捕获函数。通常我们会在调用命令之后会调用wait()函数。 这里比较推荐的做法是使用communicate（）函数，而不是wait()函数。因为wait()函数，如果 stdout 或 stderr 参数是 pipe，并且程序输出超过操作系统的 pipe size时，使用Popen.wait()方式等待程序结束获取返回值，会导致死锁，程序卡在 wait() 调用上。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Python </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 僵尸进程 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Adnroid so文件动态调试技巧]]></title>
       <url>https://nanshihui.github.io/2017/05/05/%E5%AE%89%E5%8D%93so%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7/</url>
       <content type="html"><![CDATA[<p></p><h2 id="intro">前言</h2>android的so文件调试,网上写了不少,但是按着网上来,却不一定是正确的,于是自己便总结了一份,给需要的人,同时也方便自己查阅。<p></p>

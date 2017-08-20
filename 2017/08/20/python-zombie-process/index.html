@@ -15,15 +15,16 @@
 
 
 
-<meta name="description" content="Safe blog sharing , 安全博客分享 , web安全 cyberspace safe">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Sherwel-Blog">
-<meta property="og:url" content="https://nanshihui.github.io/tags/CCS/index.html">
+<meta name="description" content="前言在使用Python的过程中,偶然发现进程列表出现一些defunct的字样,于是开始摸索是哪里出现问题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python相关僵尸进程问题避免">
+<meta property="og:url" content="https://nanshihui.github.io/2017/08/20/python-zombie-process/index.html">
 <meta property="og:site_name" content="Sherwel-Blog">
-<meta property="og:description" content="Safe blog sharing , 安全博客分享 , web安全 cyberspace safe">
+<meta property="og:description" content="前言在使用Python的过程中,偶然发现进程列表出现一些defunct的字样,于是开始摸索是哪里出现问题。">
+<meta property="og:updated_time" content="2017-08-20T03:26:19.851Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Sherwel-Blog">
-<meta name="twitter:description" content="Safe blog sharing , 安全博客分享 , web安全 cyberspace safe">
+<meta name="twitter:title" content="python相关僵尸进程问题避免">
+<meta name="twitter:description" content="前言在使用Python的过程中,偶然发现进程列表出现一些defunct的字样,于是开始摸索是哪里出现问题。">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -55,7 +56,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Tag: CCS | Sherwel-Blog</title>
+<title>python相关僵尸进程问题避免 | Sherwel-Blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -65,9 +66,9 @@
         fancybox: true,
         animate: true,
         isHome: false,
-        isPost: false,
+        isPost: true,
         isArchive: false,
-        isTag: true,
+        isTag: false,
         isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
         scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
@@ -284,97 +285,240 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-python-zombie-process" class="article article-type-post" itemscope itemprop="blogPost">
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2016/05/27/the-spy-in-the-sandbox/" class="archive-article-date">
-      <time datetime="2016-05-27T13:46:36.000Z" itemprop="datePublished">05-27</time>
+    <div class="article-meta">
+      <a href="/2017/08/20/python-zombie-process/" class="article-date">
+      <time datetime="2017-08-20T02:59:24.000Z" itemprop="datePublished">2017-08-20</time>
 </a>
 
 
-        </div>
-         
+    </div>
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/05/27/the-spy-in-the-sandbox/">The Spy in the Sandbox :Practical Cache Attacks in JavaScript and their Implications</a>
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      python相关僵尸进程问题避免
     </h1>
   
 
-        <div class="article-info info-on-archive">
-          
+      </header>
+      
+      <div class="article-info article-info-post">
+        
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/论文阅读/">论文阅读</a>
+    <a class="article-category-link" href="/categories/Python/">Python</a>
     </div>
 
 
-          
+        
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CCS/">CCS</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/僵尸进程/">僵尸进程</a></li></ul>
     </div>
 
-        </div>
         <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
+      </div>
+      
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2016/05/17/A-Search-Engine-Backed-by-Internet-Wide-Scanning/" class="archive-article-date">
-      <time datetime="2016-05-17T11:44:29.000Z" itemprop="datePublished">05-17</time>
-</a>
-
-
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/05/17/A-Search-Engine-Backed-by-Internet-Wide-Scanning/">A Search Engine Backed by Internet-Wide Scanning</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
+    <div class="article-entry" itemprop="articleBody">
+      
           
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/论文阅读/">论文阅读</a>
+        <p></p><h2 id="intro">前言</h2>在使用Python的过程中,偶然发现进程列表出现一些defunct的字样,于是开始摸索是哪里出现问题。<br><a id="more"></a><p></p>
+<h2 id="u50F5_u5C38_u8FDB_u7A0B"><a href="#u50F5_u5C38_u8FDB_u7A0B" class="headerlink" title="僵尸进程"></a>僵尸进程</h2><p>　　僵尸进程，顾名思义，就是已经死去没有意义的进程。即⼦进程运⾏完成，但是⽗进程迟迟没有进⾏回收，此时⼦进程实际上并没有退出，其仍然占⽤着系统资源，这样的⼦进程称为僵⼫进程。<br>　　因为僵⼫进程的资源⼀直未被回收，造成了系统资源的浪费，过多的僵⼫进程将造成系统性能下降，所以应避免出现僵⼫进程。将时间<br><br></p>
+<h3 id="u4EA7_u751F_u50F5_u5C38_u8FDB_u7A0B_u7684_u60C5_u51B5"><a href="#u4EA7_u751F_u50F5_u5C38_u8FDB_u7A0B_u7684_u60C5_u51B5" class="headerlink" title="产生僵尸进程的情况"></a>产生僵尸进程的情况</h3><ul>
+<li>如果父进程先退出<br>子进程自动被 init 进程收养，不会产生僵尸进程</li>
+<li>如果子进程先退出<br><strong>如果父进程 wait() 处理</strong> ，则僵尸进程会被父进程清理<br><strong>如果父进程不用wait()处理</strong>，则僵尸进程会在父进程退出之前一直存在。当然，父进程退出后，僵尸子进程会被 init 收养，init 进程会自动调用 wait() 处理。但是对于处理网络请求的服务器进程来说，父进程可能会一直存在，子进程处理完任务就退出，这种情况下会产生很多僵尸进程，这种场景就需要对僵尸进程的处理提高警惕了。</li>
+</ul>
+<p><br></p>
+<h3 id="u5982_u4F55_u907F_u514D_u4EA7_u751F_u50F5_u5C38_u8FDB_u7A0B"><a href="#u5982_u4F55_u907F_u514D_u4EA7_u751F_u50F5_u5C38_u8FDB_u7A0B" class="headerlink" title="如何避免产生僵尸进程"></a>如何避免产生僵尸进程</h3><ul>
+<li>推荐方法：fock twice, 用孙子进程去完成子进程的任务（注意这种方法的使用情景）</li>
+<li>wait(), 但是会使父进程阻塞</li>
+<li>signal(SIGCHLD,SIG_IGN), 并不是所有系统都兼容<br>即主进程程序中加入一句<code>import signalsignal.signal(signal.SIGCHLD,signal.SIG_IGN)</code></li>
+<li>sigaction + SA_NOCLDWAIT, 并不是所有系统都兼容</li>
+<li>在signal handler中调用 waitpid ，这样父进程不用阻塞。</li>
+</ul>
+<p>注意：每一种方法都有它适用的场合，比如最后一种方法适用于 one-request-one-process 的网络服务器程序，而方法 1 则不适合。</p>
+<p>　　在使用subprocess 模块的 Popen 调用外部程序时，如果调用命令，没有去等待，就会产生僵尸进程，即使你有异常捕获函数。通常我们会在调用命令之后会调用wait()函数。 这里比较推荐的做法是使用communicate（）函数，而不是wait()函数。因为wait()函数，如果 stdout 或 stderr 参数是 pipe，并且程序输出超过操作系统的 pipe size时，使用Popen.wait()方式等待程序结束获取返回值，会导致死锁，程序卡在 wait() 调用上。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/08/20/python-zombie-process/">python相关僵尸进程问题避免</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Sherwel</a></p>
+        <p><span>发布时间:</span>2017-08-20, 10:59:24</p>
+        <p><span>最后更新:</span>2017-08-20, 11:26:19</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/08/20/python-zombie-process/" title="python相关僵尸进程问题避免">https://nanshihui.github.io/2017/08/20/python-zombie-process/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://nanshihui.github.io/2017/08/20/python-zombie-process/　　作者: Sherwel" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
     </div>
 
 
-          
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CCS/">CCS</a></li></ul>
-    </div>
+<div id="empty" class="share"align="center" ></div>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
+
+<div id="cyReward" align="center" role="cylabs" data-use="reward"></div>
+<!-- 代码2：用来读取评论框配置，此代码需放置在代码1之后。 -->
+<!-- 如果当前页面有评论框，代码2请勿放置在评论框代码之前。 -->
+<!-- 如果页面同时使用多个实验室项目，以下代码只需要引入一次，只配置上面的div标签即可 -->
+<script type="text/javascript" charset="utf-8" src="https://changyan.itc.cn/js/lib/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cysUswSe1"></script>
+
+
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/05/05/安卓so动态调试技巧/">
+                    Adnroid so文件动态调试技巧
+                </a>
+            </div>
+        
+    </nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u50F5_u5C38_u8FDB_u7A0B"><span class="toc-number">2.</span> <span class="toc-text">僵尸进程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u4EA7_u751F_u50F5_u5C38_u8FDB_u7A0B_u7684_u60C5_u51B5"><span class="toc-number">2.1.</span> <span class="toc-text">产生僵尸进程的情况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u5982_u4F55_u907F_u514D_u4EA7_u751F_u50F5_u5C38_u8FDB_u7A0B"><span class="toc-number">2.2.</span> <span class="toc-text">如何避免产生僵尸进程</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
 
     
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"python相关僵尸进程问题避免　| Sherwel-Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/js/share.js?v=89860593.js?'];
+        </script>
+    
 
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section class="youyan" id="comments">
+    <script>
+        var loadComment = function(){
+            // var d = document, s = d.createElement('script');
+            // s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:')+'//v2.uyan.cc/code/uyan.js?uid=2127999';
+            // (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+    <!--PC版-->
+<!-- 代码1：放在页面需要展示的位置  -->
+<!-- 如果您配置过sourceid，建议在div标签中配置sourceid、cid(分类id)，没有请忽略  -->
+
+
+    
+<!--PC和WAP自适应版-->
+<div id="SOHUCS" ></div> 
+<script type="text/javascript"> 
+(function(){ 
+var appid = 'cysUswSe1'; 
+var conf = 'prod_446e18afd0baf760ebaf151f59effb45'; 
+var width = window.innerWidth || document.documentElement.clientWidth; 
+if (width < 960) { 
+window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
+
+
+
+
+    <!-- <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div> -->
+
+<script>
+  // var cloudTieConfig = {
+  //   url: document.location.href, 
+  //   sourceId: "",
+  //   productKey: "b5e745da886b40bbac100f4e58b55f04",
+  //   target: "cloud-tie-wrapper"
+  // };
+</script>
+<!-- <script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script> -->
+    <div id="uyan_frame"></div>
+</section>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/05/05/安卓so动态调试技巧/" title="下一篇: Adnroid so文件动态调试技巧">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/python-zombie-process/">python相关僵尸进程问题避免</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/05/安卓so动态调试技巧/">Adnroid so文件动态调试技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/12/ELF文件分析/">ELF文件分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/30/dex格式分析/">dex格式分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/29/zmap源码解读之zmap扫描快的原因/">zmap源码解读之zmap扫描快的原因</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/21/browser-fingerprint/">浏览器指纹追踪</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/08/ipproxy/">细数代理检测</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/05/run-zmap-in-docker/">Run Zmap in docker</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/27/the-spy-in-the-sandbox/">The Spy in the Sandbox :Practical Cache Attacks in JavaScript and their Implications</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/17/A-Search-Engine-Backed-by-Internet-Wide-Scanning/">A Search Engine Backed by Internet-Wide Scanning</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/10/Program-Adaptive-Mutational-Fuzzing/">Program-Adaptive Mutational Fuzzing</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/18/MySQL主从库相关信息整理/">MySQL主从库相关信息整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/25/sqlmaptips/">sqlmap常用技巧整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/21/ToolForSpider简介/">Scan-T简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/19/SQL注入总结/">SQL注入总结（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/18/python 中常见的 import 模块的方法(总结)/">python 中常见的 import 模块的方法(总结)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/15/网络空间指纹识别/">如何构建一个网络空间指纹识别系统（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/08/windows-mac-software/">自用 Windows 和 Mac 软件推荐</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/07/hello-world/">hexo编写笔记</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
 </div>
       <footer id="footer">
     <div class="outer">
