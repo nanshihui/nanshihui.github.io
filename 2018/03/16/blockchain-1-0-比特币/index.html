@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Sherwel" />
+
+
+
+<meta name="description" content="前言近一年，随处可见各种新闻媒体甚至我隔壁的阿姨都在讨论区块链，于此同时，我们也看到比特币创造的神话。数字的虚拟货币的价值这么巨大，从当初的无人问津到现在的一币千金。
+关于比特币的细节说明
+矿工的工作流程:旷工的生命周期
+工作量证明:矿工是如何挖到新块
+交易: 矿工之间的交易是怎么样的
+激励: 如何促使旷工这么积极的干活
+其他: 区块链1.0的应用方向">
+<meta property="og:type" content="article">
+<meta property="og:title" content="小说区块链 1.0(比特币)">
+<meta property="og:url" content="https://nanshihui.github.io/2018/03/16/blockchain-1-0-比特币/index.html">
+<meta property="og:site_name" content="Sherwel-Blog">
+<meta property="og:description" content="前言近一年，随处可见各种新闻媒体甚至我隔壁的阿姨都在讨论区块链，于此同时，我们也看到比特币创造的神话。数字的虚拟货币的价值这么巨大，从当初的无人问津到现在的一币千金。
+关于比特币的细节说明
+矿工的工作流程:旷工的生命周期
+工作量证明:矿工是如何挖到新块
+交易: 矿工之间的交易是怎么样的
+激励: 如何促使旷工这么积极的干活
+其他: 区块链1.0的应用方向">
+<meta property="og:image" content="https://nanshihui.github.io//nanshihui.github.io/public/images/bitcoin.png">
+<meta property="og:image" content="https://nanshihui.github.io//nanshihui.github.io/public/images/bitworker.png">
+<meta property="og:image" content="https://nanshihui.github.io//nanshihui.github.io/public/images/transaction.png">
+<meta property="og:image" content="https://nanshihui.github.io//nanshihui.github.io/public/images/utxo.png">
+<meta property="og:updated_time" content="2018-08-18T08:10:22.401Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="小说区块链 1.0(比特币)">
+<meta name="twitter:description" content="前言近一年，随处可见各种新闻媒体甚至我隔壁的阿姨都在讨论区块链，于此同时，我们也看到比特币创造的神话。数字的虚拟货币的价值这么巨大，从当初的无人问津到现在的一币千金。
+关于比特币的细节说明
+矿工的工作流程:旷工的生命周期
+工作量证明:矿工是如何挖到新块
+交易: 矿工之间的交易是怎么样的
+激励: 如何促使旷工这么积极的干活
+其他: 区块链1.0的应用方向">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Sherwel-Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>小说区块链 1.0(比特币) | Sherwel-Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?b393fdaea56f1c61a5861e21d720164b";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Sherwel</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">一个专注于吃的程序猿</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                            <li><a href="/sitemap.xml">Sitemap</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:nanshihui@gmail.com" title="Email"></a>
+                            
+                                <a class="fa 新浪微博" href="http://weibo.com/sherwel" title="新浪微博"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/nanshihui" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" href="https://www.zhihu.com/people/sherwel" title="知乎"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CCS/">CCS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Centos/">Centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nmap/">Nmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Proxy/">Proxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/S-P/">S&P</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL注入/">SQL注入</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Software/">Software</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zmap/">Zmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blockchain/">blockchain</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/import/">import</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlmap/">sqlmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/僵尸进程/">僵尸进程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/比特币/">比特币</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/浏览器指纹/">浏览器指纹</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫/">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/逆向/">逆向</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://github.com/nanshihui">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于吃</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Sherwel</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Sherwel</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">一个专注于吃的程序猿</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                    <li><a href="/sitemap.xml">Sitemap</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:nanshihui@gmail.com" title="Email"></a>
+                            
+                                <a class="fa 新浪微博" target="_blank" href="http://weibo.com/sherwel" title="新浪微博"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/nanshihui" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" target="_blank" href="https://www.zhihu.com/people/sherwel" title="知乎"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-blockchain-1-0-比特币" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/03/16/blockchain-1-0-比特币/" class="article-date">
+      <time datetime="2018-03-16T12:48:37.000Z" itemprop="datePublished">2018-03-16</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      小说区块链 1.0(比特币)
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/区块链/">区块链</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/blockchain/">blockchain</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/比特币/">比特币</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p></p><h2 id="intro">前言</h2>近一年，随处可见各种新闻媒体甚至我隔壁的阿姨都在讨论区块链，于此同时，我们也看到比特币创造的神话。数字的虚拟货币的价值这么巨大，从当初的无人问津到现在的一币千金。<p></p>
+<h3 id="u5173_u4E8E_u6BD4_u7279_u5E01_u7684_u7EC6_u8282_u8BF4_u660E"><a href="#u5173_u4E8E_u6BD4_u7279_u5E01_u7684_u7EC6_u8282_u8BF4_u660E" class="headerlink" title="关于比特币的细节说明"></a>关于比特币的细节说明</h3><ul>
+<li><strong>矿工的工作流程:</strong>旷工的生命周期</li>
+<li><strong>工作量证明:</strong>矿工是如何挖到新块</li>
+<li><strong>交易:</strong> 矿工之间的交易是怎么样的</li>
+<li><strong>激励:</strong> 如何促使旷工这么积极的干活</li>
+<li><strong>其他:</strong> 区块链1.0的应用方向</li>
+</ul>
+<a id="more"></a>
+<h2 id="u7B80_u4ECB"><a href="#u7B80_u4ECB" class="headerlink" title="简介"></a>简介</h2><p>　　最近出于好奇，对网上比特币的信息弄的云里雾里，于是开始对比特币的相关原理进行深入研究。除了对比特币的叹服之外，更多的是对中本聪的钦佩，对人性的洞察力。<br>　　在阅读下文之前，极力推荐大家看一下比特币的白皮书，通过白皮书，能够快速大致的了解，比特币是什么样的东西。如果感觉看英文太麻烦，本文将以通俗易懂的方式，来阐述区块链的1.0版本–比特币。<br>　　<strong>区块链</strong>：区块链（Blockchain）是由节点参与的分布式数据库系统。不可更改，不可伪造，也可以将其理解为账簿系统(ledger)。其具有完整比特币区块链的备份，记录了其代币（token）的每一笔交易。通过这些信息，我们可以找到每一个地址，在历史上任何一点所拥有的价值。<br>　　比特币是电子货币，而区块链只是比特币系统用来记录交易信息的账簿，其具有如下特征：</p>
+<ul>
+<li>去中心化。由于使用分布式核算和存储，不存在中心化的硬件或管理机构，任意节点的权利和义务都是均等的，系统中的数据块由整个系统中具有维护功能的节点来共同维护。</li>
+<li>开放性。系统是开放的，除了交易各方的私有信息被加密外，区块链的数据对所有人公开，任何人都可以通过公开的接口查询区块链数据和开发相关应用，因此整个系统信息高度透明。</li>
+<li>自治性。区块链采用基于协商一致的规范和协议（比如一套公开透明的算法）使得整个系统中的所有节点能够在去信任的环境自由安全的交换数据，使得对“人”的信任改成了对机器的信任，任何人为的干预不起作用。 </li>
+<li>信息不可篡改。一旦信息经过验证并添加至区块链，就会永久的存储起来，除非能够同时控制住系统中超过51%的节点，否则单个节点上对数据库的修改是无效的，因此区块链的数据稳定性和可靠性极高。</li>
+<li>匿名性。由于节点之间的交换遵循固定的算法，其数据交互是无需信任的（区块链中的程序规则会自行判断活动是否有效），因此交易对手无须通过公开身份的方式让对方自己产生信任，对信用的累积非常有帮助。<br>　　从整体上看比特币的产生、消费、流转，都离不开比特币矿工的支持。下面讲着重讲解矿工的工作流程。</li>
+</ul>
+<h2 id="u77FF_u5DE5_u7684_u5DE5_u4F5C_u6D41_u7A0B"><a href="#u77FF_u5DE5_u7684_u5DE5_u4F5C_u6D41_u7A0B" class="headerlink" title="矿工的工作流程"></a>矿工的工作流程</h2><p>　　挖矿即不断接入新的Block延续Block Chain的过程。<br><img src="//nanshihui.github.io/public/images/bitcoin.png" alt="矿工分布图"><br>　　从图中我们可以看出整个区块链网络，有很多角色组成。而最主要的角色是矿工。挖矿为整个系统的运转提供原动力，是比特币的发动机，没有挖矿就没有比特币。<br>　　挖矿有三个重要功能：</p>
+<ul>
+<li>发行新的货币（总量达到之前）</li>
+<li>维系货币的支付功能</li>
+<li>通过算力保障系统安全<br>　　从下图我们便可以直观的感受到一个矿工的生命周期。<br><img src="//nanshihui.github.io/public/images/bitworker.png" alt="矿工工作内容图"></li>
+</ul>
+<h2 id="u5DE5_u4F5C_u91CF_u8BC1_u660E"><a href="#u5DE5_u4F5C_u91CF_u8BC1_u660E" class="headerlink" title="工作量证明"></a>工作量证明</h2><p>　　工作量证明过程主要含如下四个步骤：</p>
+<ul>
+<li>将一段时间内的交易放入一个区块中</li>
+<li>通过不断改变区块中的随机数，来尝试碰撞出一个符合要求的区块散列值</li>
+<li>一旦找到符合要求的散列值，即认为完成了一次工作量证明，该区块中的交易将被记录在账本中</li>
+<li>将上一个区块的散列值放入下一个区块中，形成一个链条（区块链）</li>
+</ul>
+<p>　　而第一个计算出符合要求的区块链散列值的矿工，也就意味着他挖到了新的比特币。</p>
+<h2 id="u4EA4_u6613"><a href="#u4EA4_u6613" class="headerlink" title="交易"></a>交易</h2><p>　　在比特币网络中，交易不像传统的转账方式，将钱和人严格绑定。更多的是提出问题和回答问题的过程。提出问题相当于发出一定数量的比特币，而只有回答正确这个问题的人，才能获得这个比特币。所以在比特币转账中，转账发起人，要注明被转账人的公钥，而只有被转账人的私钥才能解开这个问题。如下图，就是一个具体交易过程所采用的验证方式和过程。</p>
+<p><img src="//nanshihui.github.io/public/images/transaction.png" alt="交易验证图"><br>　　在交易的过程中，除了填写被转账人的公钥hash值外，还要证明转账人的钱是来源哪里，并且要证明这些钱是合法的，这笔交易才会生效。<br><img src="//nanshihui.github.io/public/images/utxo.png" alt="UTXO图"></p>
+<h2 id="u6FC0_u52B1"><a href="#u6FC0_u52B1" class="headerlink" title="激励"></a>激励</h2><p>　　从以上几个方面，我们可以知晓，矿工在区块链中扮演的地位。然而为什么矿工会这么主动的做这些事情？<br>　　其实，矿工在挖矿的过程中，一旦矿工计算出一个新块的hash值，他就会获得比特币。此外每一笔交易，都会有交易费，而这个交易费，就归属于矿工。一个区块存，存储的是这一个区块时间的交易记录。矿工只有不断的去计算出hash值，才能获得更多的比特币。另外为了能获得更多的交易费，矿工节点倾向于选择交易费高，且数据量占用小的交易。</p>
+<h2 id="u5176_u4ED6"><a href="#u5176_u4ED6" class="headerlink" title="其他"></a>其他</h2><p>　　目前在区块链方面的应用已经有不少。如：</p>
+<ul>
+<li>物流追溯</li>
+<li>版权保护：数字制品的每次交易都记录到区块链里，做为正版证明。由于纪录不可修改，用户私钥的保密性，完全可以证明用户对该数字产品的拥有权，使用权，分享权。</li>
+<li>智能合约：比特币可以在一定程度上实现智能合约。此时，接收比特币的收款地址将是一个合约脚本的散列值，而不是公钥的散列值；而验证合约地址发出的交易，需要执行合约的脚本内容。</li>
+<li>分布式DNS解析服务器<br>　　以上的这些应用都是围绕区块链不可篡改的特性，进行应用，而区块链1.0也有其弊端，如需要耗费巨大的计算资源。因此在下文，笔者会以通俗的方式阐述区块链的升级版本，区块链2.0–以太坊.</li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/03/16/blockchain-1-0-比特币/">小说区块链 1.0(比特币)</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Sherwel</a></p>
+        <p><span>发布时间:</span>2018-03-16, 20:48:37</p>
+        <p><span>最后更新:</span>2018-08-18, 16:10:22</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/03/16/blockchain-1-0-比特币/" title="小说区块链 1.0(比特币)">https://nanshihui.github.io/2018/03/16/blockchain-1-0-比特币/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://nanshihui.github.io/2018/03/16/blockchain-1-0-比特币/　　作者: Sherwel" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+<div id="empty" class="share"align="center" ></div>
+
+
+<div id="cyReward" align="center" role="cylabs" data-use="reward"></div>
+<!-- 代码2：用来读取评论框配置，此代码需放置在代码1之后。 -->
+<!-- 如果当前页面有评论框，代码2请勿放置在评论框代码之前。 -->
+<!-- 如果页面同时使用多个实验室项目，以下代码只需要引入一次，只配置上面的div标签即可 -->
+<script type="text/javascript" charset="utf-8" src="https://changyan.itc.cn/js/lib/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cysUswSe1"></script>
+
+
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/08/20/python-zombie-process/">
+                    python相关僵尸进程问题避免
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#u5173_u4E8E_u6BD4_u7279_u5E01_u7684_u7EC6_u8282_u8BF4_u660E"><span class="toc-number">1.1.</span> <span class="toc-text">关于比特币的细节说明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u7B80_u4ECB"><span class="toc-number">2.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u77FF_u5DE5_u7684_u5DE5_u4F5C_u6D41_u7A0B"><span class="toc-number">3.</span> <span class="toc-text">矿工的工作流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5DE5_u4F5C_u91CF_u8BC1_u660E"><span class="toc-number">4.</span> <span class="toc-text">工作量证明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u4EA4_u6613"><span class="toc-number">5.</span> <span class="toc-text">交易</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u6FC0_u52B1"><span class="toc-number">6.</span> <span class="toc-text">激励</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5176_u4ED6"><span class="toc-number">7.</span> <span class="toc-text">其他</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"小说区块链 1.0(比特币)　| Sherwel-Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/js/share.js?v=89860593.js?'];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section class="youyan" id="comments">
+    <script>
+        var loadComment = function(){
+            // var d = document, s = d.createElement('script');
+            // s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:')+'//v2.uyan.cc/code/uyan.js?uid=2127999';
+            // (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+    <!--PC版-->
+<!-- 代码1：放在页面需要展示的位置  -->
+<!-- 如果您配置过sourceid，建议在div标签中配置sourceid、cid(分类id)，没有请忽略  -->
+
+
+    
+<!--PC和WAP自适应版-->
+<div id="SOHUCS" ></div> 
+<script type="text/javascript"> 
+(function(){ 
+var appid = 'cysUswSe1'; 
+var conf = 'prod_446e18afd0baf760ebaf151f59effb45'; 
+var width = window.innerWidth || document.documentElement.clientWidth; 
+if (width < 960) { 
+window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
+
+
+
+
+    <!-- <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div> -->
+
+<script>
+  // var cloudTieConfig = {
+  //   url: document.location.href, 
+  //   sourceId: "",
+  //   productKey: "b5e745da886b40bbac100f4e58b55f04",
+  //   target: "cloud-tie-wrapper"
+  // };
+</script>
+<!-- <script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script> -->
+    <div id="uyan_frame"></div>
+</section>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/08/20/python-zombie-process/" title="下一篇: python相关僵尸进程问题避免">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/03/16/blockchain-1-0-比特币/">小说区块链 1.0(比特币)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/python-zombie-process/">python相关僵尸进程问题避免</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/05/安卓so动态调试技巧/">Adnroid so文件动态调试技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/12/ELF文件分析/">ELF文件分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/30/dex格式分析/">dex格式分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/29/zmap源码解读之zmap扫描快的原因/">zmap源码解读之zmap扫描快的原因</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/21/browser-fingerprint/">浏览器指纹追踪</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/08/ipproxy/">细数代理检测</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/05/run-zmap-in-docker/">Run Zmap in docker</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/27/the-spy-in-the-sandbox/">The Spy in the Sandbox :Practical Cache Attacks in JavaScript and their Implications</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/17/A-Search-Engine-Backed-by-Internet-Wide-Scanning/">A Search Engine Backed by Internet-Wide Scanning</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/10/Program-Adaptive-Mutational-Fuzzing/">Program-Adaptive Mutational Fuzzing</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/18/MySQL主从库相关信息整理/">MySQL主从库相关信息整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/25/sqlmaptips/">sqlmap常用技巧整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/21/ToolForSpider简介/">Scan-T简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/19/SQL注入总结/">SQL注入总结（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/18/python 中常见的 import 模块的方法(总结)/">python 中常见的 import 模块的方法(总结)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/15/网络空间指纹识别/">如何构建一个网络空间指纹识别系统（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/08/windows-mac-software/">自用 Windows 和 Mac 软件推荐</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/07/hello-world/">hexo编写笔记</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-right">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 Sherwel
+            </div>
+
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+    <script src="/js/GithubRepoWidget.js" type="text/javascript"></script>
+
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-96161465-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+             github: ".github-widget a", 
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+<a href="https://github.com/nanshihui"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+
+</script>
+<script>
+(function(){
+   var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?bbb0c3446573f18bdbe0fe8060ca72dd":"https://jspassport.ssl.qhimg.com/11.0.1.js?bbb0c3446573f18bdbe0fe8060ca72dd";
+   document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+</body>
+</html>
